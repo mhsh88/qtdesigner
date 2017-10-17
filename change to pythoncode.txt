@@ -38,3 +38,13 @@ background-color:rgb(255, 76, 79);
 
 C:\Users\Hossein\Desktop\myqtdesigner>pyrcc5 py3 "C:\Users\Hossein\Desktop\myqtd
 esigner\svgfile.qrc" -o "C:\Users\Hossein\Desktop\myqtdesigner\svgfile_rc.py"
+
+
+
+
+for linux
+ /usr/lib/x86_64-linux-gnu/qt5/bin/designer
+
+ pyuic5 gui.ui -o gui.py
+
+ pyrcc5 images.qrc -o images_rc.py

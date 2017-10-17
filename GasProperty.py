@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'GasProperty.ui'
 #
-# Created by: PyQt5 UI code generator 5.6
+# Created by: PyQt5 UI code generator 5.8.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -11,25 +11,38 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(758, 597)
+        Form.resize(619, 751)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/icon/heater.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         Form.setWindowIcon(icon)
-        self.horizontalLayout_7 = QtWidgets.QHBoxLayout(Form)
-        self.horizontalLayout_7.setObjectName("horizontalLayout_7")
-        self.verticalLayout_7 = QtWidgets.QVBoxLayout()
-        self.verticalLayout_7.setObjectName("verticalLayout_7")
+        self.horizontalLayout_9 = QtWidgets.QHBoxLayout(Form)
+        self.horizontalLayout_9.setObjectName("horizontalLayout_9")
+        self.horizontalLayout_8 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_8.setObjectName("horizontalLayout_8")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout()
         self.verticalLayout_3.setObjectName("verticalLayout_3")
+        self.horizontalLayout_7 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_7.setObjectName("horizontalLayout_7")
+        self.comboBox = QtWidgets.QComboBox(Form)
+        font = QtGui.QFont()
+        font.setFamily("B Mitra")
+        font.setPointSize(14)
+        self.comboBox.setFont(font)
+        self.comboBox.setObjectName("comboBox")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.horizontalLayout_7.addWidget(self.comboBox)
         self.label_24 = QtWidgets.QLabel(Form)
         font = QtGui.QFont()
-        font.setFamily("Cambria")
-        font.setPointSize(12)
+        font.setFamily("B Mitra")
+        font.setPointSize(14)
         font.setBold(True)
         font.setWeight(75)
         self.label_24.setFont(font)
         self.label_24.setObjectName("label_24")
-        self.verticalLayout_3.addWidget(self.label_24)
+        self.horizontalLayout_7.addWidget(self.label_24)
+        self.verticalLayout_3.addLayout(self.horizontalLayout_7)
         self.gridLayout = QtWidgets.QGridLayout()
         self.gridLayout.setObjectName("gridLayout")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout()
@@ -291,15 +304,12 @@ class Ui_Form(object):
         self.verticalLayout.addWidget(self.lineEdit_21)
         self.gridLayout.addLayout(self.verticalLayout, 0, 1, 1, 1)
         self.verticalLayout_3.addLayout(self.gridLayout)
-        self.verticalLayout_7.addLayout(self.verticalLayout_3)
-        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_7.addItem(spacerItem)
-        self.horizontalLayout_7.addLayout(self.verticalLayout_7)
+        self.horizontalLayout_8.addLayout(self.verticalLayout_3)
         self.line = QtWidgets.QFrame(Form)
         self.line.setFrameShape(QtWidgets.QFrame.VLine)
         self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line.setObjectName("line")
-        self.horizontalLayout_7.addWidget(self.line)
+        self.horizontalLayout_8.addWidget(self.line)
         self.verticalLayout_13 = QtWidgets.QVBoxLayout()
         self.verticalLayout_13.setObjectName("verticalLayout_13")
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
@@ -486,8 +496,8 @@ class Ui_Form(object):
         self.lineEdit_30.setObjectName("lineEdit_30")
         self.verticalLayout_11.addWidget(self.lineEdit_30)
         self.horizontalLayout_5.addLayout(self.verticalLayout_11)
-        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_5.addItem(spacerItem1)
+        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_5.addItem(spacerItem)
         self.verticalLayout_12 = QtWidgets.QVBoxLayout()
         self.verticalLayout_12.setObjectName("verticalLayout_12")
         self.label_30 = QtWidgets.QLabel(Form)
@@ -531,8 +541,8 @@ class Ui_Form(object):
         self.label_35.setObjectName("label_35")
         self.horizontalLayout_6.addWidget(self.label_35)
         self.verticalLayout_13.addLayout(self.horizontalLayout_6)
-        spacerItem2 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_13.addItem(spacerItem2)
+        spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_13.addItem(spacerItem1)
         self.label_23 = QtWidgets.QLabel(Form)
         font = QtGui.QFont()
         font.setFamily("B Mitra")
@@ -554,7 +564,8 @@ class Ui_Form(object):
         self.pushButton.setObjectName("pushButton")
         self.horizontalLayout.addWidget(self.pushButton)
         self.verticalLayout_13.addLayout(self.horizontalLayout)
-        self.horizontalLayout_7.addLayout(self.verticalLayout_13)
+        self.horizontalLayout_8.addLayout(self.verticalLayout_13)
+        self.horizontalLayout_9.addLayout(self.horizontalLayout_8)
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -562,7 +573,10 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "اطلاعات ورودی ایستگاه تقلیل فشار گاز"))
-        self.label_24.setText(_translate("Form", "Gas Mole Fractions:"))
+        self.comboBox.setItemText(0, _translate("Form", "درصد جرمی"))
+        self.comboBox.setItemText(1, _translate("Form", "درصد حجمی"))
+        self.comboBox.setItemText(2, _translate("Form", "درصد مولی"))
+        self.label_24.setText(_translate("Form", "ترکیب گاز:"))
         self.label.setText(_translate("Form", "Nitrogen"))
         self.label_2.setText(_translate("Form", "Carbon Dioxide"))
         self.label_3.setText(_translate("Form", "Methane"))
@@ -640,13 +654,3 @@ class Ui_Form(object):
         self.pushButton.setText(_translate("Form", "Ok"))
 
 import svgfile_rc
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Form = QtWidgets.QWidget()
-    ui = Ui_Form()
-    ui.setupUi(Form)
-    Form.show()
-    sys.exit(app.exec_())
-
