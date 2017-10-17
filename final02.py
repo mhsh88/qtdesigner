@@ -338,6 +338,8 @@ class GasProp(QtWidgets.QWidget, GasProperty.Ui_Form):
 
                 ui.gasCheck = True
 
+                # ui.gasProperty = None
+
                 # print(self.label_23.isVisible())
 
 
@@ -370,6 +372,7 @@ class GasProp(QtWidgets.QWidget, GasProperty.Ui_Form):
         self.label_40.setVisible(False)
         self.label_23.setVisible(False)
         self.close()
+        # ui.gasProperty = None
 
 
 class OutStation(QtWidgets.QWidget, OutputStation.Ui_Form):
@@ -681,9 +684,17 @@ class OutHeaterWidget(QtWidgets.QWidget, OutputlineWidget.Ui_Form):
 
 
 class MainStationWindow(QtWidgets.QMainWindow, MainGasWindow.Ui_MainWindow):
+
+
     def __init__(self, parent=None):
         super(MainStationWindow, self).__init__(parent)
         self.setupUi(self)
+
+        # self.settingVars(self)
+
+
+
+
 
         # self.pushButton_2.iconIn = ":/icon/heater05.svg"
         self.pushButton_2.iconIn = ":/icon/heaterred.svg"
@@ -794,10 +805,17 @@ class MainStationWindow(QtWidgets.QMainWindow, MainGasWindow.Ui_MainWindow):
 
         self.gasCheck = False
         self.gasProperty = GasProp()
+
         self.pushButton_15.clicked.connect(self.gasProperty.show)
 
         # self.pushButton_22.clicked.connect(self.calculation)
         self.pushButton_22.clicked.connect(self.inlineCal)
+
+    def gasPropertyFunction(self):
+        self.gasProperty = GasProp()
+        self.gasProperty.show()
+
+
 
     def inlineCal(self):
 
@@ -965,6 +983,7 @@ class MainStationWindow(QtWidgets.QMainWindow, MainGasWindow.Ui_MainWindow):
         if reply == QMessageBox.Yes:
             self.out.close()
             self.gasProperty.close()
+
             self.run.close()
             self.heaterproperty.close()
             self.afterheater.close()
@@ -972,6 +991,20 @@ class MainStationWindow(QtWidgets.QMainWindow, MainGasWindow.Ui_MainWindow):
             event.accept()
         else:
             event.ignore()
+
+
+    def settingVar(self):
+        self.pStandard = ''
+        self.tStandard = ''
+        self.Tin = ''
+        self.Pin = ''
+        self.toutStation = ''
+        self.poutStation = ''
+        self.outTemperature = ''
+        self.windVelocity = ''
+
+
+
 
 
 import svgfile_rc
