@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" width="8.5in" height="11in" viewBox="0 0 8500 11000" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style type="text/css">
+   
+    .fil0 {fill:black}
+   
+  </style>
+  </defs>
+  <g id="Layer_x0020_1">
+    <g id="_203429216">
+      <path class="fil0" d="M4209 27c0,0 -176,2372 -1827,4056 -1467,1194 -1702,1829 -1793,2730 -92,905 8,2654 1660,3847 0,0 -594,-1452 869,-2645 1395,-1137 1223,-1944 1201,-2019 18,63 348,1251 1072,1926 743,692 634,1916 -68,3051 0,0 2283,-1476 2486,-3455 327,-3223 -2537,-6968 -3600,-7491z" style="fill: rgb(0, 101, 255);"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,131 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/">
+  <file>icon/3rahi.svg</file>
+  <file>icon/222467.png</file>
+  <file>icon/222478.png</file>
+  <file>icon/252567.png</file>
+  <file>icon/gageHorizentallPipe.svg</file>
+  <file>icon/gageonpipehorizentall.svg</file>
+  <file>icon/heaterdefined.svg</file>
+  <file>icon/heaterhover.svg</file>
+  <file>icon/heaterundefined.svg</file>
+  <file>icon/horizentalpipeThick.svg</file>
+  <file>icon/horizentalPipeYellow.svg</file>
+  <file>icon/kontoramud.svg</file>
+  <file>icon/luleamud.svg</file>
+  <file>icon/luleamudmeshki.svg</file>
+  <file>icon/MeterHorizentallPipe.svg</file>
+  <file>icon/straightpipe.svg</file>
+  <file>icon/zanuee.svg</file>
+  <file>icon/blackPipeVertical.svg</file>
+  <file>icon/pipe.svg</file>
+	<file>icon/pipe.png</file>
+	<file>icon/pipeGage.svg</file>
+	<file>icon/pipeGageRed.svg</file>
+	<file>icon/pipeThick.svg</file>
+	<file>icon/pipes4WayBlack.svg</file>
+	<file>icon/pipes4WayRed.svg</file>
+	<file>icon/pipes4WayGreen.svg</file>
+	<file>icon/zanue2.svg</file>
+	<file>icon/zanue02.svg</file>
+	<file>icon/zanue03.svg</file>
+	<file>icon/zanue04.svg</file>
+	<file>icon/valve01.svg</file>
+	<file>icon/fire.svg</file>
+		<file>icon/heater.svg</file>
+		<file>icon/heaterred.svg</file>
+		<file>icon/heater02.svg</file>
+		<file>icon/heaterPressed.svg</file>
+		<file>icon/heater05.svg</file>
+			<file>icon/valveRed.svg</file>
+			<file>icon/valve.svg</file>
+
+		<file>icon/pipeRed.svg</file>
+		<file>icon/pipe.svg</file>
+		<file>icon/zanueeRed.svg</file>
+		<file>icon/zanuee.svg</file>
+		<file>icon/zanue02Red.svg</file>
+		<file>icon/zanue02.svg</file>
+		<file>icon/zanue03Red.svg</file>		
+		<file>icon/zanue03.svg</file>
+		
+		<file>icon/zanue04Red.svg</file>
+		<file>icon/zanue04.svg</file>
+		<file>icon/GasIcon.svg</file>
+		<file>icon/GasinIcon.svg</file>
+		<file>icon/GasdefIcon.svg</file>
+		
+		<file>icon/GasIcon2.svg</file>
+		<file>icon/GasinIcon2.svg</file>
+		<file>icon/GasdefIcon2.svg</file>
+
+		<file>icon/calculateinIcon.svg</file>
+		<file>icon/calculateIcon.svg</file>
+
+		<file>icon/regulator/01.svg</file>
+		<file>icon/regulator/01red.svg</file>
+		
+
+
+		<file>icon/regulator/02.svg</file>
+		<file>icon/regulator/02red.svg</file>
+		
+
+
+		<file>icon/regulator/03.svg</file>
+		<file>icon/regulator/03red.svg</file>
+		
+
+
+		<file>icon/regulator/04.svg</file>
+		<file>icon/regulator/04red.svg</file>
+		
+
+
+		<file>icon/regulator/05.svg</file>
+		<file>icon/regulator/05red.svg</file>
+		
+
+
+		<file>icon/regulator/06.svg</file>
+		<file>icon/regulator/06red.svg</file>
+
+		<file>icon/4way/4way.svg</file>
+		<file>icon/4way/4wayred.svg</file>
+
+
+		<file>icon/4way/4way2.svg</file>
+		<file>icon/4way/4way2red.svg</file>
+		
+		<file>icon/znway/knee1.svg</file>
+		<file>icon/znway/knee1red.svg</file>
+
+		<file>icon/znway/knee2.svg</file>
+		<file>icon/znway/knee2red.svg</file>
+
+		<file>icon/znway/knee3.svg</file>
+		<file>icon/znway/knee3red.svg</file>
+
+		<file>icon/znway/knee4.svg</file>
+		<file>icon/znway/knee4red.svg</file>
+
+		<file>icon/znway/newpipe2.svg</file>
+		<file>icon/znway/newpipe2.svgz</file>
+
+
+		<file>icon/znway/newknee1.svg</file>
+		<file>icon/znway/newknee1red.svg</file>
+
+		<file>icon/znway/newknee2.svg</file>
+		<file>icon/znway/newknee2red.svg</file>
+
+		<file>icon/znway/newknee3.svg</file>
+		<file>icon/znway/newknee3red.svg</file>
+
+		<file>icon/znway/newknee4.svg</file>
+		<file>icon/znway/newknee4red.svg</file>
+		
+
+
+</qresource>
+</RCC>

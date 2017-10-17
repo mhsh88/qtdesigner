@@ -1,0 +1,40 @@
+
+C:\Users\Hossein\Desktop\myqtdesigner>
+"C:\Users\hossein.sharifi\AppData\Local\Continuum\Anaconda3\Library\bin\pyuic5.bat" -x MYAGA.ui -o MYAGA01.py
+
+C:\Users\Hossein\Desktop\myqtdesigner>
+
+"C:\ProgramData\Anaconda3\Library\bin\pyuic5.bat"
+
+
+some css:
+QPushButton{
+
+qproperty-icon:url(:/icon/heater.svg);
+qproperty-iconSize: 120px 100px;
+border-radius: 20px;
+}
+
+QPushButton::hover{
+qproperty-icon: none;
+image: url(":/icon/heater02.svg");
+
+background-color:rgb(255, 76, 79);
+
+}
+QPushButton::checked{
+qproperty-icon:url("");
+background-image:url(:/icon/heater02.svg);
+background-color:red
+
+}
+
+QPushButton::checked:hover{
+background-color:rgb(255, 76, 79);
+}
+
+
+
+
+C:\Users\Hossein\Desktop\myqtdesigner>pyrcc5 py3 "C:\Users\Hossein\Desktop\myqtd
+esigner\svgfile.qrc" -o "C:\Users\Hossein\Desktop\myqtdesigner\svgfile_rc.py"

@@ -1,0 +1,11 @@
+D:\hossein sharifi 96-01-19\behinesazan\narmafzar\final02
+
+D:\hossein sharifi 96-01-19\behinesazan\narmafzar\myqtdesigner>pyinstaller --onedir --onefile --name=PyDataMan --windowed "D:\hossein sharifi 96-01-19\behinesazan\narmafzar\final02.py"
+
+pyinstaller --onedir --onefile --name=PyDataMan --windowed "D:\hossein sharifi 96-01-19\behinesazan\narmafzar\myqtdesigner\final02.py"
+
+pip install https://github.com/pyinstaller/pyinstaller/archive/develop.zip
+
+conda install -c conda-forge pyinstaller=3.2.1
+
+conda create -n py35 python=3.5 anaconda
