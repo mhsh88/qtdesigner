@@ -578,7 +578,7 @@ class inputlineWindow(QtWidgets.QWidget, inputlineWidget.Ui_Form):
         ui.inputCheck = False
 
         try:
-            if (float(self.lineEdit.text()) <= 0):
+            if (float(self.lineEdit.text()) <= 0 or self.lineEdit.text() == ""):
 
                     # float(self.lineEdit.text()) <= 0 or float(self.lineEdit_2.text()) * 0.01 <= 0 or float(
                     # self.lineEdit_3.text()) * 0.01 <= 0 or float(self.lineEdit_3.text()) * 0.01 >= float(
@@ -591,6 +591,14 @@ class inputlineWindow(QtWidgets.QWidget, inputlineWidget.Ui_Form):
 
             else:
                 ui.inputlineLength = float(self.lineEdit.text())
+                if self.radioButton.isChecked():
+                    ui.inputlineOD = float(self.comboBox_2.currentText())*0.001
+                    ui.inputlineID = ui.inputlineOD - 2 * (float(self.comboBox_3.currentText()) * 0.001)
+
+                elif self.radioButton_2.isChecked():
+                    ui.inputlineOD = float(self.comboBox_2.currentText()) * 25.4 * 0.001
+                    ui.inputlineID = ui.inputlineOD - 2 * (float(self.comboBox_3.currentText()) * 25.4 * 0.001)
+
                 # ui.inputlineOD = float(self.lineEdit_2.text()) * 0.01
                 # ui.inputlineID = ui.inputlineOD - 2 * (float(self.lineEdit_3.text()) * 0.01)
                 self.label_4.setVisible(False)
@@ -599,20 +607,26 @@ class inputlineWindow(QtWidgets.QWidget, inputlineWidget.Ui_Form):
                 # QMessageBox.about(self, " اطلاعات وارد شده", "شما اینها را وارد کرده اید\n %s \n %s \n %s \n %s \n %s" %(ui.a, ui.b, ui.c, ui.d, ui.f))
                 ui.inputCheck = True
                 self.close()
+                return
 
 
 
 
 
-        except:
-            print(sys.exc_info()[0] + " " + sys.exc_info()[1] + " " + sys.exc_info()[2])
+        except Exception:
+            print(Exception)
+            # print(sys.exc_info()[0] + " " + sys.exc_info()[1] + " " + sys.exc_info()[2])
+            print(sys.exc_info()[0])
+            print(sys.exc_info()[2])
+            print(sys.exc_info()[2])
             ui.inputCheck = False
             self.label_4.setVisible(True)
             # self.label_5.setVisible(True)
             # self.label_6.setVisible(True)
             QMessageBox.about(self, "خطا در اطلاعات ورودی", "لطفاً اطلاعات صحیح وارد فرمایید")
 
-            return
+            pass
+
 
     def cancel(self):
         self.label_4.setVisible(False)
