@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'GasProperty.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.2
+# Created by: PyQt5 UI code generator 5.6
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(619, 751)
+        Form.resize(583, 607)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/icon/heater.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         Form.setWindowIcon(icon)
@@ -648,9 +648,19 @@ class Ui_Form(object):
         self.label_30.setText(_translate("Form", "دمای محیط (C°) :"))
         self.label_32.setText(_translate("Form", "سرعت باد (m/s):"))
         self.lineEdit_31.setPlaceholderText(_translate("Form", "30000 (m3/hr)"))
-        self.label_35.setText(_translate("Form", "ظرفیت ایستگاه (متر مکعب بر ساعت) :      "))
+        self.label_35.setText(_translate("Form", "دبی گاز عبوری از ایستگاه (متر مکعب بر ساعت) :"))
         self.label_23.setText(_translate("Form", "* الزامی"))
         self.pushButton_2.setText(_translate("Form", "Cancel"))
         self.pushButton.setText(_translate("Form", "Ok"))
 
 import svgfile_rc
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    Form = QtWidgets.QWidget()
+    ui = Ui_Form()
+    ui.setupUi(Form)
+    Form.show()
+    sys.exit(app.exec_())
+

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>619</width>
-    <height>751</height>
+    <width>583</width>
+    <height>607</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -959,7 +959,7 @@ color : red;
             </font>
            </property>
            <property name="text">
-            <string>ظرفیت ایستگاه (متر مکعب بر ساعت) :      </string>
+            <string>دبی گاز عبوری از ایستگاه (متر مکعب بر ساعت) :</string>
            </property>
           </widget>
          </item>
