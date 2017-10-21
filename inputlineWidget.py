@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'inputlineWidget.ui'
+# Form implementation generated from reading ui file 'C:\Users\hossein.sharifi\PycharmProjects\pyqtdesigner\inputlineWidget.ui'
 #
 # Created by: PyQt5 UI code generator 5.6
 #
@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(382, 228)
+        Form.resize(385, 228)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/icon/heater.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         Form.setWindowIcon(icon)
@@ -134,6 +134,13 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
+        Form.setTabOrder(self.lineEdit, self.radioButton)
+        Form.setTabOrder(self.radioButton, self.radioButton_2)
+        Form.setTabOrder(self.radioButton_2, self.comboBox)
+        Form.setTabOrder(self.comboBox, self.comboBox_2)
+        Form.setTabOrder(self.comboBox_2, self.comboBox_3)
+        Form.setTabOrder(self.comboBox_3, self.pushButton_2)
+        Form.setTabOrder(self.pushButton_2, self.pushButton)
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
