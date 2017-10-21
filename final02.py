@@ -635,6 +635,7 @@ class inputlineWindow(QtWidgets.QWidget, inputlineWidget.Ui_Form):
         self.close()
 
 
+
 class inputHeaterWidget(QtWidgets.QWidget, inputHeater.Ui_Form):
     def __init__(self, parent=None):
         super(inputHeaterWidget, self).__init__(parent)
