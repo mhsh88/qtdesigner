@@ -30,6 +30,7 @@ import GasProperty
 from AgaQt import Gas
 from Regulator import Regulator
 from Cumbustion import Combustion
+from view.Heater.Heater import Heater
 
 
 class GasProp(QtWidgets.QWidget, GasProperty.Ui_Form):
@@ -1019,7 +1020,8 @@ class MainStationWindow(QtWidgets.QMainWindow, MainGasWindow.Ui_MainWindow):
         self.pushButton_3.clicked.connect(self.inputline.show)
 
         self.heaterCheck = False
-        self.heaterproperty = inputHeaterWidget()
+        # self.heaterproperty = inputHeaterWidget()
+        self.heaterproperty = Heater()
         self.pushButton_2.clicked.connect(self.heaterproperty.show)
 
         self.runCheck = False

@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QMessageBox
-from base import BaseHeater
+from view.Heater.base import BaseHeater
 
 from PyQt5 import QtWidgets
 from PyQt5.QtGui import QDoubleValidator, QIntValidator
