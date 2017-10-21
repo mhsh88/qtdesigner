@@ -48,3 +48,10 @@ for linux
  pyuic5 gui.ui -o gui.py
 
  pyrcc5 images.qrc -o images_rc.py
+
+
+
+"C:\Users\hossein.sharifi\AppData\Local\Continuum\Anaco
+nda3\envs\py35\Library\bin\pyuic5.bat" -x "C:\Users\hossein.sharifi\PycharmProje
+cts\pyqtdesigner\inputlineWidget.ui" -o "C:\Users\hossein.sharifi\PycharmProject
+s\pyqtdesigner\inputlineWidget.py"
