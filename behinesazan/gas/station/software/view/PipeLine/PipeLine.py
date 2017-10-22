@@ -2,7 +2,7 @@ from PyQt5 import QtWidgets
 from PyQt5.QtGui import QDoubleValidator
 from PyQt5.QtWidgets import QMessageBox
 
-from view.PipeLine.base import BasePipeLine
+from behinesazan.gas.station.software.view.PipeLine.base import BasePipeLine
 
 
 class PipeLine(QtWidgets.QWidget, BasePipeLine.Ui_Form):

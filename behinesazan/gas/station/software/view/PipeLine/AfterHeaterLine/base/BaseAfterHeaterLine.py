@@ -1,4 +1,4 @@
-from view.PipeLine.PipeLine import PipeLine
+from behinesazan.gas.station.software.view.PipeLine import PipeLine
 
 
 

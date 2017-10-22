@@ -1,6 +1,6 @@
 from PyQt5 import QtWidgets
 
-from view.PipeLine.AfterHeaterLine.base.BaseAfterHeaterLine import BaseAfterHeaterLine
+from behinesazan.gas.station.software.view.PipeLine.AfterHeaterLine.base.BaseAfterHeaterLine import BaseAfterHeaterLine
 
 
 class AfterHeaterLine(BaseAfterHeaterLine):
