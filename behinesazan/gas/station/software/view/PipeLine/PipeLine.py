@@ -200,19 +200,14 @@ class PipeLine(QtWidgets.QWidget, BasePipeLine.Ui_Form):
 
 
 
-        except Exception:
-            print(Exception)
-            # print(sys.exc_info()[0] + " " + sys.exc_info()[1] + " " + sys.exc_info()[2])
-            print(sys.exc_info()[0])
-            print(sys.exc_info()[2])
-            print(sys.exc_info()[2])
-            self.inputCheck = False
-            self.label_4.setVisible(True)
-            # self.label_5.setVisible(True)
-            # self.label_6.setVisible(True)
-            QMessageBox.about(self, "خطا در اطلاعات ورودی", "لطفاً اطلاعات صحیح وارد فرمایید")
+        except Exception as e:
 
-            pass
+                print(e)
+                self.label_4.setVisible(True)
+                # self.label_5.setVisible(True)
+                # self.label_6.setVisible(True)
+                QMessageBox.about(self, "خطا در اطلاعات ورودی", "لطفاً اطلاعات صحیح وارد فرمایید")
+                return
 
     def cancel(self):
         self.data.clear()

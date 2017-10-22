@@ -1,15 +1,54 @@
 from PyQt5 import QtWidgets
 import sys
 
+from PyQt5.QtWidgets import QMessageBox
+
 from behinesazan.gas.station.software.model.gas.Gas import Gas
+from behinesazan.gas.station.software.view.GasInformationInputForm.GasInformationInputForm import \
+    GasInformationInputForm
 from behinesazan.gas.station.software.view.GasStation.base import BaseGasStation
+from behinesazan.gas.station.software.view.Heater.Heater import Heater
+from behinesazan.gas.station.software.view.PipeLine.AfterHeaterLine.AfterHeaterLine import AfterHeaterLine
+from behinesazan.gas.station.software.view.PipeLine.BeforeHeaterLine.BeforeHeaterLine import BeforeHeaterLine
+from behinesazan.gas.station.software.view.Run.Run import Run
 
 
 class GasStation(QtWidgets.QMainWindow, BaseGasStation.Ui_MainWindow):
     def __init__(self, parent=None):
         super(GasStation, self).__init__(parent)
+        self.heaterproperty = Heater()
+        self.inputline = BeforeHeaterLine()
+        self.afterheater = AfterHeaterLine()
+        self.run = Run()
+        self.gasProperty = GasInformationInputForm()
         self.setupUi(self)
         self.initiateButtonIcon()
+        self.buttonConnection()
+
+    def buttonConnection(self):
+
+        self.pushButton_21.clicked.connect(self.afterheater.show)
+        self.pushButton_3.clicked.connect(self.inputline.show)
+        self.pushButton_2.clicked.connect(self.heaterproperty.show)
+        self.pushButton_4.clicked.connect(self.run.show)
+        self.pushButton_6.clicked.connect(self.run.show)
+        self.pushButton_5.clicked.connect(self.run.show)
+        self.pushButton_16.clicked.connect(self.run.show)
+        self.pushButton_17.clicked.connect(self.run.show)
+        self.pushButton.clicked.connect(self.run.show)
+        self.pushButton_10.clicked.connect(self.run.show)
+        self.pushButton_8.clicked.connect(self.run.show)
+        self.pushButton_9.clicked.connect(self.run.show)
+        self.pushButton_7.clicked.connect(self.run.show)
+        self.pushButton_11.clicked.connect(self.run.show)
+        self.pushButton_12.clicked.connect(self.run.show)
+        self.pushButton_26.clicked.connect(self.run.show)
+        self.pushButton_24.clicked.connect(self.run.show)
+        self.pushButton_28.clicked.connect(self.run.show)
+
+        self.pushButton_15.clicked.connect(self.gasProperty.show)
+
+        # self.pushButton_22.clicked.connect(self.inlineCal)
         
     def initiateButtonIcon(self):
         # self.pushButton_2.iconIn = ":/icon/heater05.svg"
@@ -81,6 +120,21 @@ class GasStation(QtWidgets.QMainWindow, BaseGasStation.Ui_MainWindow):
         self.pushButton_24.iconOut = ":/icon/regulator/05.svg"
         self.pushButton_28.iconIn = ":/icon/regulator/05red.svg"
         self.pushButton_28.iconOut = ":/icon/regulator/05.svg"
+
+    def closeEvent(self, event):
+        reply = QMessageBox.question(self, 'Message',
+                                     "برای خروج از نرم افزار اطمینان دارید؟", QMessageBox.Yes |
+                                     QMessageBox.No, QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            self.gasProperty.close()
+            self.run.close()
+            self.heaterproperty.close()
+            self.afterheater.close()
+            self.inputline.close()
+
+            event.accept()
+        else:
+            event.ignore()
 
 if __name__ == "__main__":
 
