@@ -160,6 +160,18 @@ class Ui_Form(object):
         self.run_width_input = QtWidgets.QLineEdit(Form)
         self.run_width_input.setObjectName("run_width_input")
         self.gridLayout.addWidget(self.run_width_input, 1, 1, 1, 1)
+        self.debi_input = QtWidgets.QLineEdit(Form)
+        self.debi_input.setObjectName("debi_input")
+        self.gridLayout.addWidget(self.debi_input, 0, 0, 1, 1)
+        self.debi_label = QtWidgets.QLabel(Form)
+        font = QtGui.QFont()
+        font.setFamily("B Mitra")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.debi_label.setFont(font)
+        self.debi_label.setObjectName("debi_label")
+        self.gridLayout.addWidget(self.debi_label, 0, 1, 1, 2)
         self.gridLayout_2.addLayout(self.gridLayout, 0, 0, 1, 1)
         self.gridLayout_3.addLayout(self.gridLayout_2, 0, 0, 1, 1)
         self.verticalLayout_3.addLayout(self.gridLayout_3)
@@ -192,6 +204,7 @@ class Ui_Form(object):
         self.run_number_comboBox.setItemText(1, _translate("Form", "2"))
         self.run_number_comboBox.setItemText(2, _translate("Form", "3"))
         self.run_width_label.setText(_translate("Form", "طول کلکتور (m):"))
+        self.debi_label.setText(_translate("Form", "دبی عبوری متر مکعب بر ساعت:"))
 
 import svgfile_rc
 
