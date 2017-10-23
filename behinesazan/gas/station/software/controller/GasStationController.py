@@ -15,6 +15,7 @@ from PyQt5.QtWidgets import QMessageBox
 import MainGasWindow
 from Cumbustion import Combustion
 from QpipeLine import PipeLine
+from behinesazan.gas.station.software.model.Regulator.Regulator import Regulator
 from QpipeLineEnd import PipeLineEnd
 from Regulator import Regulator
 from behinesazan.gas.station.software.model.Logic.calculation.Calculation import Calculation
@@ -212,24 +213,32 @@ class MainStationWindow(QtWidgets.QMainWindow, MainGasWindow.Ui_MainWindow):
         self.windVelocity = ''
 
 
-class Calculate:#(GasStation):
+class Calculate:  # (GasStation):
     # def __init__(self, parent=None):
     #     super(AfterHeaterLine, self).__init__(parent)
 
     # def __init__(self, parent=None):
     #     super(Calculate, self).__init__(parent)
     def __init__(self):
-        self.calculate = Calculation()
+        # self.calculate = Calculation()
         self.station = GasStation()
         self.station.show()
-
-
-        self.station.pushButton_22.clicked.connect(self.cal)
+        try:
+            self.station.pushButton_22.clicked.connect(self.cal)
+        except Exception as exception:
+            print(exception)
+            return
         pass
 
     def cal(self):
-        if bool(self.station.gasProperty.data):
-            self.calculate.calculate(self.station.gasProperty.data)
+        if bool(self.station.gasInformationInputForm.data):
+            try:
+                Calculation.calculate(self.station.gasInformationInputForm.data, self.station.beforeHeaterLine.data,
+                                     self.station.heater.data, self.station.afterHeaterLine.data, self.station.run.data)
+            except Exception as e:
+                print(e)
+                return
+            print(self.station.gasInformationInputForm.data)
         else:
             try:
                 QMessageBox.about(self.station, "خطا در اطلاعات ورودی", "لطفا اطلاعات گاز را کامل فرمایید.")

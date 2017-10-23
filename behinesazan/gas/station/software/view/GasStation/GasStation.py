@@ -16,20 +16,20 @@ from behinesazan.gas.station.software.view.Run.Run import Run
 class GasStation(QtWidgets.QMainWindow, BaseGasStation.Ui_MainWindow):
     def __init__(self, parent=None):
         super(GasStation, self).__init__(parent)
-        self.heaterproperty = Heater()
-        self.inputline = BeforeHeaterLine()
-        self.afterheater = AfterHeaterLine()
+        self.heater = Heater()
+        self.beforeHeaterLine = BeforeHeaterLine()
+        self.afterHeaterLine = AfterHeaterLine()
         self.run = Run()
-        self.gasProperty = GasInformationInputForm()
+        self.gasInformationInputForm = GasInformationInputForm()
         self.setupUi(self)
         self.initiateButtonIcon()
         self.buttonConnection()
 
     def buttonConnection(self):
 
-        self.pushButton_21.clicked.connect(self.afterheater.show)
-        self.pushButton_3.clicked.connect(self.inputline.show)
-        self.pushButton_2.clicked.connect(self.heaterproperty.show)
+        self.pushButton_21.clicked.connect(self.afterHeaterLine.show)
+        self.pushButton_3.clicked.connect(self.beforeHeaterLine.show)
+        self.pushButton_2.clicked.connect(self.heater.show)
         self.pushButton_4.clicked.connect(self.run.show)
         self.pushButton_6.clicked.connect(self.run.show)
         self.pushButton_5.clicked.connect(self.run.show)
@@ -46,7 +46,7 @@ class GasStation(QtWidgets.QMainWindow, BaseGasStation.Ui_MainWindow):
         self.pushButton_24.clicked.connect(self.run.show)
         self.pushButton_28.clicked.connect(self.run.show)
 
-        self.pushButton_15.clicked.connect(self.gasProperty.show)
+        self.pushButton_15.clicked.connect(self.gasInformationInputForm.show)
 
         # self.pushButton_22.clicked.connect(self.inlineCal)
         
@@ -126,11 +126,11 @@ class GasStation(QtWidgets.QMainWindow, BaseGasStation.Ui_MainWindow):
                                      "برای خروج از نرم افزار اطمینان دارید؟", QMessageBox.Yes |
                                      QMessageBox.No, QMessageBox.No)
         if reply == QMessageBox.Yes:
-            self.gasProperty.close()
+            self.gasInformationInputForm.close()
             self.run.close()
-            self.heaterproperty.close()
-            self.afterheater.close()
-            self.inputline.close()
+            self.heater.close()
+            self.afterHeaterLine.close()
+            self.beforeHeaterLine.close()
 
             event.accept()
         else:

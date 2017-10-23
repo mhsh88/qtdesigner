@@ -6,7 +6,8 @@ from PyQt5.QtWidgets import QMessageBox
 
 from behinesazan.gas.station.software.view.GasInformationInputForm.base import BaseGasInformationInputForm
 from behinesazan.gas.station.software.model.gas.Gas import Gas
-
+# from behinesazan.gas.station.software.model.gas.Gas import Gas
+# from AgaQt import Gas
 
 class GasInformationInputForm(QtWidgets.QWidget, BaseGasInformationInputForm.Ui_Form):
 

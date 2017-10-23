@@ -234,8 +234,8 @@ class Gas():
             except:
                 phi_o_tau_i.append(0)
                 
-        np.isnan(cop_i_R)
-        cop_R = np.sum(np.multiply(Xi,cop_i_R))
+        # np.isnan(cop_i_R)
+        cop_R = np.sum(np.multiply(Xi, cop_i_R))
         phi_o = np.sum(phi_o_i) + math.log(soldelta/delta_theta) + math.log(tau_theta/tau)
         phi_o_tau = np.sum(phi_o_tau_i)
         phi_o_tau_tau = (-tau**(-2))*(cop_R - 1);
