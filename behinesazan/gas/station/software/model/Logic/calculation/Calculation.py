@@ -6,29 +6,41 @@ from behinesazan.gas.station.software.model.Regulator.Regulator import Regulator
 
 class Calculation:
     result = {}
+
     def __init__(self):
         return
+
     @staticmethod
     def calculate(gasInformationFormInputData, beforeHeaterLineData, heaterData, afterHeaterLineData, runData):
         # try:
         tempHHV = Combustion(gasInformationFormInputData["gas"], 2, 15, 200)
         HHV = tempHHV.HHVd
-        regulator = Regulator(gasInformationFormInputData["P_input"], gasInformationFormInputData["T_station_out"], gasInformationFormInputData["P_station_out"], gasInformationFormInputData["gas"])
+        regulator = Regulator(gasInformationFormInputData["P_input"], gasInformationFormInputData["T_station_out"],
+                              gasInformationFormInputData["P_station_out"], gasInformationFormInputData["gas"])
         tBeforeRegulator = regulator.Tin
-        gasInformationFormInputData["gas"].calculate(gasInformationFormInputData["P_input"], gasInformationFormInputData["T_input"])
+        gasInformationFormInputData["gas"].calculate(gasInformationFormInputData["P_input"],
+                                                     gasInformationFormInputData["T_input"])
         H1 = gasInformationFormInputData["gas"].H
         gasInformationFormInputData["gas"].calculate(gasInformationFormInputData["P_input"], tBeforeRegulator)
         H2 = gasInformationFormInputData["gas"].H
+
+        Calculation.result["T_before_regulator"] = tBeforeRegulator
+
         if "Station_Capacity" in gasInformationFormInputData.keys():
             Calculation.result["Q_Heater"] = Calculation.__capacityCal(gasInformationFormInputData, H1, H2, HHV)
-            if "Q_Heater" in Calculation.result.keys():
-                print(Calculation.result["Q_Heater"])
-            # print(gasInformationFormInputData["Station_Capacity"])
-        # print("this is calculate method in Calculation")
-        # print(gasInformationFormInputData)
-        # print(H1 - H2)
-        # print(tBeforeRegulator - 273.15)
-        Calculation.result["T_before_regulator"] = tBeforeRegulator
+
+        # check if heater data form is defined and air temperature is defined in Gas information form input data
+
+        if bool(heaterData) and "T_environment" in gasInformationFormInputData.keys():
+            Calculation.__combustionCal(heaterData, gasInformationFormInputData)
+            # Combustion(g, , ui.outTemperature, ui.TflueGas1)
+            pass
+
+        # ui.heaterCheck and ui.toutCheck:
+        # # print('Check')
+        # mashal1 = Combustion(g, ui.O2Mashal1, ui.outTemperature, ui.TflueGas1)
+
+
 
         return
 
@@ -50,6 +62,29 @@ class Calculation:
         Q1Heater = Qdot * g.D * (H2 - H1) / HHV * 3600
         Q1Heater = Q1Heater / Dstd
         return Q1Heater
+
+    @classmethod
+    def __combustionCal(cls, heaterData, gasInformationFormInputData):
+        Calculation.result.setdefault('heater', {})
+
+        for keys in heaterData:
+            Calculation.result["heater"].setdefault(keys, {})
+            for key in heaterData[keys]:
+                Calculation.result["heater"][keys].setdefault(key, None)
+                Calculation.result["heater"][keys][key] = Combustion(gasInformationFormInputData["gas"],
+                                                                     heaterData[keys][key]["oxygen"],
+                                                                     gasInformationFormInputData["T_environment"],
+                                                                     heaterData[keys][key]["fluegas"])
+                print("efficiency: ", "heater ", keys, " burner ", key, Calculation.result["heater"][keys][key].eff)
+                # print("efficiency: ", Calculation.result["heater"][keys][key].eff)
+                # print(heaterData[keys][key])
+
+        # print(heaterData)
+        #
+
+        # Combustion(gasInformationFormInputData["gas"], ui.O2Mashal1, ui.outTemperature, ui.TflueGas1)
+
+        pass
 
 
 if __name__ == "__main__":

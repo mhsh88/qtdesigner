@@ -6,18 +6,19 @@ from PyQt5.QtWidgets import QMessageBox
 
 from behinesazan.gas.station.software.view.GasInformationInputForm.base import BaseGasInformationInputForm
 from behinesazan.gas.station.software.model.gas.Gas import Gas
+
+
 # from behinesazan.gas.station.software.model.gas.Gas import Gas
 # from AgaQt import Gas
 
 class GasInformationInputForm(QtWidgets.QWidget, BaseGasInformationInputForm.Ui_Form):
-
     data = {}
 
     g = Gas()
+
     def __init__(self, parent=None):
         super(GasInformationInputForm, self).__init__(parent)
         self.setupUi(self)
-
 
         self.label_34.setVisible(False)
         self.label_33.setVisible(False)
@@ -29,10 +30,6 @@ class GasInformationInputForm(QtWidgets.QWidget, BaseGasInformationInputForm.Ui_
 
         self.pushButton_2.clicked.connect(self.cancel)
         self.pushButton.clicked.connect(self.datagather)
-
-
-
-
 
     def datagather(self):
         self.toutCheck = False
@@ -379,6 +376,7 @@ class GasInformationInputForm(QtWidgets.QWidget, BaseGasInformationInputForm.Ui_
 
 
         pass
+
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
