@@ -25,6 +25,8 @@ class Calculation:
         H2 = gasInformationFormInputData["gas"].H
 
         Calculation.result["T_before_regulator"] = tBeforeRegulator
+        
+        # check if Station Capacity is entered to calculation amount of energy needed
 
         if "Station_Capacity" in gasInformationFormInputData.keys():
             Calculation.result["Q_Heater"] = Calculation.__capacityCal(gasInformationFormInputData, H1, H2, HHV)
@@ -35,6 +37,11 @@ class Calculation:
             Calculation.__combustionCal(heaterData, gasInformationFormInputData)
             # Combustion(g, , ui.outTemperature, ui.TflueGas1)
             pass
+        
+        if bool(runData) and bool(afterHeaterLineData) and 'Wind_velocity' in gasInformationFormInputData.keys() and  "T_environment" in gasInformationFormInputData.keys():
+            Calculation.__heatTransferLossCal(runData, afterHeaterLineData, gasInformationFormInputData)
+            pass
+        #if ui.runCheck and ui.afterHeaterCheck and ui.windCheck and ui.toutCheck:
 
         # ui.heaterCheck and ui.toutCheck:
         # # print('Check')
@@ -84,6 +91,10 @@ class Calculation:
 
         # Combustion(gasInformationFormInputData["gas"], ui.O2Mashal1, ui.outTemperature, ui.TflueGas1)
 
+        pass
+
+    @classmethod
+    def __heatTransferLossCal(cls, runData, afterHeaterLineData, gasInformationFormInputData):
         pass
 
 
