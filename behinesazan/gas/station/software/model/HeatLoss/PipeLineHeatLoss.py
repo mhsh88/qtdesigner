@@ -1,13 +1,10 @@
-import sys
 import math
-# sys.path.append('D:\\hossein sharifi 96-01-19\\behinesazan\\narmafzar\\myqtdesigner\\AgaQt')
-# sys.path.append('C:\\Users\\Hossein\\Desktop\\myqtdesigner\\96-02-20\\GasStationSoftware\\myqtdesigner\\AgaQt')
-from AgaQt import Gas
+from behinesazan.gas.station.software.model.gas.Gas import Gas
 from math import exp
 from scipy.optimize import fsolve
 
 
-class PipeLineEnd():
+class PipeLineHeatLoss:
     # ID = 0.4
     # OD = 0.5
     # pipeLength = 20

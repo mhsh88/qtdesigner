@@ -78,7 +78,8 @@ class Run(QtWidgets.QWidget, BaseRun.Ui_Form):
         self.run_width_input.setPlaceholderText("ex: 5")
 
 
-        self.run_width_input.textChanged.connect(self.run_width_input_textchange)
+
+        self.debi_input.textChanged.connect(self.debi_input_textChange)
 
 
         # set validator input for run length and debi and width input
@@ -121,7 +122,8 @@ class Run(QtWidgets.QWidget, BaseRun.Ui_Form):
             # elif self.radioButton_2.isChecked():
             #     QMessageBox.about(self, "radiobutton2", "radio button2 is checked")
             #     pass
-    def run_width_input_textchange(self):
+
+    def debi_input_textChange(self):
         self.debi_dict[self.run_number_comboBox.currentText()] = self.debi_input.text()
 
     def changecombobox2(self):
@@ -206,18 +208,25 @@ class Run(QtWidgets.QWidget, BaseRun.Ui_Form):
 
                 self.label_4.setVisible(False)
                 self.inputCheck = True
-                self.close()
+
 
                 self.data["length"] = self.inputlineLength
                 self.data["ID"] = self.inputlineID
                 self.data["OD"] = self.inputlineOD
                 self.data["number"] = self.run_number
                 self.data["width"] = self.run_width
-                self.data = {**self.data, **self.debi_dict}
-                self.debi_dict.clear()
-                print(self.data)
+                print(self.debi_dict)
+                self.data['run_debi'] = {}
 
-                return
+                # self.data.setdefault("run_debi", {})
+                self.data['run_debi'] = self.debi_dict
+                # self.data["run_debi"] = self.debi_dict
+                print(self.data['run_debi'])
+                # self.data = {**self.data, **self.debi_dict}
+                # self.debi_dict.clear()
+                print(self.data)
+                self.close()
+
 
 
 

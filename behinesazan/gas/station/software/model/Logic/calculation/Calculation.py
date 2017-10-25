@@ -1,6 +1,7 @@
 import sys, os
 import numpy
 from behinesazan.gas.station.software.model.Combustion.Combustion import Combustion
+from behinesazan.gas.station.software.model.HeatLoss.PipeLineHeatLoss import PipeLineHeatLoss
 from behinesazan.gas.station.software.model.Regulator.Regulator import Regulator
 
 
@@ -25,7 +26,7 @@ class Calculation:
         H2 = gasInformationFormInputData["gas"].H
 
         Calculation.result["T_before_regulator"] = tBeforeRegulator
-        
+
         # check if Station Capacity is entered to calculation amount of energy needed
 
         if "Station_Capacity" in gasInformationFormInputData.keys():
@@ -37,11 +38,12 @@ class Calculation:
             Calculation.__combustionCal(heaterData, gasInformationFormInputData)
             # Combustion(g, , ui.outTemperature, ui.TflueGas1)
             pass
-        
-        if bool(runData) and bool(afterHeaterLineData) and 'Wind_velocity' in gasInformationFormInputData.keys() and  "T_environment" in gasInformationFormInputData.keys():
+
+        if bool(runData) and bool(
+                afterHeaterLineData) and 'Wind_velocity' in gasInformationFormInputData.keys() and "T_environment" in gasInformationFormInputData.keys():
             Calculation.__heatTransferLossCal(runData, afterHeaterLineData, gasInformationFormInputData)
             pass
-        #if ui.runCheck and ui.afterHeaterCheck and ui.windCheck and ui.toutCheck:
+        # if ui.runCheck and ui.afterHeaterCheck and ui.windCheck and ui.toutCheck:
 
         # ui.heaterCheck and ui.toutCheck:
         # # print('Check')
@@ -95,6 +97,28 @@ class Calculation:
 
     @classmethod
     def __heatTransferLossCal(cls, runData, afterHeaterLineData, gasInformationFormInputData):
+        print(runData['run_debi'])
+        for key in runData["run_debi"].keys():
+            Calculation.result["run_heat_loss"][key] = PipeLineHeatLoss(gasInformationFormInputData["T_environment"],
+                                                                        gasInformationFormInputData["Wind_velocity"],
+                                                                        Calculation.result["T_before_regulator"],
+                                                                        gasInformationFormInputData["T_input"],
+                                                                        gasInformationFormInputData["P_input"],
+                                                                        gasInformationFormInputData["gas"],
+                                                                        runData["OD"],
+                                                                        runData["length"],
+                                                                        runData["run_debi"][key])
+            print(Calculation.result["run_heat_loss"][key].Tout)
+            pass
+        print(Calculation.result)
+
+        print(runData, afterHeaterLineData, gasInformationFormInputData)
+        # heatloss = PipeLineHeatLoss(gasInformationFormInputData["T_environment"], gasInformationFormInputData["Wind_velocity"],
+        #                             Calculation.result["T_before_regulator"], gasInformationFormInputData["P_input"],
+        #                             gasInformationFormInputData["gas"], runData[])
+        # PipeLineEnd(ui.outTemperature, ui.windVelocity, self.tBeforeRegulator, ui.Pin, g,
+        #             ui.runOD, ui.runID,
+        #             ui.runWidth / 2 + ui.runLength, ui.Run1debi)
         pass
 
 
