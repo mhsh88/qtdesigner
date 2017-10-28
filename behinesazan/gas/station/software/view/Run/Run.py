@@ -124,7 +124,7 @@ class Run(QtWidgets.QWidget, BaseRun.Ui_Form):
             #     pass
 
     def debi_input_textChange(self):
-        self.debi_dict[self.run_number_comboBox.currentText()] = self.debi_input.text()
+        self.debi_dict[self.run_number_comboBox.currentText()] = round(float(self.debi_input.text()), 3)
 
     def changecombobox2(self):
         self.thickness_comboBox.clear()

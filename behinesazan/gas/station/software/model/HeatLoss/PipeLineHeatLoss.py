@@ -82,7 +82,7 @@ class PipeLineHeatLoss:
             # self.m = 0
             friction = fsolve(self.friction, 8)
             friction = math.fabs(friction)
-            print(friction)
+            # print(friction)
             deltaP = friction * self.g.D * (V ** 2 / (2 * self.ID)) * self.pipeLength
             Power = deltaP * Qdot
             # print('delta P = %s' %Power)

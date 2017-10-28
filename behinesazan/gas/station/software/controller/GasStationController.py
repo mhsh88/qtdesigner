@@ -236,6 +236,7 @@ class Calculate:  # (GasStation):
                 Calculation.calculate(self.station.gasInformationInputForm.data, self.station.beforeHeaterLine.data,
                                      self.station.heater.data, self.station.afterHeaterLine.data, self.station.run.data)
             except Exception as e:
+                print("saalm")
                 print(e)
                 return
             print(self.station.gasInformationInputForm.data)
