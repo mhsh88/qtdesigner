@@ -4,7 +4,7 @@ from math import exp
 from scipy.optimize import fsolve
 
 
-class PipeLineHeatLoss:
+class PipeLineEnd:
     # ID = 0.4
     # OD = 0.5
     # pipeLength = 20
