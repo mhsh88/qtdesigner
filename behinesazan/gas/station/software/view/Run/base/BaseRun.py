@@ -178,7 +178,10 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
-        Form.setTabOrder(self.run_length_input, self.mm_radioButton)
+        Form.setTabOrder(self.run_number_comboBox, self.debi_input)
+        Form.setTabOrder(self.debi_input, self.run_length_input)
+        Form.setTabOrder(self.run_length_input, self.run_width_input)
+        Form.setTabOrder(self.run_width_input, self.mm_radioButton)
         Form.setTabOrder(self.mm_radioButton, self.inch_radioButton)
         Form.setTabOrder(self.inch_radioButton, self.nominal_diameter_comboBox)
         Form.setTabOrder(self.nominal_diameter_comboBox, self.outer_diameter_comboBox)

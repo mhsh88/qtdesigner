@@ -27,7 +27,7 @@ class GasInformationInputForm(QtWidgets.QWidget, BaseGasInformationInputForm.Ui_
         self.label_39.setVisible(False)
         self.label_40.setVisible(False)
         self.label_23.setVisible(False)
-
+        # TODO create clear button
         self.pushButton_2.clicked.connect(self.cancel)
         self.pushButton.clicked.connect(self.datagather)
 
@@ -71,7 +71,8 @@ class GasInformationInputForm(QtWidgets.QWidget, BaseGasInformationInputForm.Ui_
 
                     if float(self.lineEdit_22.text()) <= 0:
                         QMessageBox.about(self, "خطا در اطلاعات ورودی",
-                                          "فشار گاز مطلق وارد کنید. فشار استاندارد گاز  باید از صفر بیشتر باشد. لطفاً اطلاعات صحیح وارد نمایید.")
+                                          "فشار گاز مطلق وارد کنید. فشار استاندارد گاز  باید از صفر بیشتر باشد. لطفاً "
+                                          "اطلاعات صحیح وارد نمایید.")
                         self.label_33.setVisible(True)
                         self.label_23.setVisible(True)
                         return
@@ -85,7 +86,8 @@ class GasInformationInputForm(QtWidgets.QWidget, BaseGasInformationInputForm.Ui_
 
                 except:
                     QMessageBox.about(self, "خطا در اطلاعات ورودی",
-                                      "اطلاعات فشار استاندارد گاز ورودی به درستی وارد نشده است. لطفاً اطلاعات صحیح وارد نمایید.")
+                                      "اطلاعات فشار استاندارد گاز ورودی به درستی وارد نشده است. لطفاً اطلاعات صحیح "
+                                      "وارد نمایید.")
                     self.label_33.setVisible(True)
                     self.label_23.setVisible(True)
                     return
@@ -233,11 +235,9 @@ class GasInformationInputForm(QtWidgets.QWidget, BaseGasInformationInputForm.Ui_
 
                     # Humidity....
 
-            # if self.lineEdit_29.text() != "":
-            #     try:
-            #         if float(self.lineEdit_29.text()) < 0 or float(self.lineEdit_29.text()) > 100:
-            #             QMessageBox.about(self, "خطا در اطلاعات ورودی",
-            #                               "رطوبت نسبی نمی تواند کمتر از صفر یا بزرگتر از 100 درصد باشد. لطفاً اطلاعات صحیح وارد نمایید.")
+            # if self.lineEdit_29.text() != "": try: if float(self.lineEdit_29.text()) < 0 or float(
+            # self.lineEdit_29.text()) > 100: QMessageBox.about(self, "خطا در اطلاعات ورودی", "رطوبت نسبی نمی تواند
+            # کمتر از صفر یا بزرگتر از 100 درصد باشد. لطفاً اطلاعات صحیح وارد نمایید.")
             #
             #         else:
             #             self.humidity = float(self.lineEdit_29.text())

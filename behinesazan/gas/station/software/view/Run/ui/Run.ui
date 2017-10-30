@@ -320,7 +320,10 @@ color : red;
   </layout>
  </widget>
  <tabstops>
+  <tabstop>run_number_comboBox</tabstop>
+  <tabstop>debi_input</tabstop>
   <tabstop>run_length_input</tabstop>
+  <tabstop>run_width_input</tabstop>
   <tabstop>mm_radioButton</tabstop>
   <tabstop>inch_radioButton</tabstop>
   <tabstop>nominal_diameter_comboBox</tabstop>

@@ -27,29 +27,54 @@ class GasStation(QtWidgets.QMainWindow, BaseGasStation.Ui_MainWindow):
 
     def buttonConnection(self):
 
-        self.pushButton_21.clicked.connect(self.afterHeaterLine.show)
-        self.pushButton_3.clicked.connect(self.beforeHeaterLine.show)
-        self.pushButton_2.clicked.connect(self.heater.show)
-        self.pushButton_4.clicked.connect(self.run.show)
-        self.pushButton_6.clicked.connect(self.run.show)
-        self.pushButton_5.clicked.connect(self.run.show)
-        self.pushButton_16.clicked.connect(self.run.show)
-        self.pushButton_17.clicked.connect(self.run.show)
-        self.pushButton.clicked.connect(self.run.show)
-        self.pushButton_10.clicked.connect(self.run.show)
-        self.pushButton_8.clicked.connect(self.run.show)
-        self.pushButton_9.clicked.connect(self.run.show)
-        self.pushButton_7.clicked.connect(self.run.show)
-        self.pushButton_11.clicked.connect(self.run.show)
-        self.pushButton_12.clicked.connect(self.run.show)
-        self.pushButton_26.clicked.connect(self.run.show)
-        self.pushButton_24.clicked.connect(self.run.show)
-        self.pushButton_28.clicked.connect(self.run.show)
+        self.pushButton_21.clicked.connect(self.afterHeaterShow)
+        self.pushButton_3.clicked.connect(self.beforeHeaterShow)
+        self.pushButton_2.clicked.connect(self.heaterShow)
+        self.pushButton_4.clicked.connect(self.runShow)
+        self.pushButton_6.clicked.connect(self.runShow)
+        self.pushButton_5.clicked.connect(self.runShow)
+        self.pushButton_16.clicked.connect(self.runShow)
+        self.pushButton_17.clicked.connect(self.runShow)
+        self.pushButton.clicked.connect(self.runShow)
+        self.pushButton_10.clicked.connect(self.runShow)
+        self.pushButton_8.clicked.connect(self.runShow)
+        self.pushButton_9.clicked.connect(self.runShow)
+        self.pushButton_7.clicked.connect(self.runShow)
+        self.pushButton_11.clicked.connect(self.runShow)
+        self.pushButton_12.clicked.connect(self.runShow)
+        self.pushButton_26.clicked.connect(self.runShow)
+        self.pushButton_24.clicked.connect(self.runShow)
+        self.pushButton_28.clicked.connect(self.runShow)
+        self.pushButton_15.clicked.connect(self.gasInformationInputFormShow)
 
-        self.pushButton_15.clicked.connect(self.gasInformationInputForm.show)
+
+    def afterHeaterShow(self):
+        self.afterHeaterLine.close()
+        self.afterHeaterLine.show()
+        return
+
+    def beforeHeaterShow(self):
+        self.beforeHeaterLine.close()
+        self.beforeHeaterLine.show()
+        return
+
+    def heaterShow(self):
+        self.heater.close()
+        self.heater.show()
+        return
+
+    def runShow(self):
+        self.run.close()
+        self.run.show()
+        return
+
+    def gasInformationInputFormShow(self):
+        self.gasInformationInputForm.close()
+        self.gasInformationInputForm.show()
+        return
 
         # self.pushButton_22.clicked.connect(self.inlineCal)
-        
+
     def initiateButtonIcon(self):
         # self.pushButton_2.iconIn = ":/icon/heater05.svg"
         self.pushButton_2.iconIn = ":/icon/heaterred.svg"
@@ -136,8 +161,8 @@ class GasStation(QtWidgets.QMainWindow, BaseGasStation.Ui_MainWindow):
         else:
             event.ignore()
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     # MainWindow = QtWidgets.QMainWindow()
     ui = GasStation()
