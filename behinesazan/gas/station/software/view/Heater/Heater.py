@@ -14,7 +14,7 @@ class Heater(QtWidgets.QWidget, BaseHeater.Ui_Form):
 
         self.heater_number_input.setValidator(QIntValidator(1, 100, self.heater_number_input))
 
-        self.heater_number_input.textChanged[str].connect(self.heaternumber)
+        self.heater_number_input.textChanged[str].connect(self.heaterNumber)
         self.okButton.clicked.connect(self.okbutton)
         self.cancelButton.clicked.connect(self.cancelbutton)
 
@@ -51,8 +51,10 @@ class Heater(QtWidgets.QWidget, BaseHeater.Ui_Form):
             # print(self.data)
         return
 
-    def heaternumber(self):
+    def heaterNumber(self):
         self.heater_number_comboBox.clear()
+        if self.heater_number_input.text() == "":
+            return
         number = int(self.heater_number_input.text())
         item = []
         for i in range(1, number + 1):

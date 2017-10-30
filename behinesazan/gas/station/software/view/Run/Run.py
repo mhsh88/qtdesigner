@@ -124,6 +124,8 @@ class Run(QtWidgets.QWidget, BaseRun.Ui_Form):
             #     pass
 
     def debi_input_textChange(self):
+        if self.debi_input.text() =="":
+            return
         self.debi_dict[self.run_number_comboBox.currentText()] = round(float(self.debi_input.text()), 3)
 
     def changecombobox2(self):
@@ -204,15 +206,16 @@ class Run(QtWidgets.QWidget, BaseRun.Ui_Form):
 
                 elif self.inch_radioButton.isChecked():
                     self.inputlineOD = float(self.outer_diameter_comboBox.currentText()) * 25.4 * 0.001
-                    self.inputlineID = self.inputlineOD - 2 * (float(self.outer_diameter_comboBox.currentText()) * 25.4 * 0.001)
+                    self.inputlineID = self.inputlineOD - 2 * (float(self.outer_diameter_comboBox.currentText()) * 25.4
+                                                               * 0.001)
 
                 self.label_4.setVisible(False)
                 self.inputCheck = True
 
 
                 self.data["length"] = self.inputlineLength
-                self.data["ID"] = self.inputlineID
-                self.data["OD"] = self.inputlineOD
+                self.data["ID"] = round(self.inputlineID, 6)
+                self.data["OD"] = round(self.inputlineOD, 6)
                 self.data["number"] = self.run_number
                 self.data["width"] = self.run_width
                 print(self.debi_dict)
