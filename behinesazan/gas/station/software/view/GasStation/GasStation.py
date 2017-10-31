@@ -1,7 +1,7 @@
 from PyQt5 import QtWidgets
 import sys
 
-from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtWidgets import QMessageBox, QLayout
 
 from behinesazan.gas.station.software.model.gas.Gas import Gas
 from behinesazan.gas.station.software.view.GasInformationInputForm.GasInformationInputForm import \
@@ -24,6 +24,10 @@ class GasStation(QtWidgets.QMainWindow, BaseGasStation.Ui_MainWindow):
         self.setupUi(self)
         self.initiateButtonIcon()
         self.buttonConnection()
+
+        # set fixed the window so that it couldn't be changed
+        self.setFixedSize(self.width(), self.height())
+
 
     def buttonConnection(self):
 

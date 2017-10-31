@@ -256,11 +256,14 @@ class GasInformationInputForm(QtWidgets.QWidget, BaseGasInformationInputForm.Ui_
 
                     else:
                         self.windVelocity = float(self.lineEdit_30.text())
+                        if self.windVelocity < 0.5:
+                            self.windVelocity = 0.5
                         self.data["Wind_velocity"] = self.windVelocity
-                        self.windCheck = True
                 except:
                     QMessageBox.about(self, "خطا در اطلاعات ورودی",
                                       "اطلاعاتی صحبحی برای سرعت باد وارد نشده است. لطفاً اطلاعات صحیح وارد فرمایید")
+            else:
+                self.data["Wind_velocity"] = 0.5  # set wind velocity to 0.5 if nothing is entered
 
             # STation Capacity
 
