@@ -15,7 +15,7 @@ class PipeLineEnd:
     # Tin = 5
     # T_air = 20
 
-    def __init__(self, T_air, v_air, Tin, P, g, OD, ID, pipeLength, QSdot):
+    def __init__(self, T_air, v_air, Tin, P, g, OD, ID, pipeLength, QSdot, t, k_insolation):
         if QSdot == 0:
             self.Tout = Tin
             self.Qdot = 0.0

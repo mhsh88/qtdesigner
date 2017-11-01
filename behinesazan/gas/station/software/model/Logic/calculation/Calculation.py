@@ -125,7 +125,9 @@ class Calculation:
             afterHeaterLineData["OD"],
             afterHeaterLineData["ID"],
             afterHeaterLineData["length"],
-            gasInformationFormInputData["Station_Capacity"])
+            gasInformationFormInputData["Station_Capacity"],
+            afterHeaterLineData["insulation_thickness"],
+            afterHeaterLineData["thermal_conductivity"])
         print(Calculation.result["heat_loss"]["After_Heater_Pipeline"].Tout)
 
         print(Calculation.result)
@@ -143,7 +145,9 @@ class Calculation:
             beforeHeaterLineData["ID"],
             beforeHeaterLineData["length"],
             gasInformationFormInputData[
-                "Station_Capacity"])  # TODO it must be checked for Station capacity and runs flows
+                "Station_Capacity"],
+            beforeHeaterLineData["insulation_thickness"],
+            beforeHeaterLineData["thermal_conductivity"])  # TODO it must be checked for Station capacity and runs flows
 
         print(Calculation.result["heat_loss"]["Before_Heater_Pipeline"].Tout)
 

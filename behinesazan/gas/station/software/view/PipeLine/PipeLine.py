@@ -63,16 +63,27 @@ class PipeLine(QtWidgets.QWidget, BasePipeLine.Ui_Form):
             '457.2': ['4.78', '6.35', '7.92', '9.53', '11.13', '12.7', '14.27', '19.05', '23.83', '29.36', '34.93',
                       '39.67', '45.24']}}
 
-
     def __init__(self, parent=None):
         super(PipeLine, self).__init__(parent)
         self.setupUi(self)
 
         self.lineEdit.setPlaceholderText("ex: 20")
 
+        # self.thermal_conductivity_label.setFixedSize(self.thermal_conductivity_label.width(),
+        #                                              self.thermal_conductivity_label.height())
+        # self.setFixedSize(self.width(), self.height())
+
         validator = QDoubleValidator(0, 999, 2, self.lineEdit)
         validator.setNotation(QDoubleValidator.StandardNotation)
         self.lineEdit.setValidator(validator)
+
+        insulation_validator = QDoubleValidator(0, 99, 2, self.insulation_input)
+        insulation_validator.setNotation(QDoubleValidator.StandardNotation)
+        self.insulation_input.setValidator(insulation_validator)
+
+        thermal_conductivity_validator = QDoubleValidator(0, 9999, 2, self.thermal_conductivity_input)
+        thermal_conductivity_validator.setNotation(QDoubleValidator.StandardNotation)
+        self.thermal_conductivity_input.setValidator(thermal_conductivity_validator)
 
         self.label_4.setVisible(False)
 
@@ -81,6 +92,17 @@ class PipeLine(QtWidgets.QWidget, BasePipeLine.Ui_Form):
 
         self.radioButton.toggled.connect(self.radiomm)
         self.radioButton_2.toggled.connect(self.radioinch)
+        self.insolation_radioButton.toggled.connect(self.insolation_activation)
+        if self.insolation_radioButton.isChecked():
+            self.insolation_label.setEnabled(True)
+            self.insulation_input.setEnabled(True)
+            self.thermal_conductivity_label(True)
+            self.thermal_conductivity_input(True)
+        else:
+            self.insolation_label.setEnabled(False)
+            self.insulation_input.setEnabled(False)
+            self.thermal_conductivity_label.setEnabled(False)
+            self.thermal_conductivity_input.setEnabled(False)
 
         self.comboBox.activated[str].connect(self.changecombobox2)
         self.comboBox_2.activated[str].connect(self.changecombobox3)
@@ -98,6 +120,18 @@ class PipeLine(QtWidgets.QWidget, BasePipeLine.Ui_Form):
             # elif self.radioButton_2.isChecked():
             #     QMessageBox.about(self, "radiobutton2", "radio button2 is checked")
             #     pass
+
+    def insolation_activation(self):
+        if self.insolation_radioButton.isChecked():
+            self.insolation_label.setEnabled(True)
+            self.insulation_input.setEnabled(True)
+            self.thermal_conductivity_label.setEnabled(True)
+            self.thermal_conductivity_input.setEnabled(True)
+        else:
+            self.insolation_label.setEnabled(False)
+            self.insulation_input.setEnabled(False)
+            self.thermal_conductivity_label.setEnabled(False)
+            self.thermal_conductivity_input.setEnabled(False)
 
     def changecombobox2(self):
         self.comboBox_3.clear()
@@ -153,7 +187,8 @@ class PipeLine(QtWidgets.QWidget, BasePipeLine.Ui_Form):
         self.inputCheck = False
 
         try:
-            if (float(self.lineEdit.text()) <= 0 or self.lineEdit.text() == ""):
+            if float(self.lineEdit.text()) <= 0 or self.lineEdit.text() == "" or self.thermal_conductivity_input.text() \
+                    == "" or self.insulation_input.text() == "":
 
                 # float(self.lineEdit.text()) <= 0 or float(self.lineEdit_2.text()) * 0.01 <= 0 or float(
                 # self.lineEdit_3.text()) * 0.01 <= 0 or float(self.lineEdit_3.text()) * 0.01 >= float(
@@ -167,8 +202,6 @@ class PipeLine(QtWidgets.QWidget, BasePipeLine.Ui_Form):
             else:
                 self.data.clear()
 
-
-
                 self.inputlineLength = float(self.lineEdit.text())
                 if self.radioButton.isChecked():
                     self.inputlineOD = float(self.comboBox_2.currentText()) * 0.001
@@ -177,6 +210,13 @@ class PipeLine(QtWidgets.QWidget, BasePipeLine.Ui_Form):
                 elif self.radioButton_2.isChecked():
                     self.inputlineOD = float(self.comboBox_2.currentText()) * 25.4 * 0.001
                     self.inputlineID = self.inputlineOD - 2 * (float(self.comboBox_3.currentText()) * 25.4 * 0.001)
+
+                if self.insolation_radioButton.isChecked():
+                    self.data["thermal_conductivity"] = round(float(self.thermal_conductivity_input.text()), 3)
+                    self.data["insulation_thickness"] = round(float(self.insulation_input.text()), 3)
+                else:
+                    self.data["thermal_conductivity"] = 0
+                    self.data["insulation_thickness"] = 0
 
                 # self.inputlineOD = float(self.lineEdit_2.text()) * 0.01
                 # self.inputlineID = self.inputlineOD - 2 * (float(self.lineEdit_3.text()) * 0.01)
@@ -187,12 +227,11 @@ class PipeLine(QtWidgets.QWidget, BasePipeLine.Ui_Form):
                 self.inputCheck = True
                 self.close()
 
-
-
-
                 self.data["length"] = self.inputlineLength
-                self.data["ID"] = self.inputlineID
-                self.data["OD"] = self.inputlineOD
+                self.data["ID"] = round(self.inputlineID, 6)
+                self.data["OD"] = round(self.inputlineOD, 6)
+
+                print(self.data)
 
                 return
 
@@ -202,12 +241,12 @@ class PipeLine(QtWidgets.QWidget, BasePipeLine.Ui_Form):
 
         except Exception as e:
 
-                print(e)
-                self.label_4.setVisible(True)
-                # self.label_5.setVisible(True)
-                # self.label_6.setVisible(True)
-                QMessageBox.about(self, "خطا در اطلاعات ورودی", "لطفاً اطلاعات صحیح وارد فرمایید")
-                return
+            print(e)
+            self.label_4.setVisible(True)
+            # self.label_5.setVisible(True)
+            # self.label_6.setVisible(True)
+            QMessageBox.about(self, "خطا در اطلاعات ورودی", "لطفاً اطلاعات صحیح وارد فرمایید")
+            return
 
     def cancel(self):
         self.data.clear()
@@ -215,7 +254,6 @@ class PipeLine(QtWidgets.QWidget, BasePipeLine.Ui_Form):
         # self.label_5.setVisible(False)
         # self.label_6.setVisible(False)
         self.close()
-
 
 
 if __name__ == "__main__":

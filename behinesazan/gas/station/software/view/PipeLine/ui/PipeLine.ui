@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>385</width>
-    <height>228</height>
+    <width>471</width>
+    <height>246</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>اطلاعات خط لوله</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../../svgfile.qrc">
+   <iconset resource="../../../../../../../svgfile.qrc">
     <normaloff>:/icon/heater.svg</normaloff>:/icon/heater.svg</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -22,19 +22,6 @@
     <layout class="QGridLayout" name="gridLayout_3">
      <item row="0" column="0">
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="2" column="0">
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
        <item row="3" column="0">
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
@@ -79,6 +66,19 @@
          </item>
         </layout>
        </item>
+       <item row="2" column="0">
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
        <item row="0" column="0">
         <layout class="QGridLayout" name="gridLayout">
          <item row="0" column="3">
@@ -88,8 +88,8 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="5">
-          <widget class="QLabel" name="label">
+         <item row="1" column="2">
+          <widget class="QLabel" name="label_3">
            <property name="font">
             <font>
              <family>B Mitra</family>
@@ -99,47 +99,33 @@
             </font>
            </property>
            <property name="text">
-            <string>طول لوله (m):</string>
+            <string>قطر اسمی:</string>
            </property>
-          </widget>
-         </item>
-         <item row="2" column="3">
-          <widget class="QRadioButton" name="radioButton_2">
-           <property name="font">
-            <font>
-             <family>B Mitra</family>
-             <pointsize>10</pointsize>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="layoutDirection">
-            <enum>Qt::RightToLeft</enum>
-           </property>
-           <property name="text">
-            <string>اینچ</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="4">
-          <widget class="QLabel" name="label_4">
-           <property name="styleSheet">
-            <string notr="true">QLabel#label_4{ 
-
-color : red;
-
- }</string>
-           </property>
-           <property name="text">
-            <string>*</string>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
            </property>
           </widget>
          </item>
          <item row="2" column="0">
           <widget class="QComboBox" name="comboBox_3"/>
          </item>
-         <item row="2" column="1">
-          <widget class="QComboBox" name="comboBox_2"/>
+         <item row="3" column="2">
+          <widget class="QLineEdit" name="insulation_input"/>
+         </item>
+         <item row="3" column="3">
+          <widget class="QLabel" name="insolation_label">
+           <property name="font">
+            <font>
+             <family>B Mitra</family>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>ضخامت عایق (cm):</string>
+           </property>
+          </widget>
          </item>
          <item row="2" column="5">
           <widget class="QRadioButton" name="radioButton">
@@ -162,39 +148,20 @@ color : red;
            </property>
           </widget>
          </item>
-         <item row="2" column="2">
-          <widget class="QComboBox" name="comboBox"/>
+         <item row="2" column="1">
+          <widget class="QComboBox" name="comboBox_2"/>
          </item>
-         <item row="1" column="5">
-          <widget class="QLabel" name="label_2">
-           <property name="font">
-            <font>
-             <family>B Mitra</family>
-             <pointsize>10</pointsize>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
+         <item row="0" column="4">
+          <widget class="QLabel" name="label_4">
+           <property name="styleSheet">
+            <string notr="true">QLabel#label_4{ 
+
+color : red;
+
+ }</string>
            </property>
            <property name="text">
-            <string>سایز لوله:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="2">
-          <widget class="QLabel" name="label_3">
-           <property name="font">
-            <font>
-             <family>B Mitra</family>
-             <pointsize>10</pointsize>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>قطر اسمی:</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
+            <string>*</string>
            </property>
           </widget>
          </item>
@@ -216,6 +183,36 @@ color : red;
            </property>
           </widget>
          </item>
+         <item row="1" column="5">
+          <widget class="QLabel" name="label_2">
+           <property name="font">
+            <font>
+             <family>B Mitra</family>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>سایز لوله:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="5">
+          <widget class="QLabel" name="label">
+           <property name="font">
+            <font>
+             <family>B Mitra</family>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>طول لوله (m):</string>
+           </property>
+          </widget>
+         </item>
          <item row="1" column="0">
           <widget class="QLabel" name="label_6">
            <property name="font">
@@ -231,6 +228,78 @@ color : red;
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="3">
+          <widget class="QLabel" name="thermal_conductivity_label">
+           <property name="minimumSize">
+            <size>
+             <width>136</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>B Mitra</family>
+             <pointsize>9</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="layoutDirection">
+            <enum>Qt::RightToLeft</enum>
+           </property>
+           <property name="text">
+            <string>ضریب انتقال حرارت (W/m°K):</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="5" alignment="Qt::AlignRight">
+          <widget class="QRadioButton" name="insolation_radioButton">
+           <property name="font">
+            <font>
+             <family>B Mitra</family>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>عایق</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="autoExclusive">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="2">
+          <widget class="QLineEdit" name="thermal_conductivity_input"/>
+         </item>
+         <item row="2" column="2">
+          <widget class="QComboBox" name="comboBox"/>
+         </item>
+         <item row="2" column="3">
+          <widget class="QRadioButton" name="radioButton_2">
+           <property name="font">
+            <font>
+             <family>B Mitra</family>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="layoutDirection">
+            <enum>Qt::RightToLeft</enum>
+           </property>
+           <property name="text">
+            <string>اینچ</string>
            </property>
           </widget>
          </item>
@@ -253,7 +322,7 @@ color : red;
   <tabstop>pushButton</tabstop>
  </tabstops>
  <resources>
-  <include location="../../../svgfile.qrc"/>
+  <include location="../../../../../../../svgfile.qrc"/>
  </resources>
  <connections/>
 </ui>
