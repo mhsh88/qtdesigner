@@ -16,7 +16,7 @@ class PipeLineHead:
     # Tin = 5
     # T_air = 20
 
-    def __init__(self, T_air, v_air, Tin, P, g, OD, ID, pipeLength, QSdot):
+    def __init__(self, T_air, v_air, Tin, P, g, OD, ID, pipeLength, QSdot, t, k_insolation):
         if QSdot == 0:
             self.Tout = Tin
             self.Qdot = 0.0
@@ -110,14 +110,23 @@ class PipeLineHead:
 
             h_gas = Nu * k_gas / self.ID
 
-            self.h_Total = 1 / (1 / hair + 1 / h_gas + ((self.OD - self.ID) / math.log(self.OD / self.ID)) / k_steel)
+            # self.Qdot = (self.Tin - self.T_air)/((1/(2*math.pi*self.ID*self.pipeLength*h_gas)) +
+            #                                      (math.log(self.OD/self.ID)/(2*math.pi*k_steel*self.pipeLength)) +
+            #                                      (math.log((self.OD + 2 * t) / (2*math.pi*k_insolation))) +
+            #                                      (1/(2 * math.pi * )))
+            if t > 0:
+                self.h_Total = 1 / (1 / hair + 1 / h_gas + ((self.OD - self.ID) / math.log(self.OD / self.ID)) / k_steel +
+                                ((self.OD + 2 * t - self.OD) / math.log((self.OD + 2 * t) / self.OD)) / k_insolation)
+            else:
+                self.h_Total = 1 / (1 / hair + 1 / h_gas + ((self.OD - self.ID) / math.log(self.OD / self.ID)) / k_steel)
+
             self.Tout = (self.Tin - self.T_air) * exp(-math.pi*self.ID * self.pipeLength * self.h_Total / (self.mdot * self.g.C_p * 1000)) + self.T_air
             # print('Tin is = ' + str(t1 - 273.15) +'\nTout is = ' + str(self.Tout - 273.15))
             self.Qdot = self.mdot * self.g.C_p * (self.Tout - self.Tin)
             # print('Qdot = ' + str(self.mdot * g.C_p * 1000 * (self.Tout - self.Tin)))
             # print('delta P  = ' + str(P))
 
-            outter_A = math.pi * self.OD * self.OD / 4
+            outter_A = math.pi * ((self.OD + 2 * t) ** 2) / 4
             deltaT = self.Qdot * 1000 / (hair * outter_A)
             Ts = T_air + deltaT
 
@@ -199,5 +208,5 @@ class PipeLineHead:
 
 if __name__ == "__main__":
     g = Gas()
-    R = PipeLineHead(30 + 273.15, 20, 20 + 273.15, 7000, g, 0.4, 0.38, 20, 4000)
+    R = PipeLineHead(30 + 273.15, 20, 20 + 273.15, 7000, g, 0.4, 0.38, 20, 4000, 0, 1)
     print(R.Tout - 273.15)

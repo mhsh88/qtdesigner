@@ -105,7 +105,12 @@ class PipeLineEnd:
 
             h_gas = Nu * k_gas / self.ID
 
-            self.h_Total = 1 / (1 / hair + 1 / h_gas + ((self.OD - self.ID) / math.log(self.OD / self.ID)) / k_steel)
+            if t > 0:
+                self.h_Total = 1 / (1 / hair + 1 / h_gas + ((self.OD - self.ID) / math.log(self.OD / self.ID)) / k_steel +
+                                ((self.OD + 2 * t - self.OD) / math.log((self.OD + 2 * t) / self.OD)) / k_insolation)
+            else:
+                self.h_Total = 1 / (1 / hair + 1 / h_gas + ((self.OD - self.ID) / math.log(self.OD / self.ID)) / k_steel)
+
             # self.Tout = (self.Tin - self.T_air) * exp(-math.pi*self.ID * self.pipeLength * self.h_Total / (self.mdot * g.C_p * 1000)) + self.T_air
             self.Tout = (self.Tin - self.T_air) / exp(
                 -math.pi * self.ID * self.pipeLength * self.h_Total / (self.mdot * self.g.C_p * 1000)) + self.T_air
