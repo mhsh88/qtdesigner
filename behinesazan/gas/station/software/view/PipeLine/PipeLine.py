@@ -187,8 +187,9 @@ class PipeLine(QtWidgets.QWidget, BasePipeLine.Ui_Form):
         self.inputCheck = False
 
         try:
-            if float(self.lineEdit.text()) <= 0 or self.lineEdit.text() == "" or self.thermal_conductivity_input.text() \
-                    == "" or self.insulation_input.text() == "":
+            if float(self.lineEdit.text()) <= 0 or self.lineEdit.text() == "" or \
+                    (self.insolation_radioButton.isChecked() and (self.thermal_conductivity_input.text() == "" or
+                             self.insulation_input.text() == "")):
 
                 # float(self.lineEdit.text()) <= 0 or float(self.lineEdit_2.text()) * 0.01 <= 0 or float(
                 # self.lineEdit_3.text()) * 0.01 <= 0 or float(self.lineEdit_3.text()) * 0.01 >= float(

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\Users\hossein.sharifi\PycharmProjects\pyqtdesigner\behinesazan\gas\station\software\view\PipeLine\ui\PipeLine.ui'
+# Form implementation generated from reading ui file 'PipeLine.ui'
 #
 # Created by: PyQt5 UI code generator 5.6
 #
@@ -177,7 +177,10 @@ class Ui_Form(object):
         Form.setTabOrder(self.radioButton_2, self.comboBox)
         Form.setTabOrder(self.comboBox, self.comboBox_2)
         Form.setTabOrder(self.comboBox_2, self.comboBox_3)
-        Form.setTabOrder(self.comboBox_3, self.pushButton_2)
+        Form.setTabOrder(self.comboBox_3, self.insolation_radioButton)
+        Form.setTabOrder(self.insolation_radioButton, self.insulation_input)
+        Form.setTabOrder(self.insulation_input, self.thermal_conductivity_input)
+        Form.setTabOrder(self.thermal_conductivity_input, self.pushButton_2)
         Form.setTabOrder(self.pushButton_2, self.pushButton)
 
     def retranslateUi(self, Form):

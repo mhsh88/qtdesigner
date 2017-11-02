@@ -49,7 +49,8 @@ class Calculation:
                 afterHeaterLineData) and 'Wind_velocity' in gasInformationFormInputData.keys() and \
                         "T_environment" in gasInformationFormInputData.keys() and \
                         "Station_Capacity" in gasInformationFormInputData.keys():
-            Calculation.__runHeatTransferLossCal(runData, afterHeaterLineData, gasInformationFormInputData)
+            Calculation.result["T_before_run"] = Calculation.__runHeatTransferLossCal(runData, afterHeaterLineData,
+                                                                                      gasInformationFormInputData)
             pass
 
         # TODO if the velocity is null the wind velocity is 0.5 and the further method must be added
@@ -59,6 +60,10 @@ class Calculation:
             Calculation.__beforeHeaterHeatLossCal(beforeHeaterLineData, gasInformationFormInputData)
             pass
 
+        print(Calculation.result)
+
+        Calculation.__energy_Consumption(Calculation.result, gasInformationFormInputData, beforeHeaterLineData,
+                                         afterHeaterLineData, runData)
         return
 
     @staticmethod
@@ -93,17 +98,18 @@ class Calculation:
                                                                      gasInformationFormInputData["T_environment"],
                                                                      heaterData[keys][key]["fluegas"])
 
-                print("efficiency: ", "heater ", keys, " burner ", key, Calculation.result["heater"][keys][key].eff)
+                # print("efficiency: ", "heater ", keys, " burner ", key, Calculation.result["heater"][keys][key].eff)
 
         pass
 
     @classmethod
     def __runHeatTransferLossCal(cls, runData, afterHeaterLineData, gasInformationFormInputData):
-        print(runData['run_debi'])
+        # print(runData['run_debi'])
         Calculation.result.setdefault("heat_loss", {})
+        Calculation.result["heat_loss"].setdefault("run", {})
         t_max = 0
         for key in runData["run_debi"].keys():
-            Calculation.result["heat_loss"][key] = PipeLineEnd(gasInformationFormInputData["T_environment"],
+            Calculation.result["heat_loss"]["run"][key] = PipeLineEnd(gasInformationFormInputData["T_environment"],
                                                                gasInformationFormInputData["Wind_velocity"],
                                                                # as Tin
                                                                Calculation.result["T_before_regulator"],
@@ -112,9 +118,9 @@ class Calculation:
                                                                runData["OD"],
                                                                runData["ID"],
                                                                runData["length"],
-                                                               runData["run_debi"][key])
+                                                               runData["run_debi"][key], 0, 0)
 
-            t_max = max(t_max, Calculation.result["heat_loss"][key].Tout)
+            t_max = max(t_max, Calculation.result["heat_loss"]["run"][key].Tout)
         Calculation.result["heat_loss"]["After_Heater_Pipeline"] = PipeLineEnd(
             gasInformationFormInputData["T_environment"],
             gasInformationFormInputData["Wind_velocity"],
@@ -128,13 +134,14 @@ class Calculation:
             gasInformationFormInputData["Station_Capacity"],
             afterHeaterLineData["insulation_thickness"],
             afterHeaterLineData["thermal_conductivity"])
-        print(Calculation.result["heat_loss"]["After_Heater_Pipeline"].Tout)
+        return t_max
+        # print(Calculation.result["heat_loss"]["After_Heater_Pipeline"].Tout)
 
-        print(Calculation.result)
+        # print(Calculation.result)
 
     @classmethod
     def __beforeHeaterHeatLossCal(cls, beforeHeaterLineData, gasInformationFormInputData):
-        print(gasInformationFormInputData["T_input"])
+        # print(gasInformationFormInputData["T_input"])
         Calculation.result["heat_loss"]["Before_Heater_Pipeline"] = PipeLineHead(
             gasInformationFormInputData["T_environment"],
             gasInformationFormInputData["Wind_velocity"],
@@ -148,8 +155,55 @@ class Calculation:
                 "Station_Capacity"],
             beforeHeaterLineData["insulation_thickness"],
             beforeHeaterLineData["thermal_conductivity"])  # TODO it must be checked for Station capacity and runs flows
+        pipeline_without_insulation = PipeLineHead(
+            gasInformationFormInputData["T_environment"],
+            gasInformationFormInputData["Wind_velocity"],
+            gasInformationFormInputData["T_input"],
+            gasInformationFormInputData["P_input"],
+            gasInformationFormInputData["gas"],
+            beforeHeaterLineData["OD"],
+            beforeHeaterLineData["ID"],
+            beforeHeaterLineData["length"],
+            gasInformationFormInputData[
+                "Station_Capacity"],
+            0,
+            0)
 
-        print(Calculation.result["heat_loss"]["Before_Heater_Pipeline"].Tout)
+        print("Pipe line with insulation is ", Calculation.result["heat_loss"]["Before_Heater_Pipeline"].Tout,
+              "\nand Pipe "
+              "line "
+              "without "
+              "insulation "
+              "T out is "
+              "",
+              pipeline_without_insulation.Tout)
+
+        pass
+
+    @classmethod
+    def __energy_Consumption(cls, result, gasInformationFormInputData, beforeHeaterLineData, afterHeaterLineData,
+                             runData):
+        if "heat_loss" in result.keys():
+            if "After_Heater_Pipeline" in result["heat_loss"].keys():
+                result["T_after_heater"] = result["heat_loss"]["After_Heater_Pipeline"].Tout
+            elif "T_before_run" in result.keys():
+                result["T_after_heater"] = result["T_before_run"]
+            elif "T_before_regulator" in result.keys():
+                result["T_after_heater"] = result["T_before_regulator"]
+            else:
+                print("something wrong gonna happen there is no data for after heater temperature")
+                pass
+            if "Before_Heater_Pipeline" in result["heat_loss"].keys():
+                result["T_before_heater"] = result["heat_loss"]["Before_Heater_Pipeline"].Tout
+            elif "T_input" in gasInformationFormInputData.keys():
+                result["T_before_heater"] = gasInformationFormInputData["T_input"]
+            else:
+                print("there is no data for before heater temperature please check the inputs")
+                pass
+        else:
+            result["T_after_heater"] = result["T_before_regulator"]
+            result["T_before_heater"] = gasInformationFormInputData["T_input"]
+            print("there is no data for heat loss so default data will be used")
 
         pass
 

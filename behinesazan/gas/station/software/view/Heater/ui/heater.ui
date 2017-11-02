@@ -14,7 +14,7 @@
    <string>اطلاعات گرم کن ایستگاه تقلیل فشار گاز</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../../svgfile.qrc">
+   <iconset resource="../../../../../../../svgfile.qrc">
     <normaloff>:/icon/heater.svg</normaloff>:/icon/heater.svg</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -229,11 +229,16 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>heater_number_input</tabstop>
+  <tabstop>heater_number_comboBox</tabstop>
+  <tabstop>burner_number_comboBox</tabstop>
+  <tabstop>burner_oxygen_percent_spinbox</tabstop>
+  <tabstop>burner_fluegas_spinbox</tabstop>
   <tabstop>okButton</tabstop>
   <tabstop>cancelButton</tabstop>
  </tabstops>
  <resources>
-  <include location="../../../svgfile.qrc"/>
+  <include location="../../../../../../../svgfile.qrc"/>
  </resources>
  <connections/>
 </ui>

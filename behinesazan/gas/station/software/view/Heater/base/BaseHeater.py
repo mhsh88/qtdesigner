@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\Users\hossein.sharifi\PycharmProjects\pyqtdesigner\view\Heater\ui\heater.ui'
+# Form implementation generated from reading ui file 'heater.ui'
 #
 # Created by: PyQt5 UI code generator 5.6
 #
@@ -137,6 +137,11 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
+        Form.setTabOrder(self.heater_number_input, self.heater_number_comboBox)
+        Form.setTabOrder(self.heater_number_comboBox, self.burner_number_comboBox)
+        Form.setTabOrder(self.burner_number_comboBox, self.burner_oxygen_percent_spinbox)
+        Form.setTabOrder(self.burner_oxygen_percent_spinbox, self.burner_fluegas_spinbox)
+        Form.setTabOrder(self.burner_fluegas_spinbox, self.okButton)
         Form.setTabOrder(self.okButton, self.cancelButton)
 
     def retranslateUi(self, Form):

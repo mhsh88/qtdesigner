@@ -318,6 +318,9 @@ color : red;
   <tabstop>comboBox</tabstop>
   <tabstop>comboBox_2</tabstop>
   <tabstop>comboBox_3</tabstop>
+  <tabstop>insolation_radioButton</tabstop>
+  <tabstop>insulation_input</tabstop>
+  <tabstop>thermal_conductivity_input</tabstop>
   <tabstop>pushButton_2</tabstop>
   <tabstop>pushButton</tabstop>
  </tabstops>
