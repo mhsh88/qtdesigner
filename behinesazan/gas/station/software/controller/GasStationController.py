@@ -213,6 +213,9 @@ class MainStationWindow(QtWidgets.QMainWindow, MainGasWindow.Ui_MainWindow):
         self.windVelocity = ''
 
 
+
+
+
 class Calculate:  # (GasStation):
     # def __init__(self, parent=None):
     #     super(AfterHeaterLine, self).__init__(parent)
@@ -233,7 +236,7 @@ class Calculate:  # (GasStation):
     def cal(self):
         if bool(self.station.gasInformationInputForm.data):
             try:
-                Calculation.calculate(self.station.gasInformationInputForm.data, self.station.beforeHeaterLine.data,
+                result = Calculation.calculate(self.station.gasInformationInputForm.data, self.station.beforeHeaterLine.data,
                                      self.station.heater.data, self.station.afterHeaterLine.data, self.station.run.data)
             except Exception as e:
                 print("saalm")

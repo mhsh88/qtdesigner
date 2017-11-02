@@ -31,12 +31,16 @@ class Calculation:
         gasInformationFormInputData["gas"].calculate(gasInformationFormInputData["P_station_out"],
                                                      gasInformationFormInputData["T_station_out"])
         print("this is print in calculate method of Calculation class T hydrate is ",
-              gasInformationFormInputData["gas"].T_h, " at ", gasInformationFormInputData["gas"].P / 6.89476, "psi")
+              gasInformationFormInputData["gas"].T_h, " at ", round(gasInformationFormInputData["gas"].P / 6.89476, 5),
+              "psi")
 
         # check if Station Capacity is entered to calculation amount of energy needed
 
         if "Station_Capacity" in gasInformationFormInputData.keys():
-            Calculation.result["Q_Heater"] = Calculation.__capacityCal(gasInformationFormInputData, H1, H2, HHV)
+            Calculation.result["Q_Heater"] = Calculation.__capacityCal(gasInformationFormInputData["P_input"],
+                                                                       gasInformationFormInputData["T_input"],
+                                                                       gasInformationFormInputData["gas"], H1, H2, HHV,
+                                                                       gasInformationFormInputData["Station_Capacity"])
 
         # check if heater data form is defined and air temperature is defined in Gas information form input data
 
@@ -45,17 +49,21 @@ class Calculation:
             # Combustion(g, , ui.outTemperature, ui.TflueGas1)
             pass
 
-        if bool(runData) and bool(
-                afterHeaterLineData) and 'Wind_velocity' in gasInformationFormInputData.keys() and \
+        if bool(runData) and 'Wind_velocity' in gasInformationFormInputData.keys() and \
                         "T_environment" in gasInformationFormInputData.keys() and \
                         "Station_Capacity" in gasInformationFormInputData.keys():
-            Calculation.result["T_before_run"] = Calculation.__runHeatTransferLossCal(runData, afterHeaterLineData,
+            Calculation.result["T_before_run"] = Calculation.__runHeatTransferLossCal(runData,
                                                                                       gasInformationFormInputData)
+            pass
+        if bool(afterHeaterLineData) and "Wind_velocity" in gasInformationFormInputData.keys() and \
+                        "T_environment" in gasInformationFormInputData.keys() and \
+                        "Station_Capacity" in gasInformationFormInputData.keys():
+            Calculation.__afterHeaterHeatLossCal(afterHeaterLineData, gasInformationFormInputData)
             pass
 
         # TODO if the velocity is null the wind velocity is 0.5 and the further method must be added
 
-        if bool(afterHeaterLineData) and "Wind_velocity" in gasInformationFormInputData.keys() and \
+        if bool(beforeHeaterLineData) and "Wind_velocity" in gasInformationFormInputData.keys() and \
                         "T_environment" in gasInformationFormInputData.keys():
             Calculation.__beforeHeaterHeatLossCal(beforeHeaterLineData, gasInformationFormInputData)
             pass
@@ -64,22 +72,22 @@ class Calculation:
 
         Calculation.__energy_Consumption(Calculation.result, gasInformationFormInputData, beforeHeaterLineData,
                                          afterHeaterLineData, runData)
-        return
+        return Calculation.result
 
     @staticmethod
-    def __capacityCal(data, H1, H2, HHV):
-        g = data["gas"]
+    def __capacityCal(P, T, g, H1, H2, HHV, Q_standard):
+
         g.calculate(g.p_theta, g.T_theta)
         P2 = g.P
         Z2 = g.Z
         T2 = g.T
         Dstd = g.D
-        g.calculate(data["P_input"], data["T_input"])
+        g.calculate(P, T)
         P1 = g.P
         Z1 = g.Z
         T1 = g.T
 
-        Qdot = (data["Station_Capacity"] / 3600) * (P2 * Z1 * T1) / (P1 * Z2 * T2)
+        Qdot = (Q_standard / 3600) * (P2 * Z1 * T1) / (P1 * Z2 * T2)
         # Q1Heater = Qdot * g.D * (H2 - H1) / HHV * 3600
         Q1Heater = Qdot * g.D * (H2 - H1) / HHV * 3600
         Q1Heater = Q1Heater / Dstd
@@ -103,29 +111,44 @@ class Calculation:
         pass
 
     @classmethod
-    def __runHeatTransferLossCal(cls, runData, afterHeaterLineData, gasInformationFormInputData):
+    def __runHeatTransferLossCal(cls, runData, gasInformationFormInputData):
         # print(runData['run_debi'])
         Calculation.result.setdefault("heat_loss", {})
         Calculation.result["heat_loss"].setdefault("run", {})
         t_max = 0
         for key in runData["run_debi"].keys():
             Calculation.result["heat_loss"]["run"][key] = PipeLineEnd(gasInformationFormInputData["T_environment"],
-                                                               gasInformationFormInputData["Wind_velocity"],
-                                                               # as Tin
-                                                               Calculation.result["T_before_regulator"],
-                                                               gasInformationFormInputData["P_input"],
-                                                               gasInformationFormInputData["gas"],
-                                                               runData["OD"],
-                                                               runData["ID"],
-                                                               runData["length"],
-                                                               runData["run_debi"][key], 0, 0)
+                                                                      gasInformationFormInputData["Wind_velocity"],
+                                                                      # as Tin
+                                                                      Calculation.result["T_before_regulator"],
+                                                                      gasInformationFormInputData["P_input"],
+                                                                      gasInformationFormInputData["gas"],
+                                                                      runData["OD"],
+                                                                      runData["ID"],
+                                                                      runData["length"],
+                                                                      runData["run_debi"][key], 0, 0)
 
             t_max = max(t_max, Calculation.result["heat_loss"]["run"][key].Tout)
+
+        return t_max
+        # print(Calculation.result["heat_loss"]["After_Heater_Pipeline"].Tout)
+
+        # print(Calculation.result)
+
+    @classmethod
+    def __afterHeaterHeatLossCal(cls, afterHeaterLineData, gasInformationFormInputData):
+        if "T_before_run" in Calculation.result.keys():
+            T2 = Calculation.result["T_before_run"]
+        elif "T_before_regulator" in Calculation.result.keys():
+            T2 = Calculation.result["T_before_regulator"]
+        else:
+            print("somthing wrong gonna happens there is to data for end of after heater pipeline temperature")
+            return
         Calculation.result["heat_loss"]["After_Heater_Pipeline"] = PipeLineEnd(
             gasInformationFormInputData["T_environment"],
             gasInformationFormInputData["Wind_velocity"],
             # as Tin
-            t_max,
+            T2,
             gasInformationFormInputData["P_input"],
             gasInformationFormInputData["gas"],
             afterHeaterLineData["OD"],
@@ -134,10 +157,8 @@ class Calculation:
             gasInformationFormInputData["Station_Capacity"],
             afterHeaterLineData["insulation_thickness"],
             afterHeaterLineData["thermal_conductivity"])
-        return t_max
-        # print(Calculation.result["heat_loss"]["After_Heater_Pipeline"].Tout)
 
-        # print(Calculation.result)
+        pass
 
     @classmethod
     def __beforeHeaterHeatLossCal(cls, beforeHeaterLineData, gasInformationFormInputData):
@@ -155,7 +176,7 @@ class Calculation:
                 "Station_Capacity"],
             beforeHeaterLineData["insulation_thickness"],
             beforeHeaterLineData["thermal_conductivity"])  # TODO it must be checked for Station capacity and runs flows
-        pipeline_without_insulation = PipeLineHead(
+        Calculation.result["heat_loss"]["Before_Heater_Pipeline_without_insulation"] = PipeLineHead(
             gasInformationFormInputData["T_environment"],
             gasInformationFormInputData["Wind_velocity"],
             gasInformationFormInputData["T_input"],
@@ -204,6 +225,22 @@ class Calculation:
             result["T_after_heater"] = result["T_before_regulator"]
             result["T_before_heater"] = gasInformationFormInputData["T_input"]
             print("there is no data for heat loss so default data will be used")
+
+        gasInformationFormInputData["gas"].calculate(gasInformationFormInputData["P_input"],
+                                                     result["T_before_heater"])
+        H1 = gasInformationFormInputData["gas"].H
+        gasInformationFormInputData["gas"].calculate(gasInformationFormInputData["P_input"], result["T_after_heater"])
+        H2 = gasInformationFormInputData["gas"].H
+        tempHHV = Combustion(gasInformationFormInputData["gas"], 2, 15, 200)
+        HHV = tempHHV.HHVd
+        Q_with_heat_loss = Calculation.__capacityCal(gasInformationFormInputData["P_input"],
+                                                     gasInformationFormInputData["T_input"],
+                                                     gasInformationFormInputData["gas"],
+                                                     H1,
+                                                     H2,
+                                                     HHV,
+                                                     gasInformationFormInputData["Station_Capacity"])
+        print("Q with heat loss", Q_with_heat_loss)
 
         pass
 
