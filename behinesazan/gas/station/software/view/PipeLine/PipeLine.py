@@ -214,7 +214,7 @@ class PipeLine(QtWidgets.QWidget, BasePipeLine.Ui_Form):
 
                 if self.insolation_radioButton.isChecked():
                     self.data["thermal_conductivity"] = round(float(self.thermal_conductivity_input.text()), 3)
-                    self.data["insulation_thickness"] = round(float(self.insulation_input.text()), 3)
+                    self.data["insulation_thickness"] = round(float(self.insulation_input.text()), 3)/100 # to cm
                 else:
                     self.data["thermal_conductivity"] = 0
                     self.data["insulation_thickness"] = 0

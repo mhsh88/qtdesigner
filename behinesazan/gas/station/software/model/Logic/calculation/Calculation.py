@@ -70,8 +70,11 @@ class Calculation:
 
         print(Calculation.result)
 
-        Calculation.__energy_Consumption(Calculation.result, gasInformationFormInputData, beforeHeaterLineData,
+        Calculation.__energy_Consumption_with_insulation(Calculation.result, gasInformationFormInputData, beforeHeaterLineData,
                                          afterHeaterLineData, runData)
+        Calculation.__energy_Consumption_without_insulation(Calculation.result, gasInformationFormInputData,
+                                                         beforeHeaterLineData,
+                                                         afterHeaterLineData, runData)
         return Calculation.result
 
     @staticmethod
@@ -157,6 +160,19 @@ class Calculation:
             gasInformationFormInputData["Station_Capacity"],
             afterHeaterLineData["insulation_thickness"],
             afterHeaterLineData["thermal_conductivity"])
+        Calculation.result["heat_loss"]["After_Heater_Pipeline_without_insulation"] = PipeLineEnd(
+            gasInformationFormInputData["T_environment"],
+            gasInformationFormInputData["Wind_velocity"],
+            # as Tin
+            T2,
+            gasInformationFormInputData["P_input"],
+            gasInformationFormInputData["gas"],
+            afterHeaterLineData["OD"],
+            afterHeaterLineData["ID"],
+            afterHeaterLineData["length"],
+            gasInformationFormInputData["Station_Capacity"],
+            0,
+            0)
 
         pass
 
@@ -197,12 +213,12 @@ class Calculation:
               "insulation "
               "T out is "
               "",
-              pipeline_without_insulation.Tout)
+              Calculation.result["heat_loss"]["Before_Heater_Pipeline_without_insulation"].Tout)
 
         pass
 
     @classmethod
-    def __energy_Consumption(cls, result, gasInformationFormInputData, beforeHeaterLineData, afterHeaterLineData,
+    def __energy_Consumption_with_insulation(cls, result, gasInformationFormInputData, beforeHeaterLineData, afterHeaterLineData,
                              runData):
         if "heat_loss" in result.keys():
             if "After_Heater_Pipeline" in result["heat_loss"].keys():
@@ -241,6 +257,50 @@ class Calculation:
                                                      HHV,
                                                      gasInformationFormInputData["Station_Capacity"])
         print("Q with heat loss", Q_with_heat_loss)
+
+        pass
+
+    @classmethod
+    def __energy_Consumption_without_insulation(cls, result, gasInformationFormInputData, beforeHeaterLineData,
+                                             afterHeaterLineData,
+                                             runData):
+        if "heat_loss" in result.keys():
+            if "After_Heater_Pipeline_without_insulation" in result["heat_loss"].keys():
+                result["T_after_heater_without_insulation"] = result["heat_loss"]["After_Heater_Pipeline_without_insulation"].Tout
+            elif "T_before_run" in result.keys():
+                result["T_after_heater_without_insulation"] = result["T_before_run"]
+            elif "T_before_regulator" in result.keys():
+                result["T_after_heater_without_insulation"] = result["T_before_regulator"]
+            else:
+                print("something wrong gonna happen there is no data for after heater temperature")
+                pass
+            if "Before_Heater_Pipeline_without_insulation" in result["heat_loss"].keys():
+                result["T_before_heater_without_insulation"] = result["heat_loss"]["Before_Heater_Pipeline_without_insulation"].Tout
+            elif "T_input" in gasInformationFormInputData.keys():
+                result["T_before_heater_without_insulation"] = gasInformationFormInputData["T_input"]
+            else:
+                print("there is no data for before heater temperature please check the inputs")
+                pass
+        else:
+            result["T_after_heater_without_insulation"] = result["T_before_regulator"]
+            result["T_before_heater_without_insulation"] = gasInformationFormInputData["T_input"]
+            print("there is no data for heat loss so default data will be used")
+
+        gasInformationFormInputData["gas"].calculate(gasInformationFormInputData["P_input"],
+                                                     result["T_before_heater_without_insulation"])
+        H1 = gasInformationFormInputData["gas"].H
+        gasInformationFormInputData["gas"].calculate(gasInformationFormInputData["P_input"], result["T_after_heater_without_insulation"])
+        H2 = gasInformationFormInputData["gas"].H
+        tempHHV = Combustion(gasInformationFormInputData["gas"], 2, 15, 200)
+        HHV = tempHHV.HHVd
+        Q_without_heat_loss = Calculation.__capacityCal(gasInformationFormInputData["P_input"],
+                                                     result["T_before_heater_without_insulation"],
+                                                     gasInformationFormInputData["gas"],
+                                                     H1,
+                                                     H2,
+                                                     HHV,
+                                                     gasInformationFormInputData["Station_Capacity"])
+        print("Q without heat loss", Q_without_heat_loss)
 
         pass
 
