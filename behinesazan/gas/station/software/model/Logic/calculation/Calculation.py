@@ -46,39 +46,45 @@ class Calculation:
 
         before_heater_heat_loss_without_insulation_consumption = \
             capacity_calculation.gasConsumptionCal(gasInformationFormInputData["P_input"],
-                                            gasInformationFormInputData["T_input"],
-                                            gasInformationFormInputData["P_input"],
-                                            beforeHeaterHeatLoss.T_out_without_insulation,
-                                            gasInformationFormInputData["gas"],
-                                            Calculation.noHeatLossConsumption.HHV,
-                                            gasInformationFormInputData["Station_Capacity"])
+                                                   gasInformationFormInputData["T_input"],
+                                                   gasInformationFormInputData["P_input"],
+                                                   beforeHeaterHeatLoss.T_out_without_insulation,
+                                                   gasInformationFormInputData["gas"],
+                                                   Calculation.noHeatLossConsumption.HHV,
+                                                   gasInformationFormInputData["Station_Capacity"])
         before_heater_heat_loss_with_insulation_consumption = \
             capacity_calculation.gasConsumptionCal(gasInformationFormInputData["P_input"],
-                                            gasInformationFormInputData["T_input"],
-                                            gasInformationFormInputData["P_input"],
-                                            beforeHeaterHeatLoss.T_out_with_insulation,
-                                            gasInformationFormInputData["gas"],
-                                            Calculation.noHeatLossConsumption.HHV,
-                                            gasInformationFormInputData["Station_Capacity"])
+                                                   gasInformationFormInputData["T_input"],
+                                                   gasInformationFormInputData["P_input"],
+                                                   beforeHeaterHeatLoss.T_out_with_insulation,
+                                                   gasInformationFormInputData["gas"],
+                                                   Calculation.noHeatLossConsumption.HHV,
+                                                   gasInformationFormInputData["Station_Capacity"])
         after_heater_heat_loss_without_insulation_consumption = \
             capacity_calculation.gasConsumptionCal(gasInformationFormInputData["P_input"],
-                                            gasInformationFormInputData["T_input"],
-                                            gasInformationFormInputData["P_input"],
-                                            afterHeaterHeatLoss.T_out_without_insulation,
-                                            gasInformationFormInputData["gas"],
-                                            Calculation.noHeatLossConsumption.HHV,
-                                            gasInformationFormInputData["Station_Capacity"])
+                                                   afterHeaterHeatLoss.T_out_without_insulation,
+                                                   gasInformationFormInputData["P_input"],
+                                                   runHeatLoss.T_before_run,
+                                                   gasInformationFormInputData["gas"],
+                                                   Calculation.noHeatLossConsumption.HHV,
+                                                   gasInformationFormInputData["Station_Capacity"])
         after_heater_heat_loss_with_insulation_consumption = \
             capacity_calculation.gasConsumptionCal(gasInformationFormInputData["P_input"],
-                                            gasInformationFormInputData["T_input"],
-                                            gasInformationFormInputData["P_input"],
-                                            afterHeaterHeatLoss.T_out_with_insulation,
-                                            gasInformationFormInputData["gas"],
-                                            Calculation.noHeatLossConsumption.HHV,
-                                            gasInformationFormInputData["Station_Capacity"])
-        heatlosswithinsulation = [after_heater_heat_loss_with_insulation_consumption, before_heater_heat_loss_with_insulation_consumption]
+                                                   afterHeaterHeatLoss.T_out_with_insulation,
+                                                   gasInformationFormInputData["P_input"],
+                                                   runHeatLoss.T_before_run,
+                                                   gasInformationFormInputData["gas"],
+                                                   Calculation.noHeatLossConsumption.HHV,
+                                                   gasInformationFormInputData["Station_Capacity"])
+        afterheater = [Calculation.noHeatLossConsumption.Q_heater, after_heater_heat_loss_with_insulation_consumption,
+                       after_heater_heat_loss_without_insulation_consumption]
 
-        print(heatlosswithinsulation)
+        print(afterheater)
+
+        beforeheater = [Calculation.noHeatLossConsumption.Q_heater, before_heater_heat_loss_with_insulation_consumption,
+                        before_heater_heat_loss_without_insulation_consumption]
+
+        print(beforeheater)
 
         return Calculation.result
 
