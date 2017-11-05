@@ -77,6 +77,7 @@ class Calculation:
                                             Calculation.noHeatLossConsumption.HHV,
                                             gasInformationFormInputData["Station_Capacity"])
         heatlosswithinsulation = [after_heater_heat_loss_with_insulation_consumption, before_heater_heat_loss_with_insulation_consumption]
+
         print(heatlosswithinsulation)
 
         return Calculation.result
