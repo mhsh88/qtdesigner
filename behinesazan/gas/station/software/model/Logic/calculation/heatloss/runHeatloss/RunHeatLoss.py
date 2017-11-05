@@ -1,20 +1,23 @@
 from behinesazan.gas.station.software.model.HeatLoss.PipeLineEndDefined.PipeLineEndDefinedHeatLoss import PipeLineEnd
+from behinesazan.gas.station.software.model.Logic.calculation.capacityCalculation.CapacityCalculation import \
+    CapacityCalculation
 
 
 class RunHeatLoss:
     result = {}
     T_before_run = None
 
-    def __init__(self, runData, gasInformationFormInputData, T_regulator):
+    def __init__(self, runData, gasInformationFormInputData, T_regulator, HHV):
+        self.capacity_calculation = CapacityCalculation()
         if bool(runData) and 'Wind_velocity' in gasInformationFormInputData.keys() and \
                         "T_environment" in gasInformationFormInputData.keys() and \
                         "Station_Capacity" in gasInformationFormInputData.keys():
-            T_before_run = self.runCal(runData, gasInformationFormInputData)
+            self.T_before_run = self.runCal(runData, gasInformationFormInputData, T_regulator, HHV)
         else:
-            T_before_run = T_regulator
+            self.T_before_run = T_regulator
             return
 
-    def runCal(self, runData, gasInformationFormInputData, T_regulator):
+    def runCal(self, runData, gasInformationFormInputData, T_regulator, HHV):
         # print(runData['run_debi'])
         self.result.setdefault("heat_loss", {})
         self.result["heat_loss"].setdefault("run", {})
@@ -30,7 +33,18 @@ class RunHeatLoss:
                                                                runData["ID"],
                                                                runData["length"],
                                                                runData["run_debi"][key], 0, 0)
+            self.result["heat_loss"]["run"][key]["consumption"] = self.capacity_calculation.gasConsumptionCal(
+                gasInformationFormInputData["P_input"],
+                self.result["heat_loss"]["run"][key].Tout,
+                gasInformationFormInputData["P_input"],
+                T_regulator,
+                gasInformationFormInputData["gas"],
+                HHV,
+                runData["run_debi"][key])
 
-            t_max = max(t_max, Calculation.result["heat_loss"]["run"][key].Tout)
+
+
+
+            t_max = max(t_max, self.result["heat_loss"]["run"][key].Tout)
 
         return t_max

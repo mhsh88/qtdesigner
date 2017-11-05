@@ -1,5 +1,6 @@
 from behinesazan.gas.station.software.model.Combustion.Combustion import Combustion
-from behinesazan.gas.station.software.model.Logic.calculation.Calculation import Calculation
+from behinesazan.gas.station.software.model.Logic.calculation.capacityCalculation.CapacityCalculation import \
+    CapacityCalculation
 from behinesazan.gas.station.software.model.Regulator.Regulator import Regulator
 
 
@@ -15,13 +16,11 @@ class NoHeatLossConsumption:
         regulator = Regulator(gasInformationFormInputData["P_input"], gasInformationFormInputData["T_station_out"],
                               gasInformationFormInputData["P_station_out"], gasInformationFormInputData["gas"])
         tBeforeRegulator = regulator.Tin
-        gasInformationFormInputData["gas"].calculate(gasInformationFormInputData["P_input"],
-                                                     gasInformationFormInputData["T_input"])
-        H1 = gasInformationFormInputData["gas"].H
-        gasInformationFormInputData["gas"].calculate(gasInformationFormInputData["P_input"], tBeforeRegulator)
-        H2 = gasInformationFormInputData["gas"].H
 
-        # Calculation.result["T_before_regulator"] = tBeforeRegulator
+
+        capacity_calculation = CapacityCalculation()
+
+
         self.T_before_regulator = tBeforeRegulator
 
         # for temporary calculation
@@ -35,10 +34,13 @@ class NoHeatLossConsumption:
         # check if Station Capacity is entered to calculation amount of energy needed
 
         if "Station_Capacity" in gasInformationFormInputData.keys():
-            self.Q_heater = Calculation.__capacityCal(gasInformationFormInputData["P_input"],
-                                                      gasInformationFormInputData["T_input"],
-                                                      gasInformationFormInputData["gas"], H1, H2, HHV,
-                                                      gasInformationFormInputData["Station_Capacity"])
+            self.Q_heater = capacity_calculation.gasConsumptionCal(gasInformationFormInputData["P_input"],
+                                                                   gasInformationFormInputData["T_input"],
+                                                                   gasInformationFormInputData["P_input"],
+                                                                   tBeforeRegulator,
+                                                                   gasInformationFormInputData["gas"],
+                                                                   self.HHV,
+                                                                   gasInformationFormInputData["Station_Capacity"])
 
         pass
 
