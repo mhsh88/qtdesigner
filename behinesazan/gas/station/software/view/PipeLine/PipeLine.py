@@ -67,6 +67,7 @@ class PipeLine(QtWidgets.QWidget, BasePipeLine.Ui_Form):
         super(PipeLine, self).__init__(parent)
         self.setupUi(self)
 
+        self.data = {}
         self.lineEdit.setPlaceholderText("ex: 20")
 
         # self.thermal_conductivity_label.setFixedSize(self.thermal_conductivity_label.width(),
