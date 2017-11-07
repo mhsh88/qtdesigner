@@ -86,7 +86,13 @@ class Calculation:
 
         print(beforeheater)
 
-        return Calculation.result
+
+        string =  ("دمای هیدرات = %s \n"
+                "بار حرارتی = %s\n"
+                "راندمان مشعل = %s\n"
+                   "" % (Calculation.noHeatLossConsumption.T_hydrate, Calculation.noHeatLossConsumption.Q_heater +
+                      after_heater_heat_loss_with_insulation_consumption, combustionCalculation.efficiency))
+        print(string)
 
 
 if __name__ == "__main__":
