@@ -7,6 +7,7 @@ class Combustion:
     O2factor = [0, 0, 2, 3.5, 5, 6.5, 6.5, 8, 8, 9.5, 11, 12.5, 14, 15.5, 1, 0, 0.5, 0, 0, 0, 0]
     H2Ofactor = [0, 0, 2, 3, 4, 5, 5, 6, 6, 7, 8, 9, 10, 11, 2, 0, 0, 1, 0, 0, 0]
     CO2factor = [0, 1, 1, 2, 3, 4, 4, 5, 5, 6, 7, 8, 9, 10, 0, 0, 1, 0, 0, 0, 0]
+    N2factor = np.multiply([1/3.76, 0, 2, 3.5, 5, 6.5, 6.5, 8, 8, 9.5, 11, 12.5, 14, 15.5, 1, 0, 0.5, 0, 0, 0, 0],  3.76)
     dencity = [1.2504, 1.977, 0.7175, 1.355, 2.011, 2.7083, 2.5326, 2.975, 2.975, 0, 0, 0, 0, 0, 0.0845, 1.429, 1.165,
                0.5040, 1.434, 0.1664, 1.661]
     HHV = [0, 0, 55499, 51876, 50346, 49500, 49500, 48776, 48776, 0, 0, 0, 0, 0, 141790, 0, 10160.4048, 0, 0, 0, 0]
@@ -27,28 +28,45 @@ class Combustion:
     def __init__(self, g, O2percent, Tamb, Tstack):
         g.calculate(101.325, 273.15 + 15)
         A0 = 1 / 0.21 * np.dot(g.component, self.O2factor)
-
-        G0 = 1 + A0
+        G0prime = np.dot(g.component, self.CO2factor) + 3.76 * np.dot(g.component, self.O2factor)
         Gwf = np.dot(g.component, self.H2Ofactor)
-        G0prime = G0 - Gwf
+
+        G0 = G0prime + Gwf
+
         CO2max = 100 / G0prime * np.dot(g.component, self.CO2factor)
 
         landa = 1 + ((G0prime / A0) * (O2percent / (21 - O2percent)))
+        dry_mass = np.dot(self.CO2factor, g.component) * 44.01 + np.dot(self.O2factor, g.component) * 32 * (landa - 1) +\
+                   np.dot(self.N2factor, g.component) * landa * 28.01
+        dry_mass_fraction = dry_mass/g.M
         CO2 = CO2max * ((21 - O2percent) / 21)
+        # O2 = O2percent  # TODO check
         O2 = 21 - (21 / landa)
         N2 = 100 - (O2 + CO2)
-        CP_Stack = self.Cp_Co2(Tstack) * CO2 / 100 + self.Cp_O2(Tstack) * O2 / 100 + self.Cp_N2(Tstack) * N2 / 100
-        CP_amb = self.Cp_Co2(Tamb) * CO2 / 100 + self.Cp_O2(Tamb) * O2 / 100 + self.Cp_N2(Tamb) * N2 / 100
+        dry_gas_dencity = np.dot([N2, CO2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, O2, 0, 0, 0, 0, 0],
+                                 self.dencity) / 100
+        CP_Stack = (self.Cp_Co2(Tstack) * CO2 / 100 + self.Cp_O2(Tstack) * O2 / 100 + self.Cp_N2(
+            Tstack) * N2 / 100) / dry_gas_dencity
+        CP_amb = (self.Cp_Co2(Tamb) * CO2 / 100 + self.Cp_O2(Tamb) * O2 / 100 + self.Cp_N2(
+            Tamb) * N2 / 100) / dry_gas_dencity
 
-        latent_heat = 2260
+        CP_Total_mass = (CP_Stack + CP_amb) / (2 * dry_gas_dencity)
+
+        if Tstack < 55:
+            latent_heat = 0
+        else:
+            latent_heat = 2260
 
         massFraction = np.multiply(g.component, self.dencity) / np.dot(g.component, self.dencity)
         mH2O = np.dot(self.H2Ofactor, g.component) * 18.02
-        muH2OtoFuel = mH2O / g.M
+        mH20_fraction = mH2O / g.M
+        # muH2OtoFuel = mH2O / g.M
         heatCapacity = np.dot(self.HHV, massFraction)
         self.HHVd = heatCapacity * g.D
-        self.loss = (G0prime * 21 / (21 - O2percent) * (CP_Stack * Tstack - CP_amb * Tamb) + Gwf * (
-            self.Cp_H2O(Tstack) * Tstack - self.Cp_H2O(Tstack) * Tstack) + Gwf * latent_heat) / self.HHVd
+        # (G0prime * 21 / (21 - O2percent)
+        self.loss = (dry_mass_fraction * (CP_Stack * Tstack - CP_amb * Tamb) + mH20_fraction * (
+            (self.Cp_H2O(Tstack) / self.ro_H2O(Tstack)) * Tstack - (self.Cp_H2O(Tamb) / self.ro_H2O(Tamb)) * Tamb) +
+                     mH20_fraction * latent_heat) / self.HHVd
         self.eff = 1 - self.loss
 
 

@@ -21,6 +21,7 @@ class RunHeatLoss:
     def runCal(self, runData, gasInformationFormInputData, T_regulator, HHV):
         # print(runData['run_debi'])
         self.heatloss = ""
+        consumption = {}
         self.result.setdefault("heat_loss", {})
         self.result["heat_loss"].setdefault("run", {})
         t_max = 0
@@ -38,7 +39,7 @@ class RunHeatLoss:
                                                                runData["length"],
                                                                runData["run_debi"][key], 0, 0)
 
-            consumption = self.capacity_calculation.gasConsumptionCal(
+            consumptionTemp = self.capacity_calculation.gasConsumptionCal(
                 gasInformationFormInputData["P_input"],
                 self.result["heat_loss"]["run"][key].Tout,
                 gasInformationFormInputData["P_input"],
@@ -46,10 +47,10 @@ class RunHeatLoss:
                 gasInformationFormInputData["gas"],
                 HHV,
                 runData["run_debi"][key])
-            self.result["heat_loss"]["run"][key]["consumption"] = consumption
+            consumption[key] = consumptionTemp
 
             t_max = max(t_max, self.result["heat_loss"]["run"][key].Tout)
-            # string = ("تلفات حرارتی ران %s ،%s\n" % (key, self.result["heat_loss"]["run"][key]["consumption"]))
-            # self.heatloss += string
+            string = ("تلفات حرارتی ران %s ،%s\n" % (key, consumption[key]))
+            self.heatloss += string
 
         return t_max

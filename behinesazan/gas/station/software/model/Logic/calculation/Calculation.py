@@ -32,13 +32,13 @@ class Calculation:
         combustionCalculation.combustionCal(heaterData, gasInformationFormInputData)
 
         runHeatLoss = RunHeatLoss(runData, gasInformationFormInputData,
-                                  Calculation.noHeatLossConsumption.T_before_regulator, Calculation.noHeatLossConsumption.HHV)
+                                  Calculation.noHeatLossConsumption.T_before_regulator,
+                                  Calculation.noHeatLossConsumption.HHV)
 
         afterHeaterHeatLoss = AfterHeaterHeatLoss(afterHeaterLineData, gasInformationFormInputData,
-                                                                runHeatLoss.T_before_run)
+                                                  runHeatLoss.T_before_run)
 
         beforeHeaterHeatLoss = BeforeHeaterHeatLoss(beforeHeaterLineData, gasInformationFormInputData)
-
 
         consumption_without_heatloss = Calculation.noHeatLossConsumption.Q_heater
 
@@ -76,6 +76,14 @@ class Calculation:
                                                    gasInformationFormInputData["gas"],
                                                    Calculation.noHeatLossConsumption.HHV,
                                                    gasInformationFormInputData["Station_Capacity"])
+
+        heater_consumption = capacity_calculation.gasConsumptionCal(gasInformationFormInputData["P_input"],
+                                                                    beforeHeaterHeatLoss.T_out_without_insulation,
+                                                                    gasInformationFormInputData["P_input"],
+                                                                    afterHeaterHeatLoss.T_out_with_insulation,
+                                                                    gasInformationFormInputData["gas"],
+                                                                    Calculation.noHeatLossConsumption.HHV,
+                                                                    gasInformationFormInputData["Station_Capacity"])
         afterheater = [Calculation.noHeatLossConsumption.Q_heater, after_heater_heat_loss_with_insulation_consumption,
                        after_heater_heat_loss_without_insulation_consumption]
 
@@ -85,14 +93,36 @@ class Calculation:
                         before_heater_heat_loss_without_insulation_consumption]
 
         print(beforeheater)
+        saving_percent = Calculation.difference_heatloss(Calculation.noHeatLossConsumption.Q_heater, heater_consumption,
+                                        before_heater_heat_loss_without_insulation_consumption,
+                                        before_heater_heat_loss_with_insulation_consumption,
+                                        after_heater_heat_loss_without_insulation_consumption,
+                                        after_heater_heat_loss_with_insulation_consumption)
 
+        string = ("دمای هیدرات = %s \n"
+                  "بار حرارتی = %s\n"
+                  "راندمان مشعل = %s\n"
+                  "تلفات حرارتی ران = %s\n"
+                  "دمای گاز قبل از رگولاتور = %s\n"
+                  "درصد صرفه جویی عایق = %s\n" % (Calculation.noHeatLossConsumption.T_hydrate,
+                        Calculation.noHeatLossConsumption.Q_heater +
+                        after_heater_heat_loss_with_insulation_consumption,
+                        combustionCalculation.efficiency,
+                        runHeatLoss.heatloss,
+                        round(Calculation.noHeatLossConsumption.T_before_regulator[0], 3)
+                        - 273.15, round(saving_percent[0], 6)*100))
 
-        string =  ("دمای هیدرات = %s \n"
-                "بار حرارتی = %s\n"
-                "راندمان مشعل = %s\n"
-                   "تلفات حرارتی ران = %s\n" % (Calculation.noHeatLossConsumption.T_hydrate, Calculation.noHeatLossConsumption.Q_heater +
-                      after_heater_heat_loss_with_insulation_consumption, combustionCalculation.efficiency, runHeatLoss.heatloss))
         print(string)
+
+    @staticmethod
+    def difference_heatloss(q_heater, q_heater_heat_loss, before, before_insulation, after, after_insulation):
+        before = before * -1
+        before_insulation = before_insulation * -1
+        after = after * -1
+        after_insulation = after_insulation * -1
+        Q_with_heat_loss = q_heater + before + after
+        Q_with_insulation = q_heater + before_insulation + after_insulation
+        return (Q_with_heat_loss - Q_with_insulation)/Q_with_heat_loss
 
 
 if __name__ == "__main__":
