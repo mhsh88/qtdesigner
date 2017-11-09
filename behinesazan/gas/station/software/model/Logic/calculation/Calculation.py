@@ -1,3 +1,5 @@
+import copy
+
 from behinesazan.gas.station.software.model.Combustion.Combustion import Combustion
 from behinesazan.gas.station.software.model.HeatLoss.PipeLineEndDefined.PipeLineEndDefinedHeatLoss import PipeLineEnd
 from behinesazan.gas.station.software.model.HeatLoss.PipeLineHeadDefined.PipeLineHeadDefinedHeatLoss import PipeLineHead
@@ -24,12 +26,26 @@ class Calculation:
 
     @staticmethod
     def calculate(gasInformationFormInputData, beforeHeaterLineData, heaterData, afterHeaterLineData, runData):
+        temp = copy.deepcopy(gasInformationFormInputData)
+        Tout_by_user_input = Calculation.consumption_calculation(temp, beforeHeaterLineData, heaterData, afterHeaterLineData, runData)
+        temp1 = copy.deepcopy(gasInformationFormInputData)
+        temp1["T_station_out"] = Calculation.noHeatLossConsumption.T_hydrate + 273.15
+        print(gasInformationFormInputData["T_station_out"])
+        print(temp1["T_station_out"])
+        Tout_equals_to_T_hydrate = Calculation.consumption_calculation(temp1,
+                                                                       beforeHeaterLineData,
+                                                                       heaterData, afterHeaterLineData, runData)
+        pass
+
+    @staticmethod
+    def consumption_calculation(gasInformationFormInputData, beforeHeaterLineData, heaterData, afterHeaterLineData, runData):
         # try:
         Calculation.noHeatLossConsumption = NoHeatLossConsumption(gasInformationFormInputData)
 
         # check if heater data form is defined and air temperature is defined in Gas information form input data
         combustionCalculation = CombustionCalculation()
         combustionCalculation.combustionCal(heaterData, gasInformationFormInputData)
+
 
         runHeatLoss = RunHeatLoss(runData, gasInformationFormInputData,
                                   Calculation.noHeatLossConsumption.T_before_regulator,
@@ -94,10 +110,10 @@ class Calculation:
 
         print(beforeheater)
         saving_percent = Calculation.difference_heatloss(Calculation.noHeatLossConsumption.Q_heater, heater_consumption,
-                                        before_heater_heat_loss_without_insulation_consumption,
-                                        before_heater_heat_loss_with_insulation_consumption,
-                                        after_heater_heat_loss_without_insulation_consumption,
-                                        after_heater_heat_loss_with_insulation_consumption)
+                                                         before_heater_heat_loss_without_insulation_consumption,
+                                                         before_heater_heat_loss_with_insulation_consumption,
+                                                         after_heater_heat_loss_without_insulation_consumption,
+                                                         after_heater_heat_loss_with_insulation_consumption)
 
         string = ("دمای هیدرات = %s \n"
                   "بار حرارتی = %s\n"
@@ -105,24 +121,27 @@ class Calculation:
                   "تلفات حرارتی ران = %s\n"
                   "دمای گاز قبل از رگولاتور = %s\n"
                   "درصد صرفه جویی عایق = %s\n" % (Calculation.noHeatLossConsumption.T_hydrate,
-                        Calculation.noHeatLossConsumption.Q_heater +
-                        after_heater_heat_loss_with_insulation_consumption,
-                        combustionCalculation.efficiency,
-                        runHeatLoss.heatloss,
-                        round(Calculation.noHeatLossConsumption.T_before_regulator[0], 3)
-                        - 273.15, round(saving_percent[0], 6)*100))
+                                                  Calculation.noHeatLossConsumption.Q_heater +
+                                                  after_heater_heat_loss_with_insulation_consumption,
+                                                  combustionCalculation.efficiency,
+                                                  runHeatLoss.heatloss,
+                                                  Calculation.noHeatLossConsumption.T_before_regulator - 273.15,
+                                                  saving_percent * 100))
 
         print(string)
+        return string
 
     @staticmethod
     def difference_heatloss(q_heater, q_heater_heat_loss, before, before_insulation, after, after_insulation):
+        if q_heater < 0.0000000001:
+            return 0.0
         before = before * -1
         before_insulation = before_insulation * -1
         after = after * -1
         after_insulation = after_insulation * -1
         Q_with_heat_loss = q_heater + before + after
         Q_with_insulation = q_heater + before_insulation + after_insulation
-        return (Q_with_heat_loss - Q_with_insulation)/Q_with_heat_loss
+        return (Q_with_heat_loss - Q_with_insulation) / Q_with_heat_loss
 
 
 if __name__ == "__main__":

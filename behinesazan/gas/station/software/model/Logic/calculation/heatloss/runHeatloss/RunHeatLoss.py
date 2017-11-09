@@ -8,7 +8,7 @@ class RunHeatLoss:
     T_before_run = None
 
     def __init__(self, runData, gasInformationFormInputData, T_regulator, HHV):
-        self.heatloss = ""
+        self.heatloss = []
         self.capacity_calculation = CapacityCalculation()
         if bool(runData) and 'Wind_velocity' in gasInformationFormInputData.keys() and \
                         "T_environment" in gasInformationFormInputData.keys() and \
@@ -20,7 +20,7 @@ class RunHeatLoss:
 
     def runCal(self, runData, gasInformationFormInputData, T_regulator, HHV):
         # print(runData['run_debi'])
-        self.heatloss = ""
+        self.heatloss = []
         consumption = {}
         self.result.setdefault("heat_loss", {})
         self.result["heat_loss"].setdefault("run", {})
@@ -50,7 +50,9 @@ class RunHeatLoss:
             consumption[key] = consumptionTemp
 
             t_max = max(t_max, self.result["heat_loss"]["run"][key].Tout)
-            string = ("تلفات حرارتی ران %s ،%s\n" % (key, consumption[key]))
-            self.heatloss += string
+            string = ("تلفات حرارتی ران %s" % key)
+            print(type(consumption[key][0]))
+            run = [string, consumption[key][0]]
+            self.heatloss.append(run)
 
         return t_max

@@ -20,84 +20,38 @@ class GasInformationInputForm(QtWidgets.QWidget, BaseGasInformationInputForm.Ui_
         super(GasInformationInputForm, self).__init__(parent)
         self.setupUi(self)
 
-        self.label_34.setVisible(False)
-        self.label_33.setVisible(False)
+        # self.label_34.setVisible(False)
+        # self.label_33.setVisible(False)
         self.label_37.setVisible(False)
         self.label_38.setVisible(False)
         self.label_39.setVisible(False)
         self.label_40.setVisible(False)
         self.label_23.setVisible(False)
+        self.address_input
         # TODO create clear button
         self.pushButton_2.clicked.connect(self.cancel)
         self.pushButton.clicked.connect(self.datagather)
+
+    def clear(self):
+        self = GasInformationInputForm()
+        self.show()
 
     def datagather(self):
         self.toutCheck = False
         self.windCheck = False
         self.humidityCheck = False
         self.stationCapacityCheck = False
+        self.tStandard = 273.15
+        self.data["T_Standard"] = 273.15 + 15
+        self.pStandard = 101.325
+        self.data["P_Standard"] = 101.325
+        self.data["address"] = self.address_input.toPlainText()
+        print(self.data['address'])
+        self.data["province"] = self.province_input.text()
+        self.data["city"] = self.city_input.text()
+        self.data["nominal_capacity"] = self.station_nominal_capacity.text()
+
         try:
-
-            # T standard
-
-            if self.lineEdit_23.text() != "":
-                try:
-                    if float(self.lineEdit_23.text()) < -273.15:
-                        QMessageBox.about(self, "خطا در اطلاعات ورودی",
-                                          "لطفاً اطلاعات دمای استاندارد صحیح وارد نمایید.")
-                        self.label_34.setVisible(True)
-                        self.label_23.setVisible(True)
-                        return
-
-                    else:
-                        self.tStandard = float(self.lineEdit_23.text()) + 273.15
-                        self.data["T_Standard"] = self.tStandard
-                        self.label_34.setVisible(False)
-                        self.label_23.setVisible(False)
-                except:
-                    QMessageBox.about(self, "خطا در اطلاعات ورودی",
-                                      "اطلاعات دما به درستی وارد نشده است. لطفاً اطلاعات صحیح وارد نمایید.")
-                    self.label_34.setVisible(True)
-                    self.label_23.setVisible(True)
-                    return
-
-            else:
-                self.label_34.setVisible(True)
-                self.label_23.setVisible(True)
-
-            # P Standard
-            if self.lineEdit_22.text() != "":
-                try:
-
-                    if float(self.lineEdit_22.text()) <= 0:
-                        QMessageBox.about(self, "خطا در اطلاعات ورودی",
-                                          "فشار گاز مطلق وارد کنید. فشار استاندارد گاز  باید از صفر بیشتر باشد. لطفاً "
-                                          "اطلاعات صحیح وارد نمایید.")
-                        self.label_33.setVisible(True)
-                        self.label_23.setVisible(True)
-                        return
-
-                    else:
-                        self.pStandard = float(self.lineEdit_22.text()) * 6.89476
-                        self.data["P_Standard"] = self.pStandard
-
-                        self.label_33.setVisible(False)
-                        self.label_23.setVisible(False)
-
-                except:
-                    QMessageBox.about(self, "خطا در اطلاعات ورودی",
-                                      "اطلاعات فشار استاندارد گاز ورودی به درستی وارد نشده است. لطفاً اطلاعات صحیح "
-                                      "وارد نمایید.")
-                    self.label_33.setVisible(True)
-                    self.label_23.setVisible(True)
-                    return
-
-
-            else:
-                self.label_33.setVisible(True)
-                self.label_23.setVisible(True)
-
-
                 # T in gas TEmperature
 
             if self.lineEdit_25.text() != "":
@@ -280,6 +234,9 @@ class GasInformationInputForm(QtWidgets.QWidget, BaseGasInformationInputForm.Ui_
                 except:
                     QMessageBox.about(self, "خطا در اطلاعات ورودی",
                                       "ظرفیت ایستگاه به درستی وارد نشده است. لطفاً اطلاعات صحیح وارد نمایید.")
+            else:
+                self.stationCapacity = 0
+                self.data["Station_Capacity"] = self.stationCapacity
 
             self.g.component[0] = float(self.lineEdit.text())
             self.g.component[1] = float(self.lineEdit_2.text())
@@ -386,4 +343,5 @@ if __name__ == "__main__":
     Form = QtWidgets.QWidget()
     ui = GasInformationInputForm()
     ui.show()
+    ui.clear()
     sys.exit(app.exec_())

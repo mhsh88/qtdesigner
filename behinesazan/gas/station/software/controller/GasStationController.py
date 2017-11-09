@@ -8,6 +8,7 @@
 
 import math
 import sys
+import traceback
 
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QMessageBox
@@ -241,6 +242,7 @@ class Calculate:  # (GasStation):
             except Exception as e:
                 print("saalm")
                 print(e)
+                print(traceback.format_exc())
                 return
             print(self.station.gasInformationInputForm.data)
         else:
