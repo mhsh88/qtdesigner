@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'heater.ui'
+# Form implementation generated from reading ui file 'C:\Users\hossein.sharifi\PycharmProjects\pyqtdesigner\behinesazan\gas\station\software\view\Heater\ui\heater.ui'
 #
 # Created by: PyQt5 UI code generator 5.6
 #
@@ -113,6 +113,7 @@ class Ui_Form(object):
         self.burner_number_comboBox.setObjectName("burner_number_comboBox")
         self.burner_number_comboBox.addItem("")
         self.burner_number_comboBox.addItem("")
+        self.burner_number_comboBox.addItem("")
         self.verticalLayout.addWidget(self.burner_number_comboBox)
         self.horizontalLayout.addLayout(self.verticalLayout)
         self.verticalLayout_5.addWidget(self.groupBox_2)
@@ -157,6 +158,7 @@ class Ui_Form(object):
         self.burner_number_label.setText(_translate("Form", "مشعل "))
         self.burner_number_comboBox.setItemText(0, _translate("Form", "1"))
         self.burner_number_comboBox.setItemText(1, _translate("Form", "2"))
+        self.burner_number_comboBox.setItemText(2, _translate("Form", "3"))
         self.cancelButton.setText(_translate("Form", "Cancel"))
         self.okButton.setText(_translate("Form", "Ok"))
 

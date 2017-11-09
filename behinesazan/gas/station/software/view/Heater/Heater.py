@@ -12,7 +12,7 @@ class Heater(QtWidgets.QWidget, BaseHeater.Ui_Form):
         super(Heater, self).__init__(parent)
         self.setupUi(self)
 
-        self.heater_number_input.setValidator(QIntValidator(1, 100, self.heater_number_input))
+        self.heater_number_input.setValidator(QIntValidator(1, 20, self.heater_number_input))
 
         self.heater_number_input.textChanged[str].connect(self.heaterNumber)
         self.okButton.clicked.connect(self.okbutton)

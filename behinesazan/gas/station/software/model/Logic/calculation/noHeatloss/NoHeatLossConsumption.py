@@ -11,7 +11,7 @@ class NoHeatLossConsumption:
     HHV = None
 
     def __init__(self, gasInformationFormInputData):
-        tempHHV = Combustion(gasInformationFormInputData["gas"], 2, 15, 200)
+        tempHHV = Combustion(gasInformationFormInputData["gas"], 2, 15+273.15, 200)
         self.HHV = tempHHV.HHVd
         regulator = Regulator(gasInformationFormInputData["P_input"], gasInformationFormInputData["T_station_out"],
                               gasInformationFormInputData["P_station_out"], gasInformationFormInputData["gas"])
