@@ -1,7 +1,7 @@
 from PyQt5 import QtWidgets
 import sys
 
-from PyQt5.QtGui import QDoubleValidator
+from PyQt5.QtGui import QDoubleValidator, QIntValidator
 from PyQt5.QtWidgets import QMessageBox
 
 from behinesazan.gas.station.software.view.Run.base import BaseRun
@@ -77,6 +77,12 @@ class Run(QtWidgets.QWidget, BaseRun.Ui_Form):
         self.debi_input.setPlaceholderText("20000 m3/hr")
         self.run_width_input.setPlaceholderText("ex: 5")
 
+        # input run modifying
+
+        self.run_input_number.setValidator(QIntValidator(1, 10, self.run_input_number))
+        # setting function for run input changing font
+        self.run_input_number.textChanged[str].connect(self.runNumber)
+
 
 
         self.debi_input.textChanged.connect(self.debi_input_textChange)
@@ -98,7 +104,6 @@ class Run(QtWidgets.QWidget, BaseRun.Ui_Form):
         self.debi_input.setValidator(debi_input_validator)
 
 
-        self.label_4.setVisible(False)
 
         self.okButton.clicked.connect(self.datagather)
         self.cancelButton.clicked.connect(self.cancel)
@@ -122,6 +127,18 @@ class Run(QtWidgets.QWidget, BaseRun.Ui_Form):
             # elif self.radioButton_2.isChecked():
             #     QMessageBox.about(self, "radiobutton2", "radio button2 is checked")
             #     pass
+
+    def runNumber(self):
+        self.run_number_comboBox.clear()
+        if self.run_input_number.text() == "":
+            return
+        number = int(self.run_input_number.text())
+        item = []
+        for i in range(1, number + 1):
+            item.append(str(i))
+
+        self.run_number_comboBox.addItems(item)
+        return
 
     def debi_input_textChange(self):
         if self.debi_input.text() =="":
@@ -187,7 +204,6 @@ class Run(QtWidgets.QWidget, BaseRun.Ui_Form):
                 # float(self.lineEdit.text()) <= 0 or float(self.lineEdit_2.text()) * 0.01 <= 0 or float(
                 # self.lineEdit_3.text()) * 0.01 <= 0 or float(self.lineEdit_3.text()) * 0.01 >= float(
                 # self.lineEdit_2.text()) * 0.01 / 2:
-                self.label_4.setVisible(True)
                 # self.label_5.setVisible(True)
                 # self.label_6.setVisible(True)
                 QMessageBox.about(self, "خطا در اطلاعات ورودی", "لطفاً اطلاعات صحیح وارد فرمایید")
@@ -209,7 +225,6 @@ class Run(QtWidgets.QWidget, BaseRun.Ui_Form):
                     self.inputlineID = self.inputlineOD - 2 * (float(self.outer_diameter_comboBox.currentText()) * 25.4
                                                                * 0.001)
 
-                self.label_4.setVisible(False)
                 self.inputCheck = True
 
 
@@ -242,7 +257,6 @@ class Run(QtWidgets.QWidget, BaseRun.Ui_Form):
             print(sys.exc_info()[2])
             print(sys.exc_info()[2])
             self.inputCheck = False
-            self.label_4.setVisible(True)
             # self.label_5.setVisible(True)
             # self.label_6.setVisible(True)
             QMessageBox.about(self, "خطا در اطلاعات ورودی", "لطفاً اطلاعات صحیح وارد فرمایید")
@@ -251,7 +265,6 @@ class Run(QtWidgets.QWidget, BaseRun.Ui_Form):
 
     def cancel(self):
         self.data.clear()
-        self.label_4.setVisible(False)
         # self.label_5.setVisible(False)
         # self.label_6.setVisible(False)
         self.close()

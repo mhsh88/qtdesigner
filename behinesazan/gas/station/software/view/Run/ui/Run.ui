@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>403</width>
+    <width>509</width>
     <height>233</height>
    </rect>
   </property>
@@ -81,27 +81,8 @@
        </item>
        <item row="0" column="0">
         <layout class="QGridLayout" name="gridLayout">
-         <item row="1" column="3">
-          <widget class="QLineEdit" name="run_length_input">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="5">
-          <widget class="QLabel" name="run_length_label">
-           <property name="font">
-            <font>
-             <family>B Mitra</family>
-             <pointsize>10</pointsize>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>طول ران (m):</string>
-           </property>
-          </widget>
+         <item row="3" column="1">
+          <widget class="QComboBox" name="outer_diameter_comboBox"/>
          </item>
          <item row="3" column="0">
           <widget class="QComboBox" name="thickness_comboBox"/>
@@ -109,8 +90,15 @@
          <item row="3" column="2">
           <widget class="QComboBox" name="nominal_diameter_comboBox"/>
          </item>
-         <item row="2" column="5">
-          <widget class="QLabel" name="label_2">
+         <item row="1" column="4">
+          <widget class="QLineEdit" name="run_length_input">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="3">
+          <widget class="QLabel" name="run_width_label">
            <property name="font">
             <font>
              <family>B Mitra</family>
@@ -120,7 +108,23 @@
             </font>
            </property>
            <property name="text">
-            <string>سایز لوله:</string>
+            <string>طول کلکتور (m):</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="4">
+          <widget class="QLineEdit" name="run_input_number">
+           <property name="toolTip">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;تعداد ران ها (بیشینه 10)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="inputMethodHints">
+            <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers|Qt::ImhTime</set>
+           </property>
+           <property name="maxLength">
+            <number>120</number>
            </property>
           </widget>
          </item>
@@ -142,8 +146,8 @@
            </property>
           </widget>
          </item>
-         <item row="2" column="1">
-          <widget class="QLabel" name="label_5">
+         <item row="0" column="5">
+          <widget class="QLabel" name="run_number_label">
            <property name="font">
             <font>
              <family>B Mitra</family>
@@ -153,28 +157,7 @@
             </font>
            </property>
            <property name="text">
-            <string>قطر خارجی:</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="label_6">
-           <property name="font">
-            <font>
-             <family>B Mitra</family>
-             <pointsize>10</pointsize>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>ضخامت دیواره:</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
+            <string>تعداد ران:</string>
            </property>
           </widget>
          </item>
@@ -217,86 +200,7 @@
            </property>
           </widget>
          </item>
-         <item row="3" column="1">
-          <widget class="QComboBox" name="outer_diameter_comboBox"/>
-         </item>
-         <item row="1" column="4">
-          <widget class="QLabel" name="label_4">
-           <property name="styleSheet">
-            <string notr="true">QLabel#label_4{ 
-
-color : red;
-
- }</string>
-           </property>
-           <property name="text">
-            <string>*</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="5">
-          <widget class="QLabel" name="run_number_label">
-           <property name="font">
-            <font>
-             <family>B Mitra</family>
-             <pointsize>10</pointsize>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>تعداد ران:</string>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="3">
-          <widget class="QComboBox" name="run_number_comboBox">
-           <property name="font">
-            <font>
-             <family>B Mitra</family>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <item>
-            <property name="text">
-             <string>1</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>2</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>3</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item row="1" column="2">
-          <widget class="QLabel" name="run_width_label">
-           <property name="font">
-            <font>
-             <family>B Mitra</family>
-             <pointsize>10</pointsize>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>طول کلکتور (m):</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="run_width_input"/>
-         </item>
-         <item row="0" column="0">
-          <widget class="QLineEdit" name="debi_input"/>
-         </item>
-         <item row="0" column="1" colspan="2">
           <widget class="QLabel" name="debi_label">
            <property name="font">
             <font>
@@ -311,6 +215,89 @@ color : red;
            </property>
           </widget>
          </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="debi_input"/>
+         </item>
+         <item row="2" column="5">
+          <widget class="QLabel" name="label_2">
+           <property name="font">
+            <font>
+             <family>B Mitra</family>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>سایز لوله:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLabel" name="label_5">
+           <property name="font">
+            <font>
+             <family>B Mitra</family>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>قطر خارجی:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_6">
+           <property name="font">
+            <font>
+             <family>B Mitra</family>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>ضخامت دیواره:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="5">
+          <widget class="QLabel" name="run_length_label">
+           <property name="font">
+            <font>
+             <family>B Mitra</family>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>طول ران (m):</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QComboBox" name="run_number_comboBox">
+           <property name="font">
+            <font>
+             <family>B Mitra</family>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QLineEdit" name="run_width_input"/>
+         </item>
         </layout>
        </item>
       </layout>
@@ -320,6 +307,7 @@ color : red;
   </layout>
  </widget>
  <tabstops>
+  <tabstop>run_input_number</tabstop>
   <tabstop>run_number_comboBox</tabstop>
   <tabstop>debi_input</tabstop>
   <tabstop>run_length_input</tabstop>
