@@ -28,6 +28,21 @@ class Combustion:
 
     def __init__(self, g, O2percent, Tamb, Tstack):
         Tamb = Tamb - 273.15
+        if Tamb <= 100:
+            Tamp_temp = 100
+        elif Tamb >= 500:
+            Tamp_temp = 500
+        else:
+            Tamp_temp = Tamb
+
+        if Tstack <= 0:
+            Tstack_temp = 0
+        elif Tstack >= 1000:
+            Tstack_temp = 1000
+        else:
+            Tstack_temp = Tstack
+
+
         g.calculate(101.325, 273.15 + 15)
         A0 = 1 / 0.21 * np.dot(g.component, self.O2factor)
         G0prime = np.dot(g.component, self.CO2factor) + 3.76 * np.dot(g.component, self.O2factor)
@@ -47,17 +62,15 @@ class Combustion:
         N2 = 100 - (O2 + CO2)
         dry_gas_dencity = np.dot([N2, CO2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, O2, 0, 0, 0, 0, 0],
                                  self.dencity) / 100
-        CP_Stack = (self.Cp_Co2(Tstack) * CO2 / 100 + self.Cp_O2(Tstack) * O2 / 100 + self.Cp_N2(
-            Tstack) * N2 / 100) / dry_gas_dencity
-        CP_amb = (self.Cp_Co2(Tamb) * CO2 / 100 + self.Cp_O2(Tamb) * O2 / 100 + self.Cp_N2(
-            Tamb) * N2 / 100) / dry_gas_dencity
+        CP_Stack = (self.Cp_Co2(Tstack_temp) * CO2 / 100 + self.Cp_O2(Tstack_temp) * O2 / 100 + self.Cp_N2(
+            Tstack_temp) * N2 / 100) / dry_gas_dencity
+        CP_amb = (self.Cp_Co2(Tamp_temp) * CO2 / 100 + self.Cp_O2(Tamp_temp) * O2 / 100 + self.Cp_N2(
+            Tamp_temp) * N2 / 100) / dry_gas_dencity
 
-        CP_Total_mass = (CP_Stack + CP_amb) / (2 * dry_gas_dencity)
-
-        if Tstack < 55 + 273.15:
+        if Tstack < 60.09:
             latent_heat = 0
         else:
-            latent_heat = 2260
+            latent_heat = 2358.40
 
         massFraction = np.multiply(g.component, self.dencity) / np.dot(g.component, self.dencity)
         mH2O = np.dot(self.H2Ofactor, g.component) * 18.02
@@ -67,18 +80,25 @@ class Combustion:
         self.HHVd = heatCapacity * g.D
         # (G0prime * 21 / (21 - O2percent)
         # if Tamb > 100:
-        CP_H2O_amb = 1.979
-        ro_H2O_amb = 0.366
+        # CP_H2O_amb = 1.427
+        # ro_H2O_amb = 0.59
 
-        print(CP_H2O_amb / ro_H2O_amb)
-        # else:
-        #     CP_H2O_amb = 4.2
-        #     ro_H2O_amb = 995
+        ro_H2O_amb = self.ro_H2O(Tamp_temp)
+
+        CP_H2O_amb = self.Cp_H2O(Tamp_temp) / ro_H2O_amb
+        CP_H2O_stack = self.Cp_H2O(Tstack_temp) / self.ro_H2O(Tstack_temp)
+
+
+
 
         self.loss = (dry_mass_fraction * (CP_Stack * (Tstack + 273.15) - CP_amb * (Tamb + 273.15)) + mH20_fraction * (
-            (self.Cp_H2O(Tstack) / self.ro_H2O(Tstack)) * (Tstack + 273.15) -
-            (CP_H2O_amb / ro_H2O_amb) * (Tamb + 273.15)) +
-                     mH20_fraction * latent_heat) / self.HHVd
+            CP_H2O_stack * (Tstack + 273.15) -
+            CP_H2O_amb * (Tamb + 273.15)) + mH20_fraction * latent_heat) / heatCapacity
+        self.loss_net = (dry_mass_fraction * (CP_Stack * (Tstack + 273.15) - CP_amb * (Tamb + 273.15)) + mH20_fraction * (
+            CP_H2O_stack * (Tstack + 273.15) -
+            CP_H2O_amb * (Tamb + 273.15))) / heatCapacity
+        self.eff_net = 1 - self.loss_net
+        #
         self.eff = 1 - self.loss
 
 
@@ -86,5 +106,5 @@ if __name__ == "__main__":
     g = Gas()
     g.component = [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     print(g.component)
-    c = Combustion(g, 3, 0+273.15, 100)
-    print(c.eff)
+    c = Combustion(g, 7, 30+273.15, 250)
+    print(c.eff, c.eff_net)

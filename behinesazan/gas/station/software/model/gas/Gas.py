@@ -4,7 +4,6 @@ from math import exp
 from math import log
 import math
 
-from scipy.linalg.tests.test_fblas import matrixmultiply
 from scipy.optimize import fsolve
 
 
