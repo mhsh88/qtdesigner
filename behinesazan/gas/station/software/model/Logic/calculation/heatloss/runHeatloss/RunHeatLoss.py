@@ -27,7 +27,6 @@ class RunHeatLoss:
         t_max = 0
         for key in runData["run_debi"].keys():
             self.result["heat_loss"]["run"].setdefault(key, {})
-            self.result["heat_loss"]["run"][key].setdefault("", {})
             self.result["heat_loss"]["run"][key] = PipeLineEnd(gasInformationFormInputData["T_environment"],
                                                                gasInformationFormInputData["Wind_velocity"],
                                                                # as Tin

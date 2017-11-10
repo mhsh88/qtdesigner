@@ -1,5 +1,6 @@
 import sys
 import pandas as pd
+import fpdf
 
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QFileDialog
@@ -37,6 +38,15 @@ class Result(QtWidgets.QWidget, BaseResult.Ui_Form):
 
             # Close the Pandas Excel writer and output the Excel file.
             writer.save()
+        elif filePath[1] == '*.pdf':
+            pdf = fpdf.FPDF(format='letter')
+            pdf.add_page()
+            # pdf.set_font("‌Arial", size=12)
+            pdf.cell(200, 10, txt="Welcome to Python!", ln=1, align="C")
+            pdf.cell(200, 10, 'بهینه سازان صنعت تاسیسات', 0, 1, 'C')
+            pdf.output(filePath[0])
+
+
         print(type(filePath))
         print(filePath)
         return
