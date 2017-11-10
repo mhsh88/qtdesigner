@@ -35,6 +35,8 @@ class Calculation:
         Tout_equals_to_T_hydrate = Calculation.consumption_calculation(temp1,
                                                                        beforeHeaterLineData,
                                                                        heaterData, afterHeaterLineData, runData)
+        return [Tout_by_user_input, Tout_equals_to_T_hydrate]
+
         pass
 
     @staticmethod
@@ -128,7 +130,7 @@ class Calculation:
                                                   Calculation.noHeatLossConsumption.T_before_regulator - 273.15,
                                                   saving_percent * 100))
 
-        print(string)
+        # print(string)
         return string
 
     @staticmethod

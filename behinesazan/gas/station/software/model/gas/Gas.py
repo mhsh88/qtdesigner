@@ -613,9 +613,9 @@ class Gas:
                        (log(psi)) ** 4, log(psi) ** 3 * log(Gamma_g), log(psi) ** 2 * log(Gamma_g) ** 2,
                        log(Gamma_g) ** 3 * log(psi), (log(Gamma_g)) ** 4]
         if Gamma_g <= 0.7:
-            C = Ch[1]
+            C = Ch[0]
         else:
-            C = Ch[2]
+            C = Ch[1]
 
         T_h = 1 / numpy.dot(C, mass_matrix)
         self.T_h = (T_h - 32) / 1.8

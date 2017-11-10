@@ -10,6 +10,7 @@ from behinesazan.gas.station.software.view.GasStation.base import BaseGasStation
 from behinesazan.gas.station.software.view.Heater.Heater import Heater
 from behinesazan.gas.station.software.view.PipeLine.AfterHeaterLine.AfterHeaterLine import AfterHeaterLine
 from behinesazan.gas.station.software.view.PipeLine.BeforeHeaterLine.BeforeHeaterLine import BeforeHeaterLine
+from behinesazan.gas.station.software.view.Result.Result import Result
 from behinesazan.gas.station.software.view.Run.Run import Run
 
 
@@ -20,6 +21,7 @@ class GasStation(QtWidgets.QMainWindow, BaseGasStation.Ui_MainWindow):
         self.beforeHeaterLine = BeforeHeaterLine()
         self.afterHeaterLine = AfterHeaterLine()
         self.run = Run()
+        self.result = Result()
         self.gasInformationInputForm = GasInformationInputForm()
         self.setupUi(self)
         self.initiateButtonIcon()
