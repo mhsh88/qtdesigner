@@ -1,6 +1,8 @@
 import sys
+import traceback
+# from pdfrw import PdfWriter, PdfReader
 import pandas as pd
-import fpdf
+import fpdf.fpdf as fpdf
 
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QFileDialog
@@ -39,13 +41,27 @@ class Result(QtWidgets.QWidget, BaseResult.Ui_Form):
             # Close the Pandas Excel writer and output the Excel file.
             writer.save()
         elif filePath[1] == '*.pdf':
-            pdf = fpdf.FPDF(format='letter')
-            pdf.add_page()
-            # pdf.set_font("‌Arial", size=12)
-            # pdf.cell(200, 10, txt="Welcome to Python!", ln=1, align="C")
-            # pdf.cell(200, 10, 'بهینه سازان صنعت تاسیسات', 0, 1, 'C')
-            pdf.output(filePath[0])
-
+            try:
+                pdf = fpdf.FPDF(format='letter')
+                # y = PdfWriter()
+                # x = PdfReader('C:/Users/hossein.sharifi/Desktop/نرم افزار شبیه(1).pdf')
+                # print(x)
+                # y.addpage(x.pages[0])
+                # y.write('result.pdf')
+                pdf.add_page()
+                pdf.set_font('Arial', 'B', 16)
+                # os.path.join(request.folder, 'static', 'fonts/B Mitra.ttf')
+                pdf.add_font('sysfont', '', r"c:\WINDOWS\Fonts\B Mitra.ttf", uni=True)
+                txt = self.result_text.toPlainText()
+                # utxt = str(txt, 'utf-8')
+                # stxt = txt.encode('utf-8')  #
+                # stxt = stxt.decode('utf-8')
+                print(txt)
+                pdf.cell(40, 10, txt)
+                pdf.output(filePath[0], 'F')
+            except Exception as exception:
+                print(exception)
+                print(traceback.format_exc())
 
         print(type(filePath))
         print(filePath)
@@ -53,8 +69,12 @@ class Result(QtWidgets.QWidget, BaseResult.Ui_Form):
 
 
 if __name__ == "__main__":
-    app = QtWidgets.QApplication(sys.argv)
-    ui = Result()
-    ui.show()
+    try:
+        app = QtWidgets.QApplication(sys.argv)
+        ui = Result()
+        ui.show()
 
-    sys.exit(app.exec_())
+        sys.exit(app.exec_())
+    except Exception as e:
+        print(e)
+        print(traceback.format_exc())

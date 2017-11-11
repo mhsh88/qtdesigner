@@ -1,14 +1,4 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'final01.ui'
-#
-# Created by: PyQt5 UI code generator 5.6
-#
-# WARNING! All changes made in this file will be lost!
-#import os
 import sys
-#sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-# sys.path.insert(0, "C:/Users/Hossein/PycharmProjects/qtdesigner/behinesazan")
 import traceback
 
 from PyQt5 import QtWidgets
@@ -16,9 +6,6 @@ from PyQt5.QtWidgets import QMessageBox
 
 from behinesazan.gas.station.software.model.Logic.calculation.Calculation import Calculation
 from behinesazan.gas.station.software.view.GasStation.GasStation import GasStation
-
-
-
 
 
 class Calculate:  # (GasStation):
