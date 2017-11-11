@@ -1,3 +1,4 @@
+/.idea
 .idea/workspace.xml
 .idea/inspectionProfiles
 .idea/misc.xml
@@ -6,3 +7,6 @@
 .idea/vcs.xml
 
 __pycache__/
+behinesazan/gas/station/software/controller/build/
+behinesazan/gas/station/software/controller/dist/
+behinesazan/gas/station/software/view/Result/result.pdf
