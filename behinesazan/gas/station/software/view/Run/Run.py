@@ -107,6 +107,7 @@ class Run(QtWidgets.QWidget, BaseRun.Ui_Form):
 
         self.okButton.clicked.connect(self.datagather)
         self.cancelButton.clicked.connect(self.cancel)
+        self.clearButton.clicked.connect(self.data.clear)
 
         self.mm_radioButton.toggled.connect(self.radiomm)
         self.inch_radioButton.toggled.connect(self.radioinch)

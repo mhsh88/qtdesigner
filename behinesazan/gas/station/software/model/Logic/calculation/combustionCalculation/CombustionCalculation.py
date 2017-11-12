@@ -24,7 +24,7 @@ class CombustionCalculation:
                                                                   heaterData[keys][key]["fluegas"])
 
                     string = ("هیتر %s، مشعل %s" % (keys, key))
-                    burner = [string,  self.result["heater"][keys][key].eff[0]]
+                    burner = [string,  self.result["heater"][keys][key].eff]
                     # print(string)
                     self.efficiency.append(burner)
         else:

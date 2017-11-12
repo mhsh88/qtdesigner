@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\Users\hossein.sharifi\PycharmProjects\pyqtdesigner\behinesazan\gas\station\software\view\Heater\ui\heater.ui'
+# Form implementation generated from reading ui file 'C:\Users\Hossein\PycharmProjects\qtdesigner\behinesazan\gas\station\software\view\Heater\ui\heater.ui'
 #
 # Created by: PyQt5 UI code generator 5.6
 #
@@ -126,6 +126,15 @@ class Ui_Form(object):
         self.cancelButton.setFont(font)
         self.cancelButton.setObjectName("cancelButton")
         self.horizontalLayout_2.addWidget(self.cancelButton)
+        self.clearButton = QtWidgets.QPushButton(Form)
+        font = QtGui.QFont()
+        font.setFamily("B Mitra")
+        font.setPointSize(9)
+        font.setBold(False)
+        font.setWeight(50)
+        self.clearButton.setFont(font)
+        self.clearButton.setObjectName("clearButton")
+        self.horizontalLayout_2.addWidget(self.clearButton)
         self.okButton = QtWidgets.QPushButton(Form)
         font = QtGui.QFont()
         font.setFamily("B Mitra")
@@ -137,13 +146,18 @@ class Ui_Form(object):
         self.verticalLayout_6.addLayout(self.verticalLayout_5)
 
         self.retranslateUi(Form)
+        self.clearButton.clicked.connect(self.heater_number_input.clear)
+        self.clearButton.clicked.connect(self.heater_number_comboBox.clear)
+        self.clearButton.clicked.connect(self.burner_oxygen_percent_spinbox.clear)
+        self.clearButton.clicked.connect(self.burner_fluegas_spinbox.clear)
         QtCore.QMetaObject.connectSlotsByName(Form)
         Form.setTabOrder(self.heater_number_input, self.heater_number_comboBox)
         Form.setTabOrder(self.heater_number_comboBox, self.burner_number_comboBox)
         Form.setTabOrder(self.burner_number_comboBox, self.burner_oxygen_percent_spinbox)
         Form.setTabOrder(self.burner_oxygen_percent_spinbox, self.burner_fluegas_spinbox)
         Form.setTabOrder(self.burner_fluegas_spinbox, self.okButton)
-        Form.setTabOrder(self.okButton, self.cancelButton)
+        Form.setTabOrder(self.okButton, self.clearButton)
+        Form.setTabOrder(self.clearButton, self.cancelButton)
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
@@ -160,6 +174,7 @@ class Ui_Form(object):
         self.burner_number_comboBox.setItemText(1, _translate("Form", "2"))
         self.burner_number_comboBox.setItemText(2, _translate("Form", "3"))
         self.cancelButton.setText(_translate("Form", "Cancel"))
+        self.clearButton.setText(_translate("Form", "Clear"))
         self.okButton.setText(_translate("Form", "Ok"))
 
 import svgfile_rc

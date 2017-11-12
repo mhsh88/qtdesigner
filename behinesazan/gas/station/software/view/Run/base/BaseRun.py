@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\Users\hossein.sharifi\PycharmProjects\pyqtdesigner\behinesazan\gas\station\software\view\Run\ui\Run.ui'
+# Form implementation generated from reading ui file 'C:\Users\Hossein\PycharmProjects\qtdesigner\behinesazan\gas\station\software\view\Run\ui\Run.ui'
 #
 # Created by: PyQt5 UI code generator 5.6
 #
@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(509, 233)
+        Form.resize(520, 233)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/icon/heater.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         Form.setWindowIcon(icon)
@@ -30,6 +30,9 @@ class Ui_Form(object):
         self.cancelButton = QtWidgets.QPushButton(Form)
         self.cancelButton.setObjectName("cancelButton")
         self.horizontalLayout.addWidget(self.cancelButton)
+        self.clearButton = QtWidgets.QPushButton(Form)
+        self.clearButton.setObjectName("clearButton")
+        self.horizontalLayout.addWidget(self.clearButton)
         self.okButton = QtWidgets.QPushButton(Form)
         self.okButton.setObjectName("okButton")
         self.horizontalLayout.addWidget(self.okButton)
@@ -172,6 +175,12 @@ class Ui_Form(object):
         self.verticalLayout_3.addLayout(self.gridLayout_3)
 
         self.retranslateUi(Form)
+        self.clearButton.clicked.connect(self.run_input_number.clear)
+        self.clearButton.clicked.connect(self.run_length_input.clear)
+        self.clearButton.clicked.connect(self.run_number_comboBox.clear)
+        self.clearButton.clicked.connect(self.debi_input.clear)
+        self.clearButton.clicked.connect(self.run_width_input.clear)
+        self.clearButton.clicked.connect(self.mm_radioButton.toggle)
         QtCore.QMetaObject.connectSlotsByName(Form)
         Form.setTabOrder(self.run_input_number, self.run_number_comboBox)
         Form.setTabOrder(self.run_number_comboBox, self.debi_input)
@@ -189,6 +198,7 @@ class Ui_Form(object):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "اطلاعات ران ایستگاه تقلیل فشار گاز"))
         self.cancelButton.setText(_translate("Form", "Cancel"))
+        self.clearButton.setText(_translate("Form", "Clear"))
         self.okButton.setText(_translate("Form", "Ok"))
         self.run_width_label.setText(_translate("Form", "طول کلکتور (m):"))
         self.run_input_number.setToolTip(_translate("Form", "<html><head/><body><p>تعداد ران ها (بیشینه 10)</p></body></html>"))

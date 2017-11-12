@@ -90,6 +90,8 @@ class PipeLine(QtWidgets.QWidget, BasePipeLine.Ui_Form):
 
         self.pushButton_2.clicked.connect(self.datagather)
         self.pushButton.clicked.connect(self.cancel)
+        self.clearButton.clicked.connect(self.data.clear)
+        self.clearButton.clicked.connect(self.insolation_radioButton.setChecked)
 
         self.radioButton.toggled.connect(self.radiomm)
         self.radioButton_2.toggled.connect(self.radioinch)

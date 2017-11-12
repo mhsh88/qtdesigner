@@ -20,8 +20,6 @@ class GasInformationInputForm(QtWidgets.QWidget, BaseGasInformationInputForm.Ui_
         super(GasInformationInputForm, self).__init__(parent)
         self.setupUi(self)
 
-        # self.label_34.setVisible(False)
-        # self.label_33.setVisible(False)
         self.label_37.setVisible(False)
         self.label_38.setVisible(False)
         self.label_39.setVisible(False)
@@ -31,10 +29,44 @@ class GasInformationInputForm(QtWidgets.QWidget, BaseGasInformationInputForm.Ui_
         # TODO create clear button
         self.pushButton_2.clicked.connect(self.cancel)
         self.pushButton.clicked.connect(self.datagather)
+        self.clear_button.clicked.connect(self.data.clear)
 
-    def clear(self):
-        self = GasInformationInputForm()
-        self.show()
+    # def clear_btn_clicked(self):
+    #     self.data.clear()
+        # self.address_input.clear()
+        # self.province_input.clear()
+        # self.city_input.clear()
+        # self.area_input.clear()
+        # self.station_nominal_capacity.clear()
+        # self.lineEdit_25.clear()
+        # self.lineEdit_24.clear()
+        # self.lineEdit_26.clear()
+        # self.lineEdit_27.clear()
+        # self.lineEdit_28.clear()
+        # self.lineEdit_30.clear()
+        # self.lineEdit_31.clear()
+        #
+        # self.lineEdit.clear()
+        # self.lineEdit_2.clear()
+        # self.lineEdit_3.clear()
+        # self.lineEdit_4.clear()
+        # self.lineEdit_5.clear()
+        # self.lineEdit_6.clear()
+        # self.lineEdit_7.clear()
+        # self.lineEdit_8.clear()
+        # self.lineEdit_9.clear()
+        # self.lineEdit_10.clear()
+        # self.lineEdit_11.clear()
+        # self.lineEdit_12.clear()
+        # self.lineEdit_13.clear()
+        # self.lineEdit_14.clear()
+        # self.lineEdit_15.clear()
+        # self.lineEdit_16.clear()
+        # self.lineEdit_17.clear()
+        # self.lineEdit_18.clear()
+        # self.lineEdit_19.clear()
+        # self.lineEdit_20.clear()
+        # self.lineEdit_21.clear()
 
     def datagather(self):
         self.toutCheck = False
@@ -179,6 +211,7 @@ class GasInformationInputForm(QtWidgets.QWidget, BaseGasInformationInputForm.Ui_
                     if float(self.lineEdit_28.text()) < - 273.15:
                         QMessageBox.about(self, "خطا در اطلاعات ورودی",
                                           "اطلاعات دمای محیط به درستی وارد نشده است. لطفاً اطلاعات صحیح وارد نمایید.")
+                        return
                     else:
                         self.outTemperature = float(self.lineEdit_28.text()) + 273.15
                         self.data["T_environment"] = self.outTemperature
@@ -186,6 +219,7 @@ class GasInformationInputForm(QtWidgets.QWidget, BaseGasInformationInputForm.Ui_
                 except:
                     QMessageBox.about(self, "خطا در اطلاعات ورودی",
                                       "اطلاعات دمای محیط به درستی وارد نشده است. لطفاً اطلاعات صحیح وارد نمایید.")
+                    return
 
                     # Humidity....
 
@@ -207,6 +241,7 @@ class GasInformationInputForm(QtWidgets.QWidget, BaseGasInformationInputForm.Ui_
                     if float(self.lineEdit_30.text()) < 0:
                         QMessageBox.about(self, "خطا در اطلاعات ورودی",
                                           "سرعت باد نمی تواند کوچکتر از صفر باشد. لطفاً اطلاعات صحیح وارد نمایید.")
+                        return
 
                     else:
                         self.windVelocity = float(self.lineEdit_30.text())
@@ -216,6 +251,7 @@ class GasInformationInputForm(QtWidgets.QWidget, BaseGasInformationInputForm.Ui_
                 except:
                     QMessageBox.about(self, "خطا در اطلاعات ورودی",
                                       "اطلاعاتی صحبحی برای سرعت باد وارد نشده است. لطفاً اطلاعات صحیح وارد فرمایید")
+                    return
             else:
                 self.data["Wind_velocity"] = 0.5  # set wind velocity to 0.5 if nothing is entered
 
@@ -226,6 +262,7 @@ class GasInformationInputForm(QtWidgets.QWidget, BaseGasInformationInputForm.Ui_
                     if float(self.lineEdit_31.text()) <= 0:
                         QMessageBox.about(self, "خطا در اطلاعات ورودی",
                                           "ظرفیت ایستگاه باید از صفر بزرگتر باشد. لطفاً اطلاعات صحیح وارد نمایید.")
+                        return
 
                     else:
                         self.stationCapacity = float(self.lineEdit_31.text())
@@ -234,31 +271,37 @@ class GasInformationInputForm(QtWidgets.QWidget, BaseGasInformationInputForm.Ui_
                 except:
                     QMessageBox.about(self, "خطا در اطلاعات ورودی",
                                       "ظرفیت ایستگاه به درستی وارد نشده است. لطفاً اطلاعات صحیح وارد نمایید.")
+                    return
             else:
                 self.stationCapacity = 0
                 self.data["Station_Capacity"] = self.stationCapacity
 
-            self.g.component[0] = float(self.lineEdit.text())
-            self.g.component[1] = float(self.lineEdit_2.text())
-            self.g.component[2] = float(self.lineEdit_3.text())
-            self.g.component[3] = float(self.lineEdit_4.text())
-            self.g.component[4] = float(self.lineEdit_5.text())
-            self.g.component[5] = float(self.lineEdit_6.text())
-            self.g.component[6] = float(self.lineEdit_7.text())
-            self.g.component[7] = float(self.lineEdit_8.text())
-            self.g.component[8] = float(self.lineEdit_9.text())
-            self.g.component[9] = float(self.lineEdit_10.text())
-            self.g.component[10] = float(self.lineEdit_11.text())
-            self.g.component[11] = float(self.lineEdit_12.text())
-            self.g.component[12] = float(self.lineEdit_13.text())
-            self.g.component[13] = float(self.lineEdit_14.text())
-            self.g.component[14] = float(self.lineEdit_15.text())
-            self.g.component[15] = float(self.lineEdit_16.text())
-            self.g.component[16] = float(self.lineEdit_17.text())
-            self.g.component[17] = float(self.lineEdit_18.text())
-            self.g.component[18] = float(self.lineEdit_19.text())
-            self.g.component[19] = float(self.lineEdit_20.text())
-            self.g.component[20] = float(self.lineEdit_21.text())
+
+            if self.comboBox.currentText() == "درصد جرمی":
+                print("جطوری؟") # TODO it must be modified
+                pass
+
+            self.g.component[0] = self.input_var_check(self.lineEdit.text())
+            self.g.component[1] = self.input_var_check(self.lineEdit_2.text())
+            self.g.component[2] = self.input_var_check(self.lineEdit_3.text())
+            self.g.component[3] = self.input_var_check(self.lineEdit_4.text())
+            self.g.component[4] = self.input_var_check(self.lineEdit_5.text())
+            self.g.component[5] = self.input_var_check(self.lineEdit_6.text())
+            self.g.component[6] = self.input_var_check(self.lineEdit_7.text())
+            self.g.component[7] = self.input_var_check(self.lineEdit_8.text())
+            self.g.component[8] = self.input_var_check(self.lineEdit_9.text())
+            self.g.component[9] = self.input_var_check(self.lineEdit_10.text())
+            self.g.component[10] = self.input_var_check(self.lineEdit_11.text())
+            self.g.component[11] = self.input_var_check(self.lineEdit_12.text())
+            self.g.component[12] = self.input_var_check(self.lineEdit_13.text())
+            self.g.component[13] = self.input_var_check(self.lineEdit_14.text())
+            self.g.component[14] = self.input_var_check(self.lineEdit_15.text())
+            self.g.component[15] = self.input_var_check(self.lineEdit_16.text())
+            self.g.component[16] = self.input_var_check(self.lineEdit_17.text())
+            self.g.component[17] = self.input_var_check(self.lineEdit_18.text())
+            self.g.component[18] = self.input_var_check(self.lineEdit_19.text())
+            self.g.component[19] = self.input_var_check(self.lineEdit_20.text())
+            self.g.component[20] = self.input_var_check(self.lineEdit_21.text())
             self.g.component = self.g.component / math.fsum(self.g.component)
             for comp in self.g.component:
                 if comp < 0:
@@ -310,8 +353,6 @@ class GasInformationInputForm(QtWidgets.QWidget, BaseGasInformationInputForm.Ui_
         except:
             print(sys.exc_info()[0])
             print(sys.exc_info()[1])
-            self.label_34.setVisible(True)
-            self.label_33.setVisible(True)
             self.label_37.setVisible(True)
             self.label_38.setVisible(True)
             self.label_39.setVisible(True)
@@ -322,10 +363,12 @@ class GasInformationInputForm(QtWidgets.QWidget, BaseGasInformationInputForm.Ui_
             QMessageBox.about(self, "خطا در اطلاعات ورودی", "لطفاً اطلاعات صحیح وارد فرمایید")
 
             return
+    def input_var_check(self, text):
+        if text =="":
+            return 0
+        return float(text)
 
     def cancel(self):
-        self.label_34.setVisible(False)
-        self.label_33.setVisible(False)
         self.label_37.setVisible(False)
         self.label_38.setVisible(False)
         self.label_39.setVisible(False)
@@ -343,5 +386,4 @@ if __name__ == "__main__":
     Form = QtWidgets.QWidget()
     ui = GasInformationInputForm()
     ui.show()
-    ui.clear()
     sys.exit(app.exec_())

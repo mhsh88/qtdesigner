@@ -26,16 +26,25 @@ class Calculation:
 
     @staticmethod
     def calculate(gasInformationFormInputData, beforeHeaterLineData, heaterData, afterHeaterLineData, runData):
+
         temp = copy.deepcopy(gasInformationFormInputData)
-        Tout_by_user_input = Calculation.consumption_calculation(temp, beforeHeaterLineData, heaterData, afterHeaterLineData, runData)
+        Tout_by_user_input = Calculation.consumption_calculation(temp,
+                                                                 beforeHeaterLineData,
+                                                                 heaterData, afterHeaterLineData, runData)
+
+
         temp1 = copy.deepcopy(gasInformationFormInputData)
         temp1["T_station_out"] = Calculation.noHeatLossConsumption.T_hydrate + 273.15
-        print(gasInformationFormInputData["T_station_out"])
-        print(temp1["T_station_out"])
         Tout_equals_to_T_hydrate = Calculation.consumption_calculation(temp1,
                                                                        beforeHeaterLineData,
                                                                        heaterData, afterHeaterLineData, runData)
-        return [Tout_by_user_input, Tout_equals_to_T_hydrate]
+        temp2 = copy.deepcopy(gasInformationFormInputData)
+        temp2["T_station_out"] = Calculation.noHeatLossConsumption.T_hydrate + 273.15 + 2
+        Tout_equals_to_T_hydrate_plus_2 = Calculation.consumption_calculation(temp2,
+                                                                       beforeHeaterLineData,
+                                                                       heaterData, afterHeaterLineData, runData)
+
+        return [Tout_by_user_input, Tout_equals_to_T_hydrate, Tout_equals_to_T_hydrate_plus_2]
 
         pass
 
@@ -47,6 +56,7 @@ class Calculation:
         # check if heater data form is defined and air temperature is defined in Gas information form input data
         combustionCalculation = CombustionCalculation()
         combustionCalculation.combustionCal(heaterData, gasInformationFormInputData)
+
 
 
         runHeatLoss = RunHeatLoss(runData, gasInformationFormInputData,

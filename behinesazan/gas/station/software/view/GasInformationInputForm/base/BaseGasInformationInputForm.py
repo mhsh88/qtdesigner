@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\Users\hossein.sharifi\PycharmProjects\pyqtdesigner\behinesazan\gas\station\software\view\GasInformationInputForm\ui\GasInformationInputForm.ui'
+# Form implementation generated from reading ui file 'C:\Users\Hossein\PycharmProjects\qtdesigner\behinesazan\gas\station\software\view\GasInformationInputForm\ui\GasInformationInputForm.ui'
 #
 # Created by: PyQt5 UI code generator 5.6
 #
@@ -687,15 +687,50 @@ class Ui_Form(object):
         self.pushButton_2 = QtWidgets.QPushButton(Form)
         self.pushButton_2.setObjectName("pushButton_2")
         self.horizontalLayout.addWidget(self.pushButton_2)
+        self.clear_button = QtWidgets.QPushButton(Form)
+        self.clear_button.setObjectName("clear_button")
+        self.horizontalLayout.addWidget(self.clear_button)
         self.pushButton = QtWidgets.QPushButton(Form)
         self.pushButton.setObjectName("pushButton")
         self.horizontalLayout.addWidget(self.pushButton)
         self.verticalLayout_15.addLayout(self.horizontalLayout)
         self.gridLayout_5.addLayout(self.verticalLayout_15, 0, 2, 1, 1)
         self.gridLayout_8.addLayout(self.gridLayout_5, 0, 0, 1, 1)
-        self.label_35.raise_()
 
         self.retranslateUi(Form)
+        self.clear_button.clicked.connect(self.province_input.clear)
+        self.clear_button.clicked.connect(self.city_input.clear)
+        self.clear_button.clicked.connect(self.area_input.clear)
+        self.clear_button.clicked.connect(self.station_nominal_capacity.clear)
+        self.clear_button.clicked.connect(self.address_input.clear)
+        self.clear_button.clicked.connect(self.lineEdit_25.clear)
+        self.clear_button.clicked.connect(self.lineEdit_24.clear)
+        self.clear_button.clicked.connect(self.lineEdit_26.clear)
+        self.clear_button.clicked.connect(self.lineEdit_27.clear)
+        self.clear_button.clicked.connect(self.lineEdit_28.clear)
+        self.clear_button.clicked.connect(self.lineEdit_30.clear)
+        self.clear_button.clicked.connect(self.lineEdit_31.clear)
+        self.clear_button.clicked.connect(self.lineEdit.clear)
+        self.clear_button.clicked.connect(self.lineEdit_2.clear)
+        self.clear_button.clicked.connect(self.lineEdit_3.clear)
+        self.clear_button.clicked.connect(self.lineEdit_4.clear)
+        self.clear_button.clicked.connect(self.lineEdit_5.clear)
+        self.clear_button.clicked.connect(self.lineEdit_6.clear)
+        self.clear_button.clicked.connect(self.lineEdit_7.clear)
+        self.clear_button.clicked.connect(self.lineEdit_8.clear)
+        self.clear_button.clicked.connect(self.lineEdit_9.clear)
+        self.clear_button.clicked.connect(self.lineEdit_10.clear)
+        self.clear_button.clicked.connect(self.lineEdit_11.clear)
+        self.clear_button.clicked.connect(self.lineEdit_12.clear)
+        self.clear_button.clicked.connect(self.lineEdit_13.clear)
+        self.clear_button.clicked.connect(self.lineEdit_14.clear)
+        self.clear_button.clicked.connect(self.lineEdit_15.clear)
+        self.clear_button.clicked.connect(self.lineEdit_16.clear)
+        self.clear_button.clicked.connect(self.lineEdit_17.clear)
+        self.clear_button.clicked.connect(self.lineEdit_18.clear)
+        self.clear_button.clicked.connect(self.lineEdit_19.clear)
+        self.clear_button.clicked.connect(self.lineEdit_20.clear)
+        self.clear_button.clicked.connect(self.lineEdit_21.clear)
         QtCore.QMetaObject.connectSlotsByName(Form)
         Form.setTabOrder(self.province_input, self.city_input)
         Form.setTabOrder(self.city_input, self.area_input)
@@ -731,13 +766,12 @@ class Ui_Form(object):
         Form.setTabOrder(self.lineEdit_19, self.lineEdit_20)
         Form.setTabOrder(self.lineEdit_20, self.lineEdit_21)
         Form.setTabOrder(self.lineEdit_21, self.pushButton)
-        Form.setTabOrder(self.pushButton, self.pushButton_2)
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "اطلاعات ورودی ایستگاه تقلیل فشار گاز"))
-        self.comboBox.setItemText(0, _translate("Form", "درصد جرمی"))
-        self.comboBox.setItemText(1, _translate("Form", "درصد مولی"))
+        self.comboBox.setItemText(0, _translate("Form", "درصد مولی"))
+        self.comboBox.setItemText(1, _translate("Form", "درصد جرمی"))
         self.label_24.setText(_translate("Form", "ترکیب گاز:"))
         self.label.setText(_translate("Form", "Nitrogen"))
         self.label_2.setText(_translate("Form", "Carbon Dioxide"))
@@ -814,6 +848,7 @@ class Ui_Form(object):
         self.label_35.setText(_translate("Form", "دبی گاز عبوری از ایستگاه (متر مکعب بر ساعت) :"))
         self.label_23.setText(_translate("Form", "* الزامی"))
         self.pushButton_2.setText(_translate("Form", "Cancel"))
+        self.clear_button.setText(_translate("Form", "Clear"))
         self.pushButton.setText(_translate("Form", "Ok"))
 
 import svgfile_rc

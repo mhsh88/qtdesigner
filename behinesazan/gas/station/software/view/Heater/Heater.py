@@ -17,6 +17,7 @@ class Heater(QtWidgets.QWidget, BaseHeater.Ui_Form):
         self.heater_number_input.textChanged[str].connect(self.heaterNumber)
         self.okButton.clicked.connect(self.okbutton)
         self.cancelButton.clicked.connect(self.cancelbutton)
+        self.clearButton.clicked.connect(self.data.clear)
 
         self.burner_oxygen_percent_spinbox.valueChanged.connect(self.burner_oxygen_percent_spinbox_changed)
         self.burner_fluegas_spinbox.valueChanged.connect(self.burner_fluegas_spinbox_changed)

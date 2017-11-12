@@ -215,6 +215,21 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="clearButton">
+         <property name="font">
+          <font>
+           <family>B Mitra</family>
+           <pointsize>9</pointsize>
+           <weight>50</weight>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Clear</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="okButton">
          <property name="font">
           <font>
@@ -240,10 +255,76 @@
   <tabstop>burner_oxygen_percent_spinbox</tabstop>
   <tabstop>burner_fluegas_spinbox</tabstop>
   <tabstop>okButton</tabstop>
+  <tabstop>clearButton</tabstop>
   <tabstop>cancelButton</tabstop>
  </tabstops>
  <resources>
   <include location="../../../../../../../svgfile.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>clearButton</sender>
+   <signal>clicked()</signal>
+   <receiver>heater_number_input</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>165</x>
+     <y>246</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>161</x>
+     <y>57</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>clearButton</sender>
+   <signal>clicked()</signal>
+   <receiver>heater_number_comboBox</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>133</x>
+     <y>249</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>114</x>
+     <y>91</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>clearButton</sender>
+   <signal>clicked()</signal>
+   <receiver>burner_oxygen_percent_spinbox</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>182</x>
+     <y>247</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>181</x>
+     <y>192</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>clearButton</sender>
+   <signal>clicked()</signal>
+   <receiver>burner_fluegas_spinbox</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>141</x>
+     <y>249</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>78</x>
+     <y>201</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

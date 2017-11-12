@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'PipeLine.ui'
+# Form implementation generated from reading ui file 'C:\Users\Hossein\PycharmProjects\qtdesigner\behinesazan\gas\station\software\view\PipeLine\ui\PipeLine.ui'
 #
 # Created by: PyQt5 UI code generator 5.6
 #
@@ -28,6 +28,9 @@ class Ui_Form(object):
         self.pushButton = QtWidgets.QPushButton(Form)
         self.pushButton.setObjectName("pushButton")
         self.horizontalLayout.addWidget(self.pushButton)
+        self.clearButton = QtWidgets.QPushButton(Form)
+        self.clearButton.setObjectName("clearButton")
+        self.horizontalLayout.addWidget(self.clearButton)
         self.pushButton_2 = QtWidgets.QPushButton(Form)
         self.pushButton_2.setObjectName("pushButton_2")
         self.horizontalLayout.addWidget(self.pushButton_2)
@@ -171,6 +174,10 @@ class Ui_Form(object):
         self.verticalLayout_3.addLayout(self.gridLayout_3)
 
         self.retranslateUi(Form)
+        self.clearButton.clicked.connect(self.lineEdit.clear)
+        self.clearButton.clicked.connect(self.radioButton.toggle)
+        self.clearButton.clicked.connect(self.insulation_input.clear)
+        self.clearButton.clicked.connect(self.thermal_conductivity_input.clear)
         QtCore.QMetaObject.connectSlotsByName(Form)
         Form.setTabOrder(self.lineEdit, self.radioButton)
         Form.setTabOrder(self.radioButton, self.radioButton_2)
@@ -187,6 +194,7 @@ class Ui_Form(object):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "اطلاعات خط لوله"))
         self.pushButton.setText(_translate("Form", "Cancel"))
+        self.clearButton.setText(_translate("Form", "Clear"))
         self.pushButton_2.setText(_translate("Form", "Ok"))
         self.label_3.setText(_translate("Form", "قطر اسمی:"))
         self.insolation_label.setText(_translate("Form", "ضخامت عایق (cm):"))

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>509</width>
+    <width>520</width>
     <height>233</height>
    </rect>
   </property>
@@ -54,6 +54,13 @@
           <widget class="QPushButton" name="cancelButton">
            <property name="text">
             <string>Cancel</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="clearButton">
+           <property name="text">
+            <string>Clear</string>
            </property>
           </widget>
          </item>
@@ -323,5 +330,102 @@
  <resources>
   <include location="../../../../../../../svgfile.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>clearButton</sender>
+   <signal>clicked()</signal>
+   <receiver>run_input_number</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>274</x>
+     <y>201</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>422</x>
+     <y>27</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>clearButton</sender>
+   <signal>clicked()</signal>
+   <receiver>run_length_input</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>235</x>
+     <y>207</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>417</x>
+     <y>54</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>clearButton</sender>
+   <signal>clicked()</signal>
+   <receiver>run_number_comboBox</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>243</x>
+     <y>213</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>211</x>
+     <y>24</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>clearButton</sender>
+   <signal>clicked()</signal>
+   <receiver>debi_input</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>237</x>
+     <y>199</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>131</x>
+     <y>26</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>clearButton</sender>
+   <signal>clicked()</signal>
+   <receiver>run_width_input</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>279</x>
+     <y>216</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>217</x>
+     <y>48</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>clearButton</sender>
+   <signal>clicked()</signal>
+   <receiver>mm_radioButton</receiver>
+   <slot>toggle()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>270</x>
+     <y>208</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>486</x>
+     <y>104</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
