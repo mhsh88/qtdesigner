@@ -395,6 +395,7 @@ class Gas:
 
         # writetoexcel(np.multiply(Xi, M_i))
         M = np.sum(np.multiply(Xi, M_i))
+        self.M_i = M_i
         self.M = M
         F = np.sum(np.multiply(Xi, F_i))
         Q = np.sum(np.multiply(Xi, Q_i))
