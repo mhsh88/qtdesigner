@@ -126,6 +126,11 @@
           </item>
           <item>
            <widget class="QDoubleSpinBox" name="burner_fluegas_spinbox">
+            <property name="font">
+             <font>
+              <family>Calibri</family>
+             </font>
+            </property>
             <property name="maximum">
              <double>999.990000000000009</double>
             </property>
@@ -149,6 +154,11 @@
           </item>
           <item>
            <widget class="QDoubleSpinBox" name="burner_oxygen_percent_spinbox">
+            <property name="font">
+             <font>
+              <family>Calibri</family>
+             </font>
+            </property>
             <property name="maximum">
              <double>21.000000000000000</double>
             </property>

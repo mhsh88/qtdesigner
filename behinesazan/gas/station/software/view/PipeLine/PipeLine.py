@@ -130,11 +130,15 @@ class PipeLine(QtWidgets.QWidget, BasePipeLine.Ui_Form):
             self.insulation_input.setEnabled(True)
             self.thermal_conductivity_label.setEnabled(True)
             self.thermal_conductivity_input.setEnabled(True)
+            self.thermal_conductivity_input.clear()
+            self.insulation_input.clear()
         else:
             self.insolation_label.setEnabled(False)
             self.insulation_input.setEnabled(False)
             self.thermal_conductivity_label.setEnabled(False)
             self.thermal_conductivity_input.setEnabled(False)
+            self.thermal_conductivity_input.clear()
+            self.insulation_input.clear()
 
     def changecombobox2(self):
         self.comboBox_3.clear()
@@ -188,6 +192,11 @@ class PipeLine(QtWidgets.QWidget, BasePipeLine.Ui_Form):
 
     def datagather(self):
         self.inputCheck = False
+
+        # if not self.insolation_radioButton.isChecked():
+        #     if ""
+        #     pass
+
 
         try:
             if float(self.lineEdit.text()) <= 0 or self.lineEdit.text() == "" or \

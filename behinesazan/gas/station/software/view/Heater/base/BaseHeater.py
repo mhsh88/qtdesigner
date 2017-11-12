@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\Users\Hossein\PycharmProjects\qtdesigner\behinesazan\gas\station\software\view\Heater\ui\heater.ui'
+# Form implementation generated from reading ui file 'C:\Users\hossein.sharifi\PycharmProjects\pyqtdesigner\behinesazan\gas\station\software\view\Heater\ui\heater.ui'
 #
 # Created by: PyQt5 UI code generator 5.6
 #
@@ -81,6 +81,9 @@ class Ui_Form(object):
         self.burner_fluegas_label.setObjectName("burner_fluegas_label")
         self.verticalLayout_2.addWidget(self.burner_fluegas_label)
         self.burner_fluegas_spinbox = QtWidgets.QDoubleSpinBox(self.groupBox_2)
+        font = QtGui.QFont()
+        font.setFamily("Calibri")
+        self.burner_fluegas_spinbox.setFont(font)
         self.burner_fluegas_spinbox.setMaximum(999.99)
         self.burner_fluegas_spinbox.setObjectName("burner_fluegas_spinbox")
         self.verticalLayout_2.addWidget(self.burner_fluegas_spinbox)
@@ -94,6 +97,9 @@ class Ui_Form(object):
         self.burner_oxygen_percent_label.setObjectName("burner_oxygen_percent_label")
         self.verticalLayout_3.addWidget(self.burner_oxygen_percent_label)
         self.burner_oxygen_percent_spinbox = QtWidgets.QDoubleSpinBox(self.groupBox_2)
+        font = QtGui.QFont()
+        font.setFamily("Calibri")
+        self.burner_oxygen_percent_spinbox.setFont(font)
         self.burner_oxygen_percent_spinbox.setMaximum(21.0)
         self.burner_oxygen_percent_spinbox.setObjectName("burner_oxygen_percent_spinbox")
         self.verticalLayout_3.addWidget(self.burner_oxygen_percent_spinbox)
