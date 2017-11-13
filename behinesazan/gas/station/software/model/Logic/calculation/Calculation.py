@@ -50,6 +50,7 @@ class Calculation:
 
     @staticmethod
     def consumption_calculation(gasInformationFormInputData, beforeHeaterLineData, heaterData, afterHeaterLineData, runData):
+        burnerconsumption = {}
         # try:
         Calculation.noHeatLossConsumption = NoHeatLossConsumption(gasInformationFormInputData)
 
@@ -139,6 +140,17 @@ class Calculation:
                                                   runHeatLoss.heatloss,
                                                   Calculation.noHeatLossConsumption.T_before_regulator - 273.15,
                                                   saving_percent * 100))
+        heaterpartialconsumption = (Calculation.noHeatLossConsumption.Q_heater +
+                                    after_heater_heat_loss_with_insulation_consumption) / len(combustionCalculation.result.keys())
+        print(combustionCalculation.result["heater"])
+
+        for heater in combustionCalculation.result["heater"].keys():
+            burnerconsumption.setdefault(heater, {})
+            print(len(combustionCalculation.result["heater"][heater]))
+            burnerpartialconsumption = heaterpartialconsumption/len(combustionCalculation.result["heater"][heater])
+
+            for burner in combustionCalculation.result["heater"][heater].keys():
+                burnerconsumption[heater][burner] = burnerpartialconsumption/combustionCalculation.result["heater"][heater][burner].eff
 
         # print(string)
         return string

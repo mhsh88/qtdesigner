@@ -86,7 +86,14 @@ class Combustion:
         ro_H2O_amb = self.ro_H2O(Tamp_temp)
 
         CP_H2O_amb = self.Cp_H2O(Tamp_temp) / ro_H2O_amb
-        CP_H2O_stack = self.Cp_H2O(Tstack_temp) / self.ro_H2O(Tstack_temp)
+        if Tstack_temp <= 100:
+            ro_H2O_stack =  self.ro_H2O(100)
+        elif Tstack_temp >= 500:
+            ro_H2O_stack = self.ro_H2O(500)
+        else:
+            ro_H2O_stack = self.ro_H2O(Tstack_temp)
+
+        CP_H2O_stack = self.Cp_H2O(Tstack_temp) / ro_H2O_stack
 
 
 
