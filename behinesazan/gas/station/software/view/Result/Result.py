@@ -29,48 +29,64 @@ class Result(QtWidgets.QWidget, BaseResult.Ui_Form):
         # self.fileDialog.getOpenFileNames(self, 'Multiple File',
         #                                  "Desktop",
         #                                  '*.xls')
-        filePath = self.fileDialog.getSaveFileName(self, 'Choose File Type', '', '*.xls\n*.xlsx\n*.pdf')
+        filePath = self.fileDialog.getSaveFileName(self, 'Choose File Type', '', '*.xls\n*.xlsx')
 
         if filePath[1] == '*.xls' or filePath[1] == "*.xlsx":
             # Create a Pandas dataframe from the data.
-            df = pd.DataFrame([self.inputs, self.outputs])
-
-            # Create a Pandas Excel writer using XlsxWriter as the engine.
-            writer = pd.ExcelWriter(filePath[0], engine='xlsxwriter')
-
-            # Convert the dataframe to an XlsxWriter Excel object.
-            df.to_excel(writer, sheet_name='Sheet1')
-
-            # Close the Pandas Excel writer and output the Excel file.
-            writer.save()
-        elif filePath[1] == '*.pdf':
             try:
-                pdf = fpdf.FPDF(format='letter')
-                # y = PdfWriter()
-                # x = PdfReader('C:/Users/hossein.sharifi/Desktop/نرم افزار شبیه(1).pdf')
-                # print(x)
-                # y.addpage(x.pages[0])
-                # y.write('result.pdf')
-                pdf.add_page()
-                pdf.set_font('Arial', 'B', 16)
-                # os.path.join(request.folder, 'static', 'fonts/B Mitra.ttf')
-                pdf.add_font('sysfont', '', r"c:\WINDOWS\Fonts\B Mitra.ttf", uni=True)
-                txt = self.result_text.toPlainText()
-                # utxt = str(txt, 'utf-8')
-                # stxt = txt.encode('utf-8')  #
-                # stxt = stxt.decode('utf-8')
-                print(txt)
-                pdf.cell(40, 10, txt)
-                pdf.output(filePath[0], 'F')
-            except Exception as exception:
-                print(exception)
-                print(traceback.format_exc())
+                df = df2 = pd.DataFrame(self.outputs.split("\n"))
+                # df.stats = df2.stats.str.strip("[]").str.split("\n")
 
-        print(type(filePath))
-        print(filePath)
+                # Create a Pandas Excel writer using XlsxWriter as the engine.
+                writer = pd.ExcelWriter(filePath[0], engine='xlsxwriter')
+
+                # Convert the dataframe to an XlsxWriter Excel object.
+                df.to_excel(writer, sheet_name='Sheet1')
+
+                # Close the Pandas Excel writer and output the Excel file.
+                writer.save()
+            except Exception as exception:
+                print(traceback.format_exc())
+                return
+        # elif filePath[1] == '*.pdf':
+        #     try:
+        #         pdf = fpdf.FPDF(format='letter')
+        #         # y = PdfWriter()
+        #         # x = PdfReader('C:/Users/hossein.sharifi/Desktop/نرم افزار شبیه(1).pdf')
+        #         # print(x)
+        #         # y.addpage(x.pages[0])
+        #         # y.write('result.pdf')
+        #         pdf.add_page()
+        #         pdf.set_font('Arial', 'B', 16)
+        #         # os.path.join(request.folder, 'static', 'fonts/B Mitra.ttf')
+        #         pdf.add_font('sysfont', '', r"c:\WINDOWS\Fonts\B Mitra.ttf", uni=True)
+        #         txt = self.result_text.toPlainText()
+        #         # utxt = str(txt, 'utf-8')
+        #         # stxt = txt.encode('utf-8')  #
+        #         # stxt = stxt.decode('utf-8')
+        #         print(txt)
+        #         pdf.cell(40, 10, txt)
+        #         pdf.output(filePath[0], 'F')
+        #     except Exception as exception:
+        #         print(exception)
+        #         print(traceback.format_exc())
+        #         return
+        #
+        # print(type(filePath))
+        # print(filePath)
         return
 
-    def setOutput(self, result):
+    def setOutput(self, information, result):
+        infos = 'استان:\n'
+        infos += '%s\n' % information['province']
+        infos += 'شهر:\n'
+        infos += '%s\n' % information['city']
+        infos += 'منطقه:\n'
+        infos += '%s\n' % information['area']
+        infos += 'آدرس:\n'
+        infos += '%s\n' % information['address']
+        infos += 'ظرفیت نامی:\n'
+        infos += '%s\n' % information['nominal_capacity']
 
         try:
             for key in result:
@@ -90,9 +106,9 @@ class Result(QtWidgets.QWidget, BaseResult.Ui_Form):
                     t_hydrateplus2_string += string
                     pass
 
-
+            self.outputs = infos + user_string + t_hydrate_string + t_hydrateplus2_string
             # print(user_string + t_hydrate_string + t_hydrateplus2_string)
-            self.result_text.setPlainText(user_string + t_hydrate_string + t_hydrateplus2_string)
+            self.result_text.setPlainText(self.outputs)
 
         except Exception as exception:
             print(traceback.format_exc())

@@ -27,10 +27,11 @@ class Calculation:
     @staticmethod
     def calculate(gasInformationFormInputData, beforeHeaterLineData, heaterData, afterHeaterLineData, runData):
         runsum = 0
-        for key in runData['run_debi']:
-            runsum +=  runData['run_debi'][key]
-        if runsum > gasInformationFormInputData['Station_Capacity'] or  runsum <= gasInformationFormInputData['Station_Capacity']:
-            gasInformationFormInputData['Station_Capacity'] = runsum
+        if 'run_debi' in runData:
+            for key in runData['run_debi']:
+                runsum +=  runData['run_debi'][key]
+            if runsum > gasInformationFormInputData['Station_Capacity'] or  runsum <= gasInformationFormInputData['Station_Capacity']:
+                gasInformationFormInputData['Station_Capacity'] = runsum
         result = {}
         temp = copy.deepcopy(gasInformationFormInputData)
         result['user'] = Calculation.consumption_calculation(temp,

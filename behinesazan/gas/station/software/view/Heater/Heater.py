@@ -19,29 +19,21 @@ class Heater(QtWidgets.QWidget, BaseHeater.Ui_Form):
         self.cancelButton.clicked.connect(self.cancelbutton)
         self.clearButton.clicked.connect(self.data.clear)
 
-        self.burner_oxygen_percent_spinbox.valueChanged.connect(self.burner_oxygen_percent_spinbox_changed)
-        self.burner_fluegas_spinbox.valueChanged.connect(self.burner_fluegas_spinbox_changed)
+        self.burner_oxygen_percent_spinbox.valueChanged.connect(self.burner_spinbox_changed)
+        self.burner_fluegas_spinbox.valueChanged.connect(self.burner_spinbox_changed)
 
-    def burner_fluegas_spinbox_changed(self):
+    def burner_spinbox_changed(self):
         if self.heater_number_input.text() == "":
             QMessageBox.about(self, "خطا در اطلاعات ورودی", "ابتدا باید تعداد گرمکن را مشخص نمایید!")
             return
         else:
-            self.data.setdefault(self.heater_number_comboBox.currentText(), {})
-            self.data[self.heater_number_comboBox.currentText()].setdefault(self.burner_number_comboBox.currentText(),
-                                                                            {})
-            self.data[self.heater_number_comboBox.currentText()][self.burner_number_comboBox.currentText()].setdefault(
-                "fluegas", [])
-            self.data[self.heater_number_comboBox.currentText()][self.burner_number_comboBox.currentText()]["fluegas"] = \
-                float(self.burner_fluegas_spinbox.text())
-            # print(self.data)
-        return
+            if self.burner_oxygen_percent_spinbox.text() =="":
+                self.burner_oxygen_percent_spinbox.setValue(0)
 
-    def burner_oxygen_percent_spinbox_changed(self):
-        if self.heater_number_input.text() == "":
-            QMessageBox.about(self, "خطا در اطلاعات ورودی", "ابتدا باید تعداد گرمکن را مشخص نمایید!")
-            return
-        else:
+            if self.burner_fluegas_spinbox.text() == "":
+                self.burner_fluegas_spinbox.setValue(0)
+
+
             self.data.setdefault(self.heater_number_comboBox.currentText(), {})
             self.data[self.heater_number_comboBox.currentText()].setdefault(self.burner_number_comboBox.currentText(),
                                                                             {})
@@ -49,6 +41,13 @@ class Heater(QtWidgets.QWidget, BaseHeater.Ui_Form):
                 "oxygen", [])
             self.data[self.heater_number_comboBox.currentText()][self.burner_number_comboBox.currentText()]["oxygen"] = \
                 float(self.burner_oxygen_percent_spinbox.text())
+            self.data.setdefault(self.heater_number_comboBox.currentText(), {})
+            self.data[self.heater_number_comboBox.currentText()].setdefault(self.burner_number_comboBox.currentText(),
+                                                                            {})
+            self.data[self.heater_number_comboBox.currentText()][self.burner_number_comboBox.currentText()].setdefault(
+                "fluegas", [])
+            self.data[self.heater_number_comboBox.currentText()][self.burner_number_comboBox.currentText()]["fluegas"] = \
+                float(self.burner_fluegas_spinbox.text())
             # print(self.data)
         return
 

@@ -80,10 +80,10 @@ class GasInformationInputForm(QtWidgets.QWidget, BaseGasInformationInputForm.Ui_
         self.pStandard = 101.325
         self.data["P_Standard"] = 101.325
         self.data["address"] = self.address_input.toPlainText()
-        print(self.data['address'])
         self.data["province"] = self.province_input.text()
         self.data["city"] = self.city_input.text()
         self.data["nominal_capacity"] = self.station_nominal_capacity.text()
+        self.data['area'] = self.area_input.text()
 
         try:
             # T in gas TEmperature

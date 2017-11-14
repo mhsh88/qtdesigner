@@ -162,6 +162,7 @@ class GasStation(QtWidgets.QMainWindow, BaseGasStation.Ui_MainWindow):
             self.heater.close()
             self.afterHeaterLine.close()
             self.beforeHeaterLine.close()
+            self.result.close()
 
             event.accept()
         else:
