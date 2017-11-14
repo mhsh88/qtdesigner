@@ -10,6 +10,9 @@ from PyQt5.QtWidgets import QFileDialog
 from behinesazan.gas.station.software.view.Result.base import BaseResult
 
 
+
+
+
 class Result(QtWidgets.QWidget, BaseResult.Ui_Form):
     def __init__(self, parent=None):
         super(Result, self).__init__(parent)
@@ -66,6 +69,106 @@ class Result(QtWidgets.QWidget, BaseResult.Ui_Form):
         print(type(filePath))
         print(filePath)
         return
+
+    def setOutput(self, result):
+
+        try:
+            for key in result:
+                if key == 'user':
+                    user_string = 'محاسبات با دمای خروجی وارد شده\n\n'
+                    string = self.string_creator(result[key])
+                    user_string += string
+                    pass
+                elif key == 'T_hydrate':
+                    t_hydrate_string = '\nمحاسبات بر اساس دمای هیدرات محاسبه شده\n\n'
+                    string = self.string_creator(result[key])
+                    t_hydrate_string += string
+                    pass
+                elif key == 'T_hydrate_plus_2':
+                    t_hydrateplus2_string = '\nمحاسبات بر اساس دما دمای هیدرات محاسبه شده به علاوه ۲ درجه\n\n'
+                    string = self.string_creator(result[key])
+                    t_hydrateplus2_string += string
+                    pass
+
+
+            # print(user_string + t_hydrate_string + t_hydrateplus2_string)
+            self.result_text.setPlainText(user_string + t_hydrate_string + t_hydrateplus2_string)
+
+        except Exception as exception:
+            print(traceback.format_exc())
+            self.result_text.setPlainText(traceback.format_exc())
+
+
+    def string_creator(self, result):
+        string = ''
+        for key in sorted(result.keys()):
+
+            if 'دمای هیدرات' == key:
+                string += 'ٔدمای هیدرات در فشار خروجی = %s\n'%result['دمای هیدرات']
+            elif 'دمای گاز قبل از رگولاتور' == key:
+                string += 'ٔدمای گاز قبل از رگولاتور = %s\n' % result['دمای گاز قبل از رگولاتور']
+            elif 'بار حرارتی' == key:
+                if result['بار حرارتی'] > 0:
+                    string += 'ٔبار حرارتی مورد نیاز = %s متر مکعب بر ساعت\n' % result['بار حرارتی']
+            elif 'بار حرارتی بدون تلفات لوله' == key:
+                if result['بار حرارتی بدون تلفات لوله'] > 0:
+                    string += 'بار حرارتی بدون تلفات خط لوله = %s متر مکعب بر ساعت \n'% result['بار حرارتی بدون تلفات لوله']
+            elif 'راندمان مشعل' == key:
+                print(result[key])
+                for burner in result['راندمان مشعل']:
+                    print(burner[1])
+                    print(burner[0])
+                    string += 'راندمان %s = %s \n' %(burner[0], round(burner[1], 3))
+                pass
+
+            elif 'تلفات حرارتی ران' == key:
+                for runloss in result['تلفات حرارتی ران']:
+                    string += '%s = %s \n متر مکعب بر ساعت' %(runloss[0], round(runloss[1], 3))
+                pass
+
+                pass
+            elif 'تلفات خط لوله قبل از گرم کن' == key:
+                if result['تلفات خط لوله قبل از گرم کن']:
+                    if result['تلفات خط لوله قبل از گرم کن'][0] > 0 or result['تلفات خط لوله قبل از گرم کن'][0] < 0:
+                        if result['تلفات خط لوله قبل از گرم کن'][0] == result['تلفات خط لوله قبل از گرم کن'][1]:
+                            string += 'تلفات خط لوله قبل از گرم کن  = %s\n'% result['تلفات خط لوله قبل از گرم کن'][0]
+                        else:
+                            string +=  'تلفات خط لوله قبل از گرم کن بدون عایق  = %s\n'% result['تلفات خط لوله قبل از گرم کن'][0]
+                            string += 'تلفات خط لوله قبل از گرم کن با عایق  = %s\n' % \
+                                      result['تلفات خط لوله قبل از گرم کن'][1]
+                pass
+            elif 'تلفات خط لوله بعد از گرم کن' == key:
+                if result['تلفات خط لوله بعد از گرم کن']:
+                    if result['تلفات خط لوله بعد از گرم کن'][0] > 0 or result['تلفات خط لوله بعد از گرم کن'][0] < 0:
+                        if result['تلفات خط لوله بعد از گرم کن'][0] == result['تلفات خط لوله بعد از گرم کن'][1]:
+                            string += 'تلفات خط لوله بعد از گرم کن  = %s\n'% result['تلفات خط لوله بعد از گرم کن'][0]
+                        else:
+                            string +=  'تلفات خط لوله بعد از گرم کن بدون عایق  = %s\n'% result['تلفات خط لوله بعد از گرم کن'][0]
+                            string += 'تلفات خط لوله قبل از گرم کن با عایق  = %s\n' % \
+                                      result['تلفات خط لوله بعد از گرم کن'][1]
+                pass
+            elif 'مصرف با راندمان محاسبه شده' == key:
+                print(result['مصرف با راندمان محاسبه شده'])
+                strng = ''
+                if bool(result['مصرف با راندمان محاسبه شده']):
+                    for heater in sorted(result['مصرف با راندمان محاسبه شده'].keys()):
+                        for burner in  sorted(result['مصرف با راندمان محاسبه شده'][heater].keys()):
+                            if result['مصرف با راندمان محاسبه شده'][heater][burner] > 0:
+                                strng += 'مصرف گاز مشعل %s از گرم کن %s = %s متر مکعب بر ساعت \n' % (burner, heater, result['مصرف با راندمان محاسبه شده'][heater][burner])
+
+                string += strng
+                pass
+            elif 'درصد صرفه جویی عایق' == key:
+                if result['درصد صرفه جویی عایق'] > 0.0 or result['درصد صرفه جویی عایق'] < 0.0:
+                    string += 'درصد صرفه جویی عایق = %s\n' % result['درصد صرفه جویی عایق'] * 100
+                pass
+            elif 'مصرف هیتر با راندمان ۸۰ درصد' == key:
+                if result['مصرف هیتر با راندمان ۸۰ درصد'] > 0.0 or result['مصرف هیتر با راندمان ۸۰ درصد'] < 0.0:
+                    string += 'مصرف گاز با راندمان ۸۰ درصد = %s\n' % result['مصرف هیتر با راندمان ۸۰ درصد']
+                pass
+
+
+        return string
 
 
 if __name__ == "__main__":

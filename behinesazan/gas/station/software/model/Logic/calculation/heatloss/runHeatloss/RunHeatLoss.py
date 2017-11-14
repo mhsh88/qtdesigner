@@ -25,7 +25,7 @@ class RunHeatLoss:
         self.result.setdefault("heat_loss", {})
         self.result["heat_loss"].setdefault("run", {})
         t_max = 0
-        for key in runData["run_debi"].keys():
+        for key in sorted(runData["run_debi"].keys()):
             self.result["heat_loss"]["run"].setdefault(key, {})
             self.result["heat_loss"]["run"][key] = PipeLineEnd(gasInformationFormInputData["T_environment"],
                                                                gasInformationFormInputData["Wind_velocity"],
@@ -50,7 +50,6 @@ class RunHeatLoss:
 
             t_max = max(t_max, self.result["heat_loss"]["run"][key].Tout)
             string = ("تلفات حرارتی ران %s" % key)
-            print(type(consumption[key][0]))
             run = [string, consumption[key][0]]
             self.heatloss.append(run)
 

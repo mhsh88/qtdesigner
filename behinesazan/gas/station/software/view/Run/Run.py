@@ -142,7 +142,7 @@ class Run(QtWidgets.QWidget, BaseRun.Ui_Form):
         return
 
     def debi_input_textChange(self):
-        if self.debi_input.text() =="":
+        if self.debi_input.text() =="" or self.run_number_comboBox.currentText() == "":
             return
         self.debi_dict[self.run_number_comboBox.currentText()] = round(float(self.debi_input.text()), 3)
 

@@ -13,9 +13,9 @@ class CombustionCalculation:
         self.result.setdefault('heater', {})
         if bool(heaterData) and "T_environment" in gasInformationFormInputData.keys():
 
-            for keys in heaterData:
+            for keys in sorted(heaterData.keys()):
                 self.result["heater"].setdefault(keys, {})
-                for key in heaterData[keys]:
+                for key in sorted(heaterData[keys].keys()):
                     burner = []
                     self.result["heater"][keys].setdefault(key, None)
                     self.result["heater"][keys][key] = Combustion(gasInformationFormInputData["gas"],
@@ -23,7 +23,7 @@ class CombustionCalculation:
                                                                   gasInformationFormInputData["T_environment"],
                                                                   heaterData[keys][key]["fluegas"])
 
-                    string = ("هیتر %s، مشعل %s" % (keys, key))
+                    string = ("گرم کن %s، مشعل %s" % (keys, key))
                     burner = [string,  self.result["heater"][keys][key].eff]
                     # print(string)
                     self.efficiency.append(burner)

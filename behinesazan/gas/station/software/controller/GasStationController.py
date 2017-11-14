@@ -33,7 +33,8 @@ class Calculate:  # (GasStation):
                 self.station.result.inputs = result
                 self.station.result.outputs = result
                 self.station.result.result_text.clear()
-                self.station.result.result_text.setPlainText("".join(result))
+                # self.station.result.result_text.setPlainText("".join(result))
+                self.station.result.setOutput(result)
                 self.station.result.show()
 
             except Exception as e:

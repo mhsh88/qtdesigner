@@ -28,6 +28,9 @@ class Combustion:
 
     def __init__(self, g, O2percent, Tamb, Tstack):
         Tamb = Tamb - 273.15
+        if Tstack < Tamb:
+            Tstack = Tamb
+
         if Tamb <= 100:
             Tamp_temp = 100
         elif Tamb >= 500:
@@ -107,6 +110,11 @@ class Combustion:
         self.eff_net = 1 - self.loss_net
         #
         self.eff = 1 - self.loss
+        if self.eff_net>1:
+            self.eff_net = 1.0
+        if self.eff >1:
+            self.eff = 1.0
+
 
 
 if __name__ == "__main__":

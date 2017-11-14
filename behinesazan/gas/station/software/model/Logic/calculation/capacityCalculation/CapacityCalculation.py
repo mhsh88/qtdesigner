@@ -36,7 +36,7 @@ class CapacityCalculation:
         Qdot = (Q_standard / 3600) * C
         # calculation kW of energy needed for heat up gas
         Q1Heater = Qdot * g.D * (H2 - H1)  # kJ/s
-        print("needed power is ", Q1Heater, " kW", " and HHV is ", HHV)
+        # print("needed power is ", Q1Heater, " kW", " and HHV is ", HHV)
         # change kJ/s to kJ/hr
         Q1Heater = Q1Heater * 3600
         #change kJ/hr to kg/hr
