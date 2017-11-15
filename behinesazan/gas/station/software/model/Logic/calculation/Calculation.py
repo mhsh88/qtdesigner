@@ -59,6 +59,7 @@ class Calculation:
         burnerconsumption = {}
         # try:
         Calculation.noHeatLossConsumption = NoHeatLossConsumption(gasInformationFormInputData)
+        t_before_regulator = Calculation.noHeatLossConsumption.T_before_regulator - 273.15
 
         # check if heater data form is defined and air temperature is defined in Gas information form input data
         combustionCalculation = CombustionCalculation()
@@ -139,7 +140,7 @@ class Calculation:
                                                          after_heater_heat_loss_with_insulation_consumption)
 
         heaterpartialconsumption = (consumption_without_heatloss -before_heater_heat_loss_with_insulation_consumption -
-             after_heater_heat_loss_with_insulation_consumption - runconsumption) / len(combustionCalculation.result.keys())
+             after_heater_heat_loss_with_insulation_consumption - runconsumption) / len(combustionCalculation.result['heater'].keys())
 
         for heater in combustionCalculation.result["heater"].keys():
             burnerconsumption.setdefault(heater, {})
@@ -148,8 +149,8 @@ class Calculation:
             for burner in combustionCalculation.result["heater"][heater].keys():
                 burnerconsumption[heater][burner] = burnerpartialconsumption/combustionCalculation.result["heater"][heater][burner].eff
         rr = {}
-        rr["دمای هیدرات"] = round(Calculation.noHeatLossConsumption.T_hydrate,3)
-        rr['دمای گاز قبل از رگولاتور'] =Calculation.noHeatLossConsumption.T_before_regulator - 273.15
+        rr["دمای هیدرات"] = round(Calculation.noHeatLossConsumption.T_hydrate, 3)
+        rr['دمای گاز قبل از رگولاتور'] = t_before_regulator
         rr["بار حرارتی"] = consumption_without_heatloss -before_heater_heat_loss_with_insulation_consumption - \
                            after_heater_heat_loss_with_insulation_consumption - runconsumption
         rr["بار حرارتی بدون تلفات لوله"]=consumption_without_heatloss

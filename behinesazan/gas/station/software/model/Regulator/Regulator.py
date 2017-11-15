@@ -29,5 +29,5 @@ class Regulator:
 
 if __name__ == "__main__":
     g = Gas()
-    R = Regulator(7000, 288, 2000, g)
+    R = Regulator(1400/14.7*100, 273.15+10, 250/14.7*100, g)
     print(R.Tin - 273.15)
