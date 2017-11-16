@@ -35,7 +35,8 @@ class Result(QtWidgets.QWidget, BaseResult.Ui_Form):
         if filePath[1] == '*.xls' or filePath[1] == "*.xlsx":
             # Create a Pandas dataframe from the data.
             try:
-                df = df2 = pd.DataFrame(self.outputs.split("\n"))
+                df = df2 = pd.DataFrame(self.inputs)
+                # df.stats = df2.stats.str.strip("[]").str.split("\n")
                 # df.stats = df2.stats.str.strip("[]").str.split("\n")
 
                 # Create a Pandas Excel writer using XlsxWriter as the engine.
@@ -141,6 +142,7 @@ class Result(QtWidgets.QWidget, BaseResult.Ui_Form):
                     pass
 
             self.outputs = infos + user_string + t_hydrate_string + t_hydrateplus2_string
+            self.inputs = excel_output
             # print(user_string + t_hydrate_string + t_hydrateplus2_string)
             self.result_text.setPlainText(self.outputs)
 

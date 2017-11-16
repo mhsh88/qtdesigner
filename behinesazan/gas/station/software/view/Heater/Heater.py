@@ -1,5 +1,7 @@
 from PyQt5 import QtWidgets
+from PyQt5.QtGui import QFont
 from PyQt5.QtGui import QIntValidator
+from PyQt5.QtWidgets import QListView
 from PyQt5.QtWidgets import QMessageBox
 
 from behinesazan.gas.station.software.view.Heater.base import BaseHeater
@@ -22,17 +24,22 @@ class Heater(QtWidgets.QWidget, BaseHeater.Ui_Form):
         self.burner_oxygen_percent_spinbox.valueChanged.connect(self.burner_spinbox_changed)
         self.burner_fluegas_spinbox.valueChanged.connect(self.burner_spinbox_changed)
 
+        # combo_font = QFont("Arial", 12, -1, True)
+        # vw = QListView()
+        # vw.setFont(combo_font)
+        # self.burner_oxygen_percent_spinbox.setView(vw)
+        # self.burner_fluegas_spinbox.setView(vw)
+
     def burner_spinbox_changed(self):
         if self.heater_number_input.text() == "":
             QMessageBox.about(self, "خطا در اطلاعات ورودی", "ابتدا باید تعداد گرمکن را مشخص نمایید!")
             return
         else:
-            if self.burner_oxygen_percent_spinbox.text() =="":
+            if self.burner_oxygen_percent_spinbox.text() == "":
                 self.burner_oxygen_percent_spinbox.setValue(0)
 
             if self.burner_fluegas_spinbox.text() == "":
                 self.burner_fluegas_spinbox.setValue(0)
-
 
             self.data.setdefault(self.heater_number_comboBox.currentText(), {})
             self.data[self.heater_number_comboBox.currentText()].setdefault(self.burner_number_comboBox.currentText(),
@@ -40,14 +47,14 @@ class Heater(QtWidgets.QWidget, BaseHeater.Ui_Form):
             self.data[self.heater_number_comboBox.currentText()][self.burner_number_comboBox.currentText()].setdefault(
                 "oxygen", [])
             self.data[self.heater_number_comboBox.currentText()][self.burner_number_comboBox.currentText()]["oxygen"] = \
-                float(self.burner_oxygen_percent_spinbox.text())
+                float(self.enToArNumb(self.burner_oxygen_percent_spinbox.text()))
             self.data.setdefault(self.heater_number_comboBox.currentText(), {})
             self.data[self.heater_number_comboBox.currentText()].setdefault(self.burner_number_comboBox.currentText(),
                                                                             {})
             self.data[self.heater_number_comboBox.currentText()][self.burner_number_comboBox.currentText()].setdefault(
                 "fluegas", [])
             self.data[self.heater_number_comboBox.currentText()][self.burner_number_comboBox.currentText()]["fluegas"] = \
-                float(self.burner_fluegas_spinbox.text())
+                float(self.enToArNumb(self.burner_fluegas_spinbox.text()))
             # print(self.data)
         return
 
@@ -80,14 +87,14 @@ class Heater(QtWidgets.QWidget, BaseHeater.Ui_Form):
             self.data[self.heater_number_comboBox.currentText()][self.burner_number_comboBox.currentText()].setdefault(
                 "fluegas", [])
             self.data[self.heater_number_comboBox.currentText()][self.burner_number_comboBox.currentText()]["fluegas"] = \
-                float(self.burner_fluegas_spinbox.text())
+                float(self.enToArNumb(self.burner_fluegas_spinbox.text()))
             self.data.setdefault(self.heater_number_comboBox.currentText(), {})
             self.data[self.heater_number_comboBox.currentText()].setdefault(self.burner_number_comboBox.currentText(),
                                                                             {})
             self.data[self.heater_number_comboBox.currentText()][self.burner_number_comboBox.currentText()].setdefault(
                 "oxygen", [])
             self.data[self.heater_number_comboBox.currentText()][self.burner_number_comboBox.currentText()]["oxygen"] = \
-                float(self.burner_oxygen_percent_spinbox.text())
+                float(self.enToArNumb(self.burner_oxygen_percent_spinbox.text()))
 
         print(self.data)
         self.close()
@@ -96,6 +103,39 @@ class Heater(QtWidgets.QWidget, BaseHeater.Ui_Form):
     def cancelbutton(self):
         self.close()
         pass
+
+    def enToArNumb(self, number):
+        print(number)
+        dic = {
+            ',': '.',
+            '۱': '1',
+            '۲': '2',
+            '۰': '0',
+            '١': '1',
+            '٢': '2',
+            '۳': '3',
+            '۴': '4',
+            '۵': '5',
+            '۶': '6',
+            '۷': '7',
+            '۸': '8',
+            '۹': '9',
+            '٫': '.',
+            '0': '0',
+            '1': '1',
+            '2': '2',
+            '3': '3',
+            '4': '4',
+            '5': '5',
+            '6': '6',
+            '7': '7',
+            '8': '8',
+            '9': '9',
+            '.': '.',
+        }
+        temp = [dic.get(num) for num in number]
+        print(temp)
+        return ''.join(temp)
 
 
 if __name__ == "__main__":

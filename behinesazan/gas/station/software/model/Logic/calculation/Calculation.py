@@ -139,6 +139,7 @@ class Calculation:
                                                          after_heater_heat_loss_without_insulation_consumption,
                                                          after_heater_heat_loss_with_insulation_consumption)
 
+
         heaterpartialconsumption = (consumption_without_heatloss -before_heater_heat_loss_with_insulation_consumption -
              after_heater_heat_loss_with_insulation_consumption - runconsumption) / len(combustionCalculation.result['heater'].keys())
 
