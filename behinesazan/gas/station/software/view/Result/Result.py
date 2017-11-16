@@ -8,6 +8,7 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QFileDialog
 
 from behinesazan.gas.station.software.view.Result.base import BaseResult
+import re
 
 
 
@@ -77,6 +78,15 @@ class Result(QtWidgets.QWidget, BaseResult.Ui_Form):
         return
 
     def setOutput(self, information, result):
+        tempstring = ''
+        excel_output = []
+        excel_output.append(['استان', information['province']])
+        excel_output.append(['شهر', information['city']])
+        excel_output.append(['منطقه', information['area']])
+        excel_output.append(['آدرس', information['address']])
+        excel_output.append(['ظرفیت نامی', information['nominal_capacity']])
+
+        replacements = ('\n', '=')
         infos = 'استان:\n'
         infos += '%s\n' % information['province']
         infos += 'شهر:\n'
@@ -88,21 +98,45 @@ class Result(QtWidgets.QWidget, BaseResult.Ui_Form):
         infos += 'ظرفیت نامی:\n'
         infos += '%s\n' % information['nominal_capacity']
 
+
         try:
             for key in result:
                 if key == 'user':
                     user_string = 'محاسبات با دمای خروجی وارد شده\n\n'
+                    excel_output.append([user_string, ''])
                     string = self.string_creator(result[key])
+                    tempstring = string
+                    for r in replacements:
+                        tempstring = tempstring.replace(r, ',')
+                    tempstring = tempstring.split(',')
+                    for i in range((len(tempstring) // 2) * 2):
+                        excel_output.append([tempstring[i], tempstring[i+1]])
+
+
                     user_string += string
                     pass
                 elif key == 'T_hydrate':
                     t_hydrate_string = '\nمحاسبات بر اساس دمای هیدرات محاسبه شده\n\n'
+                    excel_output.append([t_hydrate_string, ''])
                     string = self.string_creator(result[key])
+                    tempstring = string
+                    for r in replacements:
+                        tempstring = tempstring.replace(r, ',')
+                    tempstring = tempstring.split(',')
+                    for i in range((len(tempstring) // 2) * 2):
+                        excel_output.append([tempstring[i], tempstring[i+1]])
                     t_hydrate_string += string
                     pass
                 elif key == 'T_hydrate_plus_2':
                     t_hydrateplus2_string = '\nمحاسبات بر اساس دما دمای هیدرات محاسبه شده به علاوه ۲ درجه\n\n'
+                    excel_output.append([t_hydrateplus2_string, ''])
                     string = self.string_creator(result[key])
+                    tempstring = string
+                    for r in replacements:
+                        tempstring = tempstring.replace(r, ',')
+                    tempstring = tempstring.split(',')
+                    for i in range((len(tempstring) // 2) * 2):
+                        excel_output.append([tempstring[i], tempstring[i+1]])
                     t_hydrateplus2_string += string
                     pass
 
