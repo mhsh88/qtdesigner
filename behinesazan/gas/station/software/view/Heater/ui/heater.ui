@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>317</width>
-    <height>283</height>
+    <width>271</width>
+    <height>296</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -36,8 +36,8 @@
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_4">
-        <item>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
            <widget class="QLineEdit" name="heater_number_input">
@@ -65,9 +65,9 @@
           </item>
          </layout>
         </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
-          <item>
+        <item row="1" column="0">
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="0" column="0">
            <widget class="QComboBox" name="heater_number_comboBox">
             <property name="font">
              <font>
@@ -76,7 +76,7 @@
             </property>
            </widget>
           </item>
-          <item>
+          <item row="0" column="1">
            <widget class="QLabel" name="heater_base_specification_label">
             <property name="font">
              <font>
@@ -85,6 +85,33 @@
             </property>
             <property name="text">
              <string>گرم کن:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="heater_efficiency_label">
+            <property name="minimumSize">
+             <size>
+              <width>130</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>راندمان جذب حرارتی کویل:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLineEdit" name="burner_efficiency_input">
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
             </property>
            </widget>
           </item>
@@ -114,6 +141,12 @@
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
            <widget class="QLabel" name="burner_fluegas_label">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>0</height>
+             </size>
+            </property>
             <property name="font">
              <font>
               <pointsize>10</pointsize>
@@ -142,6 +175,12 @@
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
            <widget class="QLabel" name="burner_oxygen_percent_label">
+            <property name="minimumSize">
+             <size>
+              <width>80</width>
+              <height>0</height>
+             </size>
+            </property>
             <property name="font">
              <font>
               <pointsize>10</pointsize>
@@ -261,6 +300,7 @@
  <tabstops>
   <tabstop>heater_number_input</tabstop>
   <tabstop>heater_number_comboBox</tabstop>
+  <tabstop>burner_efficiency_input</tabstop>
   <tabstop>burner_number_comboBox</tabstop>
   <tabstop>burner_oxygen_percent_spinbox</tabstop>
   <tabstop>burner_fluegas_spinbox</tabstop>
@@ -279,12 +319,12 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>165</x>
-     <y>246</y>
+     <x>166</x>
+     <y>283</y>
     </hint>
     <hint type="destinationlabel">
-     <x>161</x>
-     <y>57</y>
+     <x>157</x>
+     <y>70</y>
     </hint>
    </hints>
   </connection>
@@ -295,12 +335,12 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>133</x>
-     <y>249</y>
+     <x>166</x>
+     <y>283</y>
     </hint>
     <hint type="destinationlabel">
-     <x>114</x>
-     <y>91</y>
+     <x>101</x>
+     <y>89</y>
     </hint>
    </hints>
   </connection>
@@ -311,12 +351,12 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>182</x>
-     <y>247</y>
+     <x>166</x>
+     <y>283</y>
     </hint>
     <hint type="destinationlabel">
-     <x>181</x>
-     <y>192</y>
+     <x>180</x>
+     <y>239</y>
     </hint>
    </hints>
   </connection>
@@ -327,12 +367,28 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>141</x>
-     <y>249</y>
+     <x>166</x>
+     <y>283</y>
     </hint>
     <hint type="destinationlabel">
-     <x>78</x>
-     <y>201</y>
+     <x>97</x>
+     <y>239</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>clearButton</sender>
+   <signal>clicked()</signal>
+   <receiver>burner_efficiency_input</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>123</x>
+     <y>270</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>82</x>
+     <y>126</y>
     </hint>
    </hints>
   </connection>

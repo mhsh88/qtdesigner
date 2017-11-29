@@ -29,33 +29,34 @@ class Calculation:
         runsum = 0
         if 'run_debi' in runData:
             for key in runData['run_debi']:
-                runsum +=  runData['run_debi'][key]
-            if runsum > gasInformationFormInputData['Station_Capacity'] or  runsum <= gasInformationFormInputData['Station_Capacity']:
+                runsum += runData['run_debi'][key]
+            if runsum > gasInformationFormInputData['Station_Capacity'] or runsum <= gasInformationFormInputData[
+                'Station_Capacity']:
                 gasInformationFormInputData['Station_Capacity'] = runsum
         result = {}
         temp = copy.deepcopy(gasInformationFormInputData)
         result['user'] = Calculation.consumption_calculation(temp,
-                                                                 beforeHeaterLineData,
-                                                                 heaterData, afterHeaterLineData, runData)
-
+                                                             beforeHeaterLineData,
+                                                             heaterData, afterHeaterLineData, runData)
 
         temp1 = copy.deepcopy(gasInformationFormInputData)
         temp1["T_station_out"] = Calculation.noHeatLossConsumption.T_hydrate + 273.15
         result['T_hydrate'] = Calculation.consumption_calculation(temp1,
-                                                                       beforeHeaterLineData,
-                                                                       heaterData, afterHeaterLineData, runData)
+                                                                  beforeHeaterLineData,
+                                                                  heaterData, afterHeaterLineData, runData)
         temp2 = copy.deepcopy(gasInformationFormInputData)
         temp2["T_station_out"] = Calculation.noHeatLossConsumption.T_hydrate + 273.15 + 2
         result['T_hydrate_plus_2'] = Calculation.consumption_calculation(temp2,
-                                                                       beforeHeaterLineData,
-                                                                       heaterData, afterHeaterLineData, runData)
+                                                                         beforeHeaterLineData,
+                                                                         heaterData, afterHeaterLineData, runData)
 
         return result
 
         pass
 
     @staticmethod
-    def consumption_calculation(gasInformationFormInputData, beforeHeaterLineData, heaterData, afterHeaterLineData, runData):
+    def consumption_calculation(gasInformationFormInputData, beforeHeaterLineData, heaterData, afterHeaterLineData,
+                                runData):
         burnerconsumption = {}
         # try:
         Calculation.noHeatLossConsumption = NoHeatLossConsumption(gasInformationFormInputData)
@@ -65,17 +66,12 @@ class Calculation:
         combustionCalculation = CombustionCalculation()
         combustionCalculation.combustionCal(heaterData, gasInformationFormInputData)
 
-
-
         runHeatLoss = RunHeatLoss(runData, gasInformationFormInputData,
                                   Calculation.noHeatLossConsumption.T_before_regulator,
                                   Calculation.noHeatLossConsumption.HHV)
         runconsumption = 0
         for run in runHeatLoss.heatloss:
             runconsumption += run[1]
-
-
-
 
         afterHeaterHeatLoss = AfterHeaterHeatLoss(afterHeaterLineData, gasInformationFormInputData,
                                                   runHeatLoss.T_before_run)
@@ -129,7 +125,6 @@ class Calculation:
         afterheater = [Calculation.noHeatLossConsumption.Q_heater, after_heater_heat_loss_with_insulation_consumption,
                        after_heater_heat_loss_without_insulation_consumption]
 
-
         beforeheater = [Calculation.noHeatLossConsumption.Q_heater, before_heater_heat_loss_with_insulation_consumption,
                         before_heater_heat_loss_without_insulation_consumption]
 
@@ -139,46 +134,68 @@ class Calculation:
                                                          after_heater_heat_loss_without_insulation_consumption,
                                                          after_heater_heat_loss_with_insulation_consumption)
 
-
-        heaterpartialconsumption = (consumption_without_heatloss -before_heater_heat_loss_with_insulation_consumption -
-             after_heater_heat_loss_with_insulation_consumption - runconsumption) / len(combustionCalculation.result['heater'].keys())
+        if len(
+                combustionCalculation.result['heater'].keys()) >= 1:
+            heaterpartialconsumption = (
+                                           consumption_without_heatloss - before_heater_heat_loss_with_insulation_consumption -
+                                           after_heater_heat_loss_with_insulation_consumption - runconsumption) / len(
+                combustionCalculation.result['heater'].keys())
+        else:
+            heaterpartialconsumption = (
+                                           consumption_without_heatloss - before_heater_heat_loss_with_insulation_consumption -
+                                           after_heater_heat_loss_with_insulation_consumption - runconsumption)
 
         for heater in combustionCalculation.result["heater"].keys():
             burnerconsumption.setdefault(heater, {})
-            burnerpartialconsumption = heaterpartialconsumption/len(combustionCalculation.result["heater"][heater])
+            burnerpartialconsumption = heaterpartialconsumption / \
+                                       len(combustionCalculation.result["heater"][heater]) / \
+                                       (heaterData[heater]['burner_efficiency'] / 100)
 
             for burner in combustionCalculation.result["heater"][heater].keys():
-                burnerconsumption[heater][burner] = burnerpartialconsumption/combustionCalculation.result["heater"][heater][burner].eff
+                burnerconsumption[heater][burner] = burnerpartialconsumption / \
+                                                    combustionCalculation.result["heater"][heater][burner].eff
         rr = {}
+        heatereffstring = ''
+
+
+        for heater in heaterData:
+            heatereffstring = heatereffstring + 'راندمان جذب حرارتی کویل کرم کن%s = %s\n' % (heater, heaterData[heater]['burner_efficiency'])
+
+
+        rr['راندمان جذب حرارتی کویل گرمکن'] = heatereffstring
+
         rr["دمای هیدرات"] = round(Calculation.noHeatLossConsumption.T_hydrate, 3)
         rr['دمای گاز قبل از رگولاتور'] = t_before_regulator
-        rr["بار حرارتی"] = consumption_without_heatloss -before_heater_heat_loss_with_insulation_consumption - \
+        rr["بار حرارتی"] = consumption_without_heatloss - before_heater_heat_loss_with_insulation_consumption - \
                            after_heater_heat_loss_with_insulation_consumption - runconsumption
-        rr["بار حرارتی بدون تلفات لوله"]=consumption_without_heatloss
+        rr["بار حرارتی بدون تلفات لوله"] = consumption_without_heatloss
         rr['راندمان مشعل'] = combustionCalculation.efficiency
         rr['تلفات حرارتی ران'] = runHeatLoss.heatloss
-        rr['تلفات خط لوله قبل از گرم کن'] = [before_heater_heat_loss_without_insulation_consumption, before_heater_heat_loss_with_insulation_consumption]
+        rr['تلفات خط لوله قبل از گرم کن'] = [before_heater_heat_loss_without_insulation_consumption,
+                                             before_heater_heat_loss_with_insulation_consumption]
         rr['تلفات خط لوله بعد از گرم کن'] = [after_heater_heat_loss_without_insulation_consumption,
-                                         after_heater_heat_loss_with_insulation_consumption]
+                                             after_heater_heat_loss_with_insulation_consumption]
         rr['مصرف با راندمان محاسبه شده'] = burnerconsumption
-        rr['درصد صرفه جویی عایق'] =  saving_percent * 100
-        rr['مصرف هیتر با راندمان ۸۰ درصد'] = (consumption_without_heatloss - before_heater_heat_loss_with_insulation_consumption -
-             after_heater_heat_loss_with_insulation_consumption - runconsumption) / 0.8
-        r = [["دمای هیدرات", round(Calculation.noHeatLossConsumption.T_hydrate,3)],['دمای گاز قبل از رگولاتور',
-                                                                                       Calculation.noHeatLossConsumption.T_before_regulator - 273.15],
-             ["بار حرارتی", consumption_without_heatloss -before_heater_heat_loss_with_insulation_consumption -
-             after_heater_heat_loss_with_insulation_consumption - runconsumption],
-             ["بار حرارتی بدون تلفات لوله",consumption_without_heatloss],
+        rr['درصد صرفه جویی عایق'] = saving_percent * 100
+        rr['مصرف هیتر با راندمان ۸۰ درصد'] = (
+                                                 consumption_without_heatloss - before_heater_heat_loss_with_insulation_consumption -
+                                                 after_heater_heat_loss_with_insulation_consumption - runconsumption) / 0.8
+        r = [["دمای هیدرات", round(Calculation.noHeatLossConsumption.T_hydrate, 3)], ['دمای گاز قبل از رگولاتور',
+                                                                                      Calculation.noHeatLossConsumption.T_before_regulator - 273.15],
+             ["بار حرارتی", consumption_without_heatloss - before_heater_heat_loss_with_insulation_consumption -
+              after_heater_heat_loss_with_insulation_consumption - runconsumption],
+             ["بار حرارتی بدون تلفات لوله", consumption_without_heatloss],
              ['راندمان مشعل', combustionCalculation.efficiency],
              ['تلفات حرارتی ران', runHeatLoss.heatloss],
              ['تلفات خط لوله قبل از گرم کن', [before_heater_heat_loss_without_insulation_consumption,
-                                        before_heater_heat_loss_with_insulation_consumption]],
+                                              before_heater_heat_loss_with_insulation_consumption]],
              ['تلفات خط لوله بعد از گرم کن', [after_heater_heat_loss_without_insulation_consumption,
-                                        after_heater_heat_loss_with_insulation_consumption]],
-             ['درصد صرفه جویی عایق',saving_percent * 100],
+                                              after_heater_heat_loss_with_insulation_consumption]],
+             ['درصد صرفه جویی عایق', saving_percent * 100],
              ['مصرف با راندمان محاسبه شده', burnerconsumption],
-             ['مصرف هیتر با راندمان ۸۰ درصد', (consumption_without_heatloss -before_heater_heat_loss_with_insulation_consumption -
-             after_heater_heat_loss_with_insulation_consumption - runconsumption) / 0.8]]
+             ['مصرف هیتر با راندمان ۸۰ درصد',
+              (consumption_without_heatloss - before_heater_heat_loss_with_insulation_consumption -
+               after_heater_heat_loss_with_insulation_consumption - runconsumption) / 0.8]]
 
         return rr
 

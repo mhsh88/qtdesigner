@@ -28,16 +28,16 @@ class Calculate:  # (GasStation):
     def cal(self):
         if bool(self.station.gasInformationInputForm.data):
             try:
-                result = Calculation.calculate(self.station.gasInformationInputForm.data, self.station.beforeHeaterLine.data,
-                                     self.station.heater.data, self.station.afterHeaterLine.data, self.station.run.data)
+                result = Calculation.calculate(self.station.gasInformationInputForm.data,
+                                               self.station.beforeHeaterLine.data,
+                                               self.station.heater.data, self.station.afterHeaterLine.data,
+                                               self.station.run.data)
                 self.station.result.result_text.clear()
                 # self.station.result.result_text.setPlainText("".join(result))
-                self.station.result.setOutput(self.station.gasInformationInputForm.data , result)
+                self.station.result.setOutput(self.station.gasInformationInputForm.data, self.station.heater.data, result)
                 self.station.result.show()
 
             except Exception as e:
-                print("saalm")
-                print(e)
                 print(traceback.format_exc())
                 return
             print(self.station.gasInformationInputForm.data)

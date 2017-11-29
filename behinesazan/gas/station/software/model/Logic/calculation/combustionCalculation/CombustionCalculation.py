@@ -16,6 +16,8 @@ class CombustionCalculation:
             for keys in sorted(heaterData.keys()):
                 self.result["heater"].setdefault(keys, {})
                 for key in sorted(heaterData[keys].keys()):
+                    if key == 'burner_efficiency':
+                        continue
                     burner = []
                     self.result["heater"][keys].setdefault(key, None)
                     self.result["heater"][keys][key] = Combustion(gasInformationFormInputData["gas"],

@@ -11,9 +11,6 @@ from behinesazan.gas.station.software.view.Result.base import BaseResult
 import re
 
 
-
-
-
 class Result(QtWidgets.QWidget, BaseResult.Ui_Form):
     def __init__(self, parent=None):
         super(Result, self).__init__(parent)
@@ -78,7 +75,7 @@ class Result(QtWidgets.QWidget, BaseResult.Ui_Form):
         # print(filePath)
         return
 
-    def setOutput(self, information, result):
+    def setOutput(self, information, heaterdata, result):
         tempstring = ''
         excel_output = []
         excel_output.append(['استان', information['province']])
@@ -99,7 +96,6 @@ class Result(QtWidgets.QWidget, BaseResult.Ui_Form):
         infos += 'ظرفیت نامی:\n'
         infos += '%s\n' % information['nominal_capacity']
 
-
         try:
             for key in result:
                 if key == 'user':
@@ -111,8 +107,7 @@ class Result(QtWidgets.QWidget, BaseResult.Ui_Form):
                         tempstring = tempstring.replace(r, ',')
                     tempstring = tempstring.split(',')
                     for i in range((len(tempstring) // 2) * 2):
-                        excel_output.append([tempstring[i], tempstring[i+1]])
-
+                        excel_output.append([tempstring[i], tempstring[i + 1]])
 
                     user_string += string
                     pass
@@ -125,7 +120,7 @@ class Result(QtWidgets.QWidget, BaseResult.Ui_Form):
                         tempstring = tempstring.replace(r, ',')
                     tempstring = tempstring.split(',')
                     for i in range((len(tempstring) // 2) * 2):
-                        excel_output.append([tempstring[i], tempstring[i+1]])
+                        excel_output.append([tempstring[i], tempstring[i + 1]])
                     t_hydrate_string += string
                     pass
                 elif key == 'T_hydrate_plus_2':
@@ -137,7 +132,7 @@ class Result(QtWidgets.QWidget, BaseResult.Ui_Form):
                         tempstring = tempstring.replace(r, ',')
                     tempstring = tempstring.split(',')
                     for i in range((len(tempstring) // 2) * 2):
-                        excel_output.append([tempstring[i], tempstring[i+1]])
+                        excel_output.append([tempstring[i], tempstring[i + 1]])
                     t_hydrateplus2_string += string
                     pass
 
@@ -150,42 +145,51 @@ class Result(QtWidgets.QWidget, BaseResult.Ui_Form):
             print(traceback.format_exc())
             self.result_text.setPlainText(traceback.format_exc())
 
-
     def string_creator(self, result):
         string = ''
         for key in sorted(result.keys()):
 
             if 'دمای هیدرات' == key:
-                string += 'ٔدمای هیدرات در فشار خروجی = %s سلسیوس\n'%result['دمای هیدرات']
+                string += 'دمای هیدرات در فشار خروجی = %s سلسیوس\n' % result['دمای هیدرات']
+            elif key == 'راندمان جذب حرارتی کویل گرمکن' and result['راندمان جذب حرارتی کویل گرمکن'] != "":
+                string += result['راندمان جذب حرارتی کویل گرمکن']
             elif 'دمای گاز قبل از رگولاتور' == key:
-                string += 'ٔدمای گاز قبل از رگولاتور = %s سلسیوس\n' % round(result['دمای گاز قبل از رگولاتور'][0], 3)
+                string += 'دمای گاز قبل از رگولاتور = %s سلسیوس\n' % round(result['دمای گاز قبل از رگولاتور'][0], 3)
             elif 'بار حرارتی' == key:
                 if result['بار حرارتی'] > 0:
-                    string += 'ٔبار حرارتی مورد نیاز = %s متر مکعب بر ساعت\n' % round(result['بار حرارتی'][0], 3)
+                    string += 'بار حرارتی مورد نیاز = %s متر مکعب بر ساعت\n' % round(result['بار حرارتی'][0], 3)
             elif 'بار حرارتی بدون تلفات لوله' == key:
                 if result['بار حرارتی بدون تلفات لوله'] > 0:
-                    string += 'بار حرارتی بدون تلفات خط لوله = %s متر مکعب بر ساعت \n'% round(result['بار حرارتی بدون تلفات لوله'][0], 3)
+                    string += "بار حرارتی بدون تلفات خط لوله = %s متر مکعب بر ساعت \n" % round(result['بار حرارتی '
+                                                                                                      'بدون تلفات '
+                                                                                                      'لوله'][0], 3)
             elif 'راندمان مشعل' == key:
                 print(result[key])
                 for burner in result['راندمان مشعل']:
                     print(burner[1])
                     print(burner[0])
-                    string += 'راندمان %s = %s \n' %(burner[0], round(burner[1], 3))
+                    string += 'راندمان %s = %s \n' % (burner[0], round(burner[1], 3))
                 pass
 
             elif 'تلفات حرارتی ران' == key:
                 for runloss in result['تلفات حرارتی ران']:
-                    string += '%s = %s متر مکعب بر ساعت\n' %(runloss[0], round(runloss[1], 3))
+                    string += '%s = %s متر مکعب بر ساعت\n' % (runloss[0], round(runloss[1], 3))
                 pass
 
                 pass
+
             elif 'تلفات خط لوله قبل از گرم کن' == key:
                 if result['تلفات خط لوله قبل از گرم کن']:
                     if result['تلفات خط لوله قبل از گرم کن'][0] > 0 or result['تلفات خط لوله قبل از گرم کن'][0] < 0:
                         if result['تلفات خط لوله قبل از گرم کن'][0] == result['تلفات خط لوله قبل از گرم کن'][1]:
-                            string += 'تلفات خط لوله قبل از گرم کن  = %s متر مکعب بر ساعت\n'% round(result['تلفات خط لوله قبل از گرم کن'][0][0], 3)
+                            string += 'تلفات خط لوله قبل از گرم کن  = %s متر مکعب بر ساعت\n' % round(result['تلفات خط '
+                                                                                                            'لوله قبل '
+                                                                                                            'از گرم '
+                                                                                                            'کن'][0][
+                                                                                                         0], 3)
                         else:
-                            string +=  'تلفات خط لوله قبل از گرم کن بدون عایق  = %s متر مکعب بر ساعت\n'% round(result['تلفات خط لوله قبل از گرم کن'][0][0], 3)
+                            string += 'تلفات خط لوله قبل از گرم کن بدون عایق  = %s متر مکعب بر ساعت\n' % round(
+                                result['تلفات خط لوله قبل از گرم کن'][0][0], 3)
                             string += 'تلفات خط لوله قبل از گرم کن با عایق  = %s متر مکعب بر ساعت\n' % \
                                       round(result['تلفات خط لوله قبل از گرم کن'][1][0], 3)
                 pass
@@ -193,9 +197,14 @@ class Result(QtWidgets.QWidget, BaseResult.Ui_Form):
                 if result['تلفات خط لوله بعد از گرم کن']:
                     if result['تلفات خط لوله بعد از گرم کن'][0] > 0 or result['تلفات خط لوله بعد از گرم کن'][0] < 0:
                         if result['تلفات خط لوله بعد از گرم کن'][0] == result['تلفات خط لوله بعد از گرم کن'][1]:
-                            string += 'تلفات خط لوله بعد از گرم کن  = %s متر مکعب بر ساعت \n'% round(result['تلفات خط لوله بعد از گرم کن'][0][0], 3)
+                            string += 'تلفات خط لوله بعد از گرم کن  = %s متر مکعب بر ساعت \n' % round(result['تلفات خط '
+                                                                                                             'لوله بعد'
+                                                                                                             ' از گرم '
+                                                                                                             'کن'][0][
+                                                                                                          0], 3)
                         else:
-                            string +=  'تلفات خط لوله بعد از گرم کن بدون عایق  = %s متر مکعب بر ساعت\n'% round(result['تلفات خط لوله بعد از گرم کن'][0][0], 3)
+                            string += 'تلفات خط لوله بعد از گرم کن بدون عایق  = %s متر مکعب بر ساعت\n' % round(
+                                result['تلفات خط لوله بعد از گرم کن'][0][0], 3)
                             string += 'تلفات خط لوله قبل از گرم کن با عایق  = %s متر مکعب بر ساعت\n' % \
                                       round(result['تلفات خط لوله بعد از گرم کن'][1][0], 3)
                 pass
@@ -204,9 +213,10 @@ class Result(QtWidgets.QWidget, BaseResult.Ui_Form):
                 strng = ''
                 if bool(result['مصرف با راندمان محاسبه شده']):
                     for heater in sorted(result['مصرف با راندمان محاسبه شده'].keys()):
-                        for burner in  sorted(result['مصرف با راندمان محاسبه شده'][heater].keys()):
+                        for burner in sorted(result['مصرف با راندمان محاسبه شده'][heater].keys()):
                             if result['مصرف با راندمان محاسبه شده'][heater][burner] > 0:
-                                strng += 'مصرف گاز مشعل %s از گرم کن %s = %s متر مکعب بر ساعت \n' % (burner, heater, round(result['مصرف با راندمان محاسبه شده'][heater][burner][0], 3))
+                                strng += 'مصرف گاز مشعل %s از گرم کن %s = %s متر مکعب بر ساعت \n' % (
+                                burner, heater, round(result['مصرف با راندمان محاسبه شده'][heater][burner][0], 3))
 
                 string += strng
                 pass
@@ -216,9 +226,10 @@ class Result(QtWidgets.QWidget, BaseResult.Ui_Form):
                 pass
             elif 'مصرف هیتر با راندمان ۸۰ درصد' == key:
                 if result['مصرف هیتر با راندمان ۸۰ درصد'] > 0.0 or result['مصرف هیتر با راندمان ۸۰ درصد'] < 0.0:
-                    string += 'مصرف گاز با راندمان ۸۰ درصد = %s متر مکعب بر ساعت\n' % round(result['مصرف هیتر با راندمان ۸۰ درصد'][0], 3)
+                    string += 'مصرف گاز با راندمان ۸۰ درصد = %s متر مکعب بر ساعت\n' % round(result['مصرف هیتر با '
+                                                                                                   'راندمان ۸۰ '
+                                                                                                   'درصد'][0], 3)
                 pass
-
 
         return string
 
