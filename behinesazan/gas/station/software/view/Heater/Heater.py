@@ -160,7 +160,6 @@ class Heater(QtWidgets.QWidget, BaseHeater.Ui_Form):
             '.': '.',
         }
         temp = [dic.get(num) for num in number]
-        print(temp)
         return ''.join(temp)
 
 

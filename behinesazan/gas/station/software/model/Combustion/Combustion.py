@@ -119,7 +119,9 @@ class Combustion:
 
 if __name__ == "__main__":
     g = Gas()
-    g.component = [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    g.component = [0.057, 0.076, 0.812, 0.043, 0.009, 0.0015, 0.0015, 0., 0., 0.
+                , 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.
+                , 0.]
     print(g.component)
     c = Combustion(g, 7, 30+273.15, 250)
     print(c.eff, c.eff_net)

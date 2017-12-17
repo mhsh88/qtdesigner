@@ -196,9 +196,12 @@ class PipeLineEnd:
 
 if __name__ == "__main__":
     g = Gas()
-    numpy.arange(0.0, 1.0, 0.1)
-    for v in numpy.arange(0.0, 4.0, 0.05):
-        R = PipeLineEnd(10 + 273.15, v, 5 + 273.15, 5000, g, 0.4, 0.38, 20, 10000)
-        print(R.Tout - 273.15)
+    g.component = [0.057, 0.076, 0.812, 0.043, 0.009, 0.0015, 0.0015, 0., 0., 0.
+        , 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.
+        , 0.]
+    # numpy.arange(0.0, 1.0, 0.1)
+    # for v in numpy.arange(0.0, 4.0, 0.05):
+    R = PipeLineEnd(30 + 273.15, 10, 20 + 273.15, 7000, g, 0.4, 0.38, 20, 4000, .05, 100)
+    print(R.Tout - 273.15)
 
         # R.calcul(50, 0.5, 0.7)

@@ -350,6 +350,7 @@ class Gas:
         component = self.component
 
         a_n = np.array(returnCol(tableD1, 1))
+        self.a_n = a_n
         self.b_n = np.array(returnCol(tableD1, 2))
         b_n = self.b_n
         self.c_n = np.array(returnCol(tableD1, 3))
@@ -363,6 +364,7 @@ class Gas:
         f_n = np.array(returnCol(tableD1, 8))
         s_n = np.array(returnCol(tableD1, 9))
         w_n = np.array(returnCol(tableD1, 10))
+
         # items.amount()
 
         Xi = component / np.sum(component)
@@ -414,7 +416,6 @@ class Gas:
             for j in range(i + 1, 21):
                 _V.append(Xi[i] * Xi[j] * (V_ij[i][j] ** 5 - 1) * ((E_i[i] * E_i[j]) ** (5 / 2)))
             V.append(_V)
-
         V = ((np.sum(np.multiply(Xi, E_i ** (5 / 2)))) ** 2 + 2 * np.sum(np.sum(np.array(V)))) ** (1 / 5)
 
         K = []
@@ -682,3 +683,9 @@ class Gas:
         self.T = T
         self.Uinit()
         pass
+
+
+if __name__ == '__main__':
+    g = Gas()
+    # print(g.C_n)
+    # print(g.component)
